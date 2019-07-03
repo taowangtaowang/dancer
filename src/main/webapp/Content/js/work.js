@@ -2,7 +2,7 @@
 //调用方法：$.sysStaticData().urlExt
 $.sysStaticData = function () {
     var staticData = {
-        urlExt: "/myweb"//系统扩展路径
+        urlExt: "/dancer"//系统扩展路径
     };
     return staticData;
 }
