@@ -6,8 +6,7 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4215884f-e12a-4b42-8e82-c9a2b70da0f1" name="Default" comment="idea 测试提交">
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+    <list default="true" id="4215884f-e12a-4b42-8e82-c9a2b70da0f1" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -54,11 +53,11 @@
       <file leaf-file-name="login.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/login.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="152">
-              <caret line="92" column="54" lean-forward="true" selection-start-line="92" selection-start-column="54" selection-end-line="92" selection-end-column="54" />
+            <state relative-caret-position="171">
+              <caret line="93" column="52" lean-forward="false" selection-start-line="93" selection-start-column="52" selection-end-line="93" selection-end-column="52" />
               <folding>
-                <marker date="1562148070911" expanded="true" signature="751:757" ph="&amp;nbsp;" />
-                <marker date="1562148070911" expanded="true" signature="757:763" ph="&amp;nbsp;" />
+                <marker date="1562148108435" expanded="true" signature="751:757" ph="&amp;nbsp;" />
+                <marker date="1562148108435" expanded="true" signature="757:763" ph="&amp;nbsp;" />
               </folding>
             </state>
           </provider>
@@ -446,12 +445,20 @@
       <option name="presentableId" value="Default" />
       <updated>1562138474857</updated>
       <workItem from="1562138478007" duration="4163000" />
-      <workItem from="1562147150534" duration="754000" />
+      <workItem from="1562147150534" duration="772000" />
     </task>
+    <task id="LOCAL-00001" summary="idea 测试提交">
+      <created>1562148100359</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1562148100359</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="4917000" />
+    <option name="totallyTimeSpent" value="4935000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -790,11 +797,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/login.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="92" column="54" lean-forward="true" selection-start-line="92" selection-start-column="54" selection-end-line="92" selection-end-column="54" />
+        <state relative-caret-position="171">
+          <caret line="93" column="52" lean-forward="false" selection-start-line="93" selection-start-column="52" selection-end-line="93" selection-end-column="52" />
           <folding>
-            <marker date="1562148070911" expanded="true" signature="751:757" ph="&amp;nbsp;" />
-            <marker date="1562148070911" expanded="true" signature="757:763" ph="&amp;nbsp;" />
+            <marker date="1562148108435" expanded="true" signature="751:757" ph="&amp;nbsp;" />
+            <marker date="1562148108435" expanded="true" signature="757:763" ph="&amp;nbsp;" />
           </folding>
         </state>
       </provider>
