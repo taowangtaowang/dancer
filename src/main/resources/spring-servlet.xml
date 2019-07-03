@@ -14,6 +14,7 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
 	<mvc:annotation-driven>
 	</mvc:annotation-driven>
 
+	<!--资源文件路径-->
 	<mvc:resources mapping="/Content/**" location="/Content/" /> 
 
 	<!-- 启动包扫描功能，以便注册带有@Controllers、@service、@repository、@Component等注解的类成为spring的bean -->
@@ -24,9 +25,4 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
 		<property name="prefix" value="/"/>    <!-- 前缀 -->
 		<property name="suffix" value=".jsp"/>    <!-- 后缀 -->
 	</bean>
-	<!-- 访问静态文件（jpg,js,css）的方法 -->
-	<!--<mvc:resources location="/files/" mapping="/files/**" />-->
-	<!--<mvc:resources location="/scripts/" mapping="/scripts/**" />-->
-	<!--<mvc:resources location="/styles/" mapping="/styles/**" />-->
-	<!--<mvc:resources location="/Views/" mapping="/Views/**" />-->
 </beans>

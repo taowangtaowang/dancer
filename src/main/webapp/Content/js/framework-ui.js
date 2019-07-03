@@ -10,17 +10,17 @@ $.reload = function () {
 //调用方法：$.sysStaticData().urlExt
 $.sysStaticData = function () {
     var staticData = {
-        urlExt: "/myweb"//系统扩展路径
+        urlExt: "/dancer"//系统扩展路径
     };
     return staticData;
 }
 //系统静态资源
 //调用方法：$.sysStaticDataUrl().urlExtUrl
 $.sysStaticDataUrl = function () {
-var staticData = {
-		  urlExtUrl: "http://10.6.10.108:8080/FileService/"//系统扩展路径 头像地址路径
-};
-return staticData;
+    var staticData = {
+              urlExtUrl: "http://10.6.10.108:8080/FileService/"//系统扩展路径 头像地址路径
+    };
+    return staticData;
 }
 //转换日期格式(时间戳转换为datetime格式)
 //调用方法$.changeDateFormat(options).DateExt
