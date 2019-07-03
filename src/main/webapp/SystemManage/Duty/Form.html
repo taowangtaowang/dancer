@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" />
+    <title>岗位管理-新增/修改</title>
+    <link href="../../Content/css/framework-font.css" rel="stylesheet" />
+    <link href="../../Content/css/framework-theme.css" rel="stylesheet" />
+    <script src="../../Content/js/jquery/jquery-2.1.1.min.js"></script>
+    <script src="../../Content/js/bootstrap/bootstrap.js"></script>
+    <link href="../../Content/js/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <script src="../../Content/js/wdtree/tree.js"></script>
+    <link href="../../Content/js/wdtree/tree.css" rel="stylesheet" />
+    <link href="../../Content/js/select2/select2.min.css" rel="stylesheet" />
+    <script src="../../Content/js/select2/select2.min.js"></script>
+    <link href="../../Content/js/wizard/wizard.css" rel="stylesheet" />
+    <script src="../../Content/js/wizard/wizard.js"></script>
+    <script src="../../Content/js/validate/jquery.validate.min.js"></script>
+    <script src="../../Content/js/datepicker/WdatePicker.js"></script>
+    <link href="../../Content/css/framework-ui.css" rel="stylesheet" />
+    <script src="../../Content/js/framework-ui.js"></script>
+    <script>
+        var keyValue = $.request("keyValue");
+        $(function () {
+            initControl();
+            if (!!keyValue) {
+                $.ajax({
+                    url:$.sysStaticData().urlExt +"/role/queryOneByRoleId",
+                    data: { keyValue: keyValue },
+                    dataType: "json",
+                    async: false,
+                    success: function (data) {
+                        $("#form1").formSerialize(data);
+                    }
+                });
+            }
+        });
+        function initControl() {
+            var defaultorganzeid =
+            {
+                id: "id",
+                text: "fullname",
+                search: false,
+                url: "",
+                param: [],
+                change: null,
+                data: top.clients.organize
+            };
+        $("#fOrganizeid").bindSelectByData(defaultorganzeid);
+            /* $("#fOrganizeid").bindSelect({
+                url: "/SystemManage/Organize/GetTreeSelectJson",
+            }); */
+        }
+        function submitForm() {
+            if (!$('#form1').formValid()) {
+                return false;
+            }
+			var num = document.getElementById("fSortcode").value;
+			if (num=="" || !(/(^[1-9]\d*$)/.test(num)))
+			{
+				$.modalAlert("请输入类型为非负整数的排序！");
+                return false;
+			}
+            $.submitForm({
+                url: $.sysStaticData().urlExt +"/role/updateDuty?keyValue=" + keyValue,
+                param: $("#form1").formSerialize(),
+                success: function () {
+                    $.currentWindow().$("#gridList").trigger("reloadGrid");
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+    <form id="form1">
+        <div style="padding-top: 20px; margin-right: 20px;">
+            <table class="form">
+                <tr style="display:none;">
+                    <th class="formTitle">归属组织</th>
+                    <td class="formValue">
+                        <select id="fOrganizeid" name="fOrganizeid" class="form-control required"></select>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="formTitle">岗位名称</th>
+                    <td class="formValue">
+                        <input id="fFullname" name="fFullname" type="text" class="form-control required" placeholder="请输入岗位名称" />
+                    </td>
+                </tr>
+                <tr>
+                    <th class="formTitle">岗位职责</th>
+                    <td class="formValue">
+                        <input id="fResponsibility" name="fResponsibility" type="text" class="form-control required" placeholder="请输入岗位职责" />
+                    </td>
+                </tr>
+                <tr>
+                    <th class="formTitle">岗位编号</th>
+                    <td class="formValue">
+                        <input id="fEncode" name="fEncode" type="text" class="form-control required" placeholder="请输入岗位编号" />
+                    </td>
+                </tr>
+                <tr>
+                    <th class="formTitle">显示顺序</th>
+                    <td class="formValue">
+                        <input id="fSortcode" name="fSortcode" type="text" class="form-control required digits isIntGteZero" placeholder="请输入类型为为非整数的排序" />
+                    </td>
+                </tr>
+                <tr>
+                    <th class="formTitle" style="height: 35px;">选项</th>
+                    <td class="formValue" style="padding-top: 1px;">
+<!--                         <div class="ckbox">
+                            <input id="fAllowedit" name="fAllowedit" type="checkbox"><label for="fAllowedit">允许编辑</label>
+                        </div>
+                        <div class="ckbox">
+                            <input id="fAllowdelete" name="fAllowdelete" type="checkbox"><label for="fAllowdelete">允许删除</label>
+                        </div> -->
+                        <div class="ckbox">
+                            <input id="fEnabledmark" name="fEnabledmark" type="checkbox" checked="checked"><label for="fEnabledmark">有效</label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="formTitle" valign="top" style="padding-top: 5px;">
+                        备注
+                    </th>
+                    <td class="formValue">
+                        <textarea id="fDescription" name="fDescription" class="form-control" style="height: 60px;"></textarea>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </form>
+</body>
+</html>

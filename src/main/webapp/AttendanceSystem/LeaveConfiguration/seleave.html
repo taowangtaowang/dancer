@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<title>绵阳一体化政务服务考勤系统</title>
+    <link href="../../Content/css/framework-font.css" rel="stylesheet" />
+    <link href="../../Content/css/framework-theme.css" rel="stylesheet" />
+    <script src="../../Content/js/jquery/jquery-2.1.1.min.js"></script>
+    <script src="../../Content/js/bootstrap/bootstrap.js"></script>
+    <link href="../../Content/js/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <script src="../../Content/js/wdtree/tree.js"></script>
+    <link href="../../Content/js/wdtree/tree.css" rel="stylesheet" />
+    <link href="../../Content/js/select2/select2.min.css" rel="stylesheet" />
+    <script src="../../Content/js/select2/select2.min.js"></script>
+    <link href="../../Content/js/wizard/wizard.css" rel="stylesheet" />
+    <script src="../../Content/js/wizard/wizard.js"></script>
+    <script src="../../Content/js/validate/jquery.validate.min.js"></script>
+    <script src="../../Content/js/datepicker/WdatePicker.js"></script>
+    <link href="../../Content/css/framework-ui.css" rel="stylesheet" />
+    <script src="../../Content/js/framework-ui.js"></script>
+<link href="../../Content/css/my_kq.css" rel="stylesheet" />
+<script>
+	var keyValue = $.request("keyValue");
+	$(function () {
+    if (keyValue.length>=1) {
+        $.ajax({
+            url: $.sysStaticData().urlExt+"/lvLeaveApply/queryOnelvApprovalFlow",//查询设备信息
+            data: { id: keyValue },
+            dataType: "json",
+            success: function (data) {
+            　　　　　　　　if (data!=null) {
+            	 $("#up_p").val(data.leaveTypeId);//类别
+                 var datas=data.deleteUserId;
+            	 if(datas!=null){
+            		 var len=datas.indexOf("至");
+                     $("#up_d_1").val(datas.substr(0,len));//时间
+                     $("#up_d_2").val(datas.substr(len+1,datas.length));//时间 
+            	 }
+                 $("#up_c").text(data.leaveDays+"小时");//总计
+                 if(data.isReplaceLeave==0){
+              	   $("#up_c_1").attr("checked","checked");//请假类别
+                 }else $("#up_c_2").attr("checked","checked");//请假类别
+                 $("#up_ps").val(data.leaveApplyUserIdStr);//请假人
+                 $("#up_con").text(data.leaveCause);//事由
+                 var value=data.path;
+                 if(data.filename!=null && data.filename!=""){
+                	 $("#up_f").text(data.filename).append($("<a></a>").text("(下载查看)").attr("href",$.sysStaticData().urlExt +"/common/downloadFileByPath?pathFile="+value+"&fileName="+value.substr(value.lastIndexOf("/")+1,value.length)).css({"color":"#54c0ab"}));//附件
+                 }	
+            }
+              }
+        });
+    }
+});
+</script>
+</head>
+<body>
+<div class="ck_div" style="-moz-transform:scale(2,2); -webkit-transform:scale(0.99,0.99); -o-transform:scale(2,2); ">
+  <div class="tab_con">
+  <div class="co_con_big" style="padding-top:0; border-bottom:0;">
+    <div class="co_con_a">
+      <div class="sc_in_group">
+          <label class="tc03">类别：</label>
+        <input type="text" disabled="disabled" class="input-ss in-u-s-11" id="up_p" placeholder=""  value=" " disabled="disabled">
+        </div>
+        <div class="sc_in_group">
+          <label class="tc03">时间：</label>
+        <input type="text" disabled="disabled" class="input-ss in-u-s-11" placeholder="" style="margin-right:5px; height:32px;width: 140px;"  id="up_d_1" />
+        到
+        <input type="text" disabled="disabled" class="input-ss in-u-s-11" placeholder="" style="margin-right:5px; margin-left:5px;height:32px;width: 140px;" id="up_d_2" />
+        </div>
+        <div class="sc_in_group">
+          <label class="tc03">总计：</label><font class=" clr_yel" id="up_c"></font>
+        </div>
+        <div class="sc_in_group">
+          <label class="tc03">请假类别：</label>
+        <input type="radio" disabled="disabled" id="up_c_1" name="check" value="0"> 本人请假&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" id="up_c_1" disabled="disabled" name="check" value="1"> 代人请假
+        </div>
+        <div class="sc_in_group">
+          <label class="tc03">请假人：</label>
+        <input type="text" class="input-ss in-u-s-4" id="up_ps" placeholder=""  value=" " disabled="disabled">
+        <br />
+        </div>
+       <div class="sc_in_group">
+          <label class="tc03">事由：</label>
+        <textarea disabled="disabled" id="up_con" rows="3" class="input-ss inpu_ta in-u-s-4 " placeholder="" style="margin: 0px; height: 146px; width: 549px;"></textarea>
+        </div><br/>
+        <div class="sc_in_gsroup" style="margin-left: 5.1%;">
+          <label class="tc03" style="float: left;">附件：</label><font class=" clr_yel" id="up_f"></font>
+        <br/><br/>
+        <ul>
+         <li id="uploads">
+            
+         </li>
+        </ul>
+       </div>
+       
+    <div class="clr"></div>
+</div>
+</div>
+  </div>
+  <div class="clr"></div>
+  <input type="hidden" id="hs"/>
+</div>
+</body>
+</html>

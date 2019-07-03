@@ -1,0 +1,202 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" />
+    <title>标题</title>
+    <link href="../../Content/css/framework-font.css" rel="stylesheet" />
+    <link href="../../Content/css/framework-theme.css" rel="stylesheet" />
+    <script src="../../Content/js/jquery/jquery-2.1.1.min.js"></script>
+    <script src="../../Content/js/bootstrap/bootstrap.js"></script>
+    <link href="../../Content/js/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <script src="../../Content/js/wdtree/tree.js"></script>
+    <link href="../../Content/js/wdtree/tree.css" rel="stylesheet" />
+    <link href="../../Content/js/select2/select2.min.css" rel="stylesheet" />
+    <script src="../../Content/js/select2/select2.min.js"></script>
+    <link href="../../Content/js/wizard/wizard.css" rel="stylesheet" />
+    <script src="../../Content/js/wizard/wizard.js"></script>
+    <script src="../../Content/js/validate/jquery.validate.min.js"></script>
+    <script src="../../Content/js/datepicker/WdatePicker.js"></script>
+    <link href="../../Content/css/framework-ui.css" rel="stylesheet" />
+    <script src="../../Content/js/framework-ui.js"></script>
+    <script>
+        var keyValue = $.request("keyValue");
+        $(function () {
+        	loadCompany();
+        	loadWindows();
+        	loadSelect();
+            if (!!keyValue) {
+                $.ajax({
+                    url: $.sysStaticData().urlExt+"/rnBusiness/businessType/findOne",//查询
+                    data: { keyValue: keyValue },
+                    dataType: "json",
+                    async: false,
+                    success: function (Result) {
+                       if(Result!=null){
+                    	  $("#typeName").val(Result.id);
+                    	  $("#typeName").attr("disabled","disabled");
+                    	  if(Result.organIds!=null){
+                    		  var organIds = Result.organIds.split(',');
+                        	  for(i=0;i<organIds.length;i++){
+                        		  $("#company"+organIds[i]+"").attr("checked","checked");              		  
+                        	  }
+                    	  }
+                    	  if(Result.windowsIds!=null){
+                    		  var windowsIds = Result.windowsIds.split(',');
+                        	  for(i=0;i<windowsIds.length;i++){
+                        		  $("#Windows"+windowsIds[i]+"").attr("checked","checked");
+                        	  }
+                    	  }
+                       }
+                    }
+                });
+            }
+        });
+        
+        function submitForm() {
+        	var company=$("input[name='companyselect']:checked");
+        	var companyselect="";
+        	var selectWindows="";
+        	for(i=0;i<company.length;i++)
+        	{
+        		companyselect+=company[i].value+",";
+        	}
+        	var windowss=$("input[name='selectWindows']:checked");
+        	for(i=0;i<windowss.length;i++)
+        	{
+        		selectWindows+=windowss[i].value+",";
+        	}
+            if (!$('#form1').formValid()) {
+                return false;
+            }
+            var typeName=$("#typeName").val();
+            if(companyselect==""){
+            	$.modalAlert("请选择业务单位！");
+            	return false;
+            }
+            if(selectWindows==""){
+            	$.modalAlert("请选择业务窗口！");
+            	return false;
+            }
+            var formoneoen=new Object();
+            formoneoen["businessTypeId"] = typeName;
+            formoneoen["organIds"]=companyselect;
+            formoneoen["windowIds"]=selectWindows;
+                $.submitFormNormal({
+                    url:$.sysStaticData().urlExt+"/rnBusiness/businessType/bindOrganAndWindow",//编辑
+                    param: formoneoen,
+                    success: function () {
+                        $.currentWindow().$("#gridList").trigger("reloadGrid");
+                    }
+                });
+        }
+        function loadCompany()
+        {
+        var html =[];
+      	  $.ajax({
+                url: $.sysStaticData().urlExt+"/sysOrganize/selectAllParentOrganize",//查询      
+                dataType: "json",
+                async: false,
+                success: function (data) {
+                	 $(data).each(function () {
+                		 html.push("<li><div class='ckbox'><input id='company"+this.fId+"' value='"+this.fId+"' name='companyselect' type='checkbox'><label for='company"+this.fId+"'>"+this.fFullname+"</label></div></li>");
+                	 });
+                }
+            });
+      	$("#SelectedCompany").html(html.join(''));
+        }
+        function loadWindows()
+        {
+        	var html =[];
+        	  $.ajax({
+                  url: $.sysStaticData().urlExt+"/rnBusiness/businnessWindows/findAll",//查询      
+                  dataType: "json",
+                  async: false,
+                  success: function (Result) {
+                	  $.each(Result, function (i) {
+                   		var cobjdata = Result[i];
+                   		if(cobjdata.enabledMark){
+                   			html.push("<li ><div class='ckbox'><input id='Windows"+cobjdata.id+"' value='"+cobjdata.id+"' name='selectWindows' type='checkbox'><label for='Windows"+cobjdata.id+"'>"+cobjdata.windowName+"</label></div></li>");
+                   		}      		
+                       });
+                  }
+              });
+        	$("#SelectedWindows").html(html.join(''));
+        }
+        function loadSelect()
+        {
+        	var html =[];
+      	  $.ajax({
+                url: $.sysStaticData().urlExt+"/rnBusiness/businessType/selectAll",//绑定下拉   
+                dataType: "json",
+                async: false,
+                success: function (Result) {
+                	 $.each(Result, function (i) {
+                		 var cobjdata = Result[i];
+                		 if(cobjdata.enabledMark){
+                			 html.push("<option value ='"+cobjdata.id+"'>"+cobjdata.typeName+"</option>"); 
+                		 }	     		
+                        });
+                }
+            });
+      	$("#typeName").html(html.join(''));
+        }
+    </script>
+    <style>
+    #SelectedCompany li {
+        float: left;
+    	list-style-type:none;
+    }
+    #SelectedCompany{
+    width:450px;
+    height:200px;
+    overflow: auto;
+    }
+    #SelectedWindows li {
+        float: left;
+    	list-style-type:none;
+    }
+    #SelectedWindows{
+    width:450px;
+    height:200px;
+    overflow: auto;
+    }
+    </style>
+</head>
+<body>
+    <form id="form1">
+        <div style="margin-top: 10px; margin-left: 10px; margin-right: 10px;">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#">业务信息</a></li>
+            </ul>
+            <div style="padding-top: 20px; margin-right: 30px;">
+                <table class="form">
+                    <tr>
+                        <th class="formTitle">业务名称</th>
+                         
+                        <td class="formValue" colspan="3">
+                          <select id="typeName" name="typeName" onchange="typeNameChange()" class="form-control required"></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="formTitle" style="vertical-align:top">业务单位</th>
+                        <td class="formValue" colspan="3">
+                           <ul id="SelectedCompany">
+                           	
+                           </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="formTitle" style="vertical-align:top">业务窗口</th>
+                        <td class="formValue" colspan="3">
+                           <ul id="SelectedWindows">
+                           
+                           </ul>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

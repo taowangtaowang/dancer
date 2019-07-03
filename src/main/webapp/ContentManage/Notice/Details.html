@@ -1,0 +1,194 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" />
+    <title>通知公告管理</title>
+    <link href="../../Content/css/framework-font.css" rel="stylesheet" />
+    <link href="../../Content/css/framework-theme.css" rel="stylesheet" />
+    <script src="../../Content/js/jquery/jquery-2.1.1.min.js"></script>
+    <script src="../../Content/js/bootstrap/bootstrap.js"></script>
+    <link href="../../Content/js/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <link href="../../Content/js/webuploader/skin/style.css" rel="stylesheet" />
+    <link href="../../Content/js/select2/select2.min.css" rel="stylesheet" />
+    <script src="../../Content/js/select2/select2.min.js"></script>
+    <link href="../../Content/js/wizard/wizard.css" rel="stylesheet" />
+    <script src="../../Content/js/wizard/wizard.js"></script>
+    <script src="../../Content/js/validate/jquery.validate.min.js"></script>
+    <script src="../../Content/js/datepicker/WdatePicker.js"></script>
+    <link href="../../Content/css/framework-ui.css" rel="stylesheet" />
+    <script src="../../Content/js/framework-ui.js"></script>
+    <script src="../../Content/js/webuploader/webuploader.min.js"></script>
+    <script src="../../Content/js/webuploader/uploader.js"></script>
+    <link href="../../Content/umeditor/themes/default/css/umeditor.min.css" rel="stylesheet" />
+    <script type="text/javascript" charset="utf-8" src="../../Content/umeditor/umeditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="../../Content/umeditor/umeditor.min.js"></script>
+    <script type="text/javascript" src="../../Content/umeditor/lang/zh-cn/zh-cn.js"></script>
+
+
+</head>
+<body>
+    <form id="form1">
+        <div style="margin-top: 10px; margin-left: 10px; margin-right: 10px;">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#">基本信息</a></li>
+                <li><a href="#">内容信息</a></li>
+            </ul>
+            <div style="padding-top: 20px;">
+                <table class="form">
+                	<tr>
+                		<th class="formTitle">发布设备</th>
+                        <td class="formValue">
+                            <select id="publishDevice"  name="publishDevice"  class="form-control required">
+                              
+                            </select>
+                        </td>
+                        <th class="formTitle">公告类型</th>
+                        <td class="formValue" id="noticeRadioType">
+                        	
+                        </td>
+                	</tr>
+                    <tr>
+                        <th class="formTitle">公告标题</th>
+                        <td class="formValue" colspan="3">
+                            <input id="title" name="title" type="text" class="form-control required" placeholder="请输入标题" />
+                        </td>
+                    </tr>
+                     <tr>
+                        <th class="formTitle">来源</th>
+                        <td class="formValue">
+                            <input id="source" name="source" type="text" class="form-control required" placeholder="请输入来源" />
+                        </td>
+                        <th class="formTitle">发布日期</th>
+                        <td class="formValue">
+                            <input id="releaseTime" name="releaseTime" type="text" class="form-control input-wdatepicker required" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="formTitle">附件</th>
+                        <td class="formValue">
+                            <div class="input-group">
+                                <input id="filepath" name="filepath" type="hidden" class="form-control upload-path" >
+                                <input id="filename" name="filename" type="text" class="form-control upload-name" style="width:216px;">
+                            </div>
+                        </td>
+                        <th class="formTitle" style="height: 35px;">选项</th>
+                        <td class="formValue" style="padding-top: 1px;">
+                            <div class="ckbox">
+                                <input id="enabledMark" name="enabledMark" type="checkbox" checked="checked"><label for="enabledMark">有效</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr id="trContent">
+                        <th class="formTitle" valign="top" style="padding-top: 5px;">内容</th>
+                        <td class="formValue" colspan="3">
+                        	<script type="text/plain" id="editor" style="width:100%;height:300px;"></script>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+    </form>
+        <script>
+        var keyValue = $.request("keyValue");
+        var um = UM.getEditor('editor');
+        $(function () {
+        	initControl();
+            if (!!keyValue) {
+                $.ajax({
+                    url: $.sysStaticData().urlExt+"/advertisement/showAdv",//查询公告信息
+                    data: { id: keyValue },
+                    dataType: "json",
+                    async: false,
+                    success: function (Result) {
+                        $("#form1").formSerialize(Result.adv);
+                        if(!!Result.advAttachments){
+                            $("#filename").val(Result.advAttachments.attachmentName+'.'+Result.advAttachments.extensionName);
+                            $("#filepath").val(Result.advAttachments.path);
+                        } 
+                        $("input[name='type'][value="+Result.adv.type+"]").attr("checked",true)
+                        ChangeTypeVal(Result.adv.type);
+                        um.setContent(Result.adv.noticeContent);
+                        $("#form1").find('.form-control,select,input').attr('readonly', 'readonly');
+                        $("#form1").find('div.ckbox label').attr('for', '');
+                        $("#form1").find('div.rdio label').attr('for', '');
+                        um.setDisabled('fullscreen');
+                        disableBtn("enable");
+                    }
+                });
+            }
+        });
+        function initControl(){
+        	$("#publishDevice").bindSelect({
+                url: $.sysStaticData().urlExt +"/sysItemsDetail/getSelectJson",
+                param: { enCode: "NoticePublishDevice" },
+                id: "F_Id",
+                text:"F_ItemName"
+            });
+        	$("#noticeRadioType").bindRadio({
+                url: $.sysStaticData().urlExt +"/sysItemsDetail/getSelectJson",
+                param: { enCode: "NoticeType" },
+                id: "F_Id",
+                text:"F_ItemName",
+                name:"type",
+                change:function(obj){
+            		var ckVal = $(obj).val();
+            		ChangeTypeVal(ckVal);
+                }
+            });
+        	//$(".upload-img").InitUploader({ filesize: "102400", sendurl: $.sysStaticData().urlExt +"/common/uploadFile", swf: $.sysStaticData().urlExt +"/Content/js/webuploader/uploader.swf", filetypes: "gif,jpg,png,bmp,rar,zip,doc,xls,txt,flv,mp3,mp4,avi" });
+        }
+        function submitForm() {
+            if (!$('#form1').formValid()) {
+                return false;
+            }
+            var postData = $("#form1").formSerialize();
+            postData["type"]=$('input:radio[name="type"]:checked').val();
+            postData["files"] = $("#filename").val()+','+$("#filepath").val();
+            postData["noticeContent"] = um.getContent();
+            var postUrl;
+            if(!!keyValue){
+            	postUrl=$.sysStaticData().urlExt+"/advertisement/updateAdv?id=" + keyValue;//修改
+            }
+            else{
+            	postUrl=$.sysStaticData().urlExt+"/advertisement/addAdv";//新增
+            }
+            $.submitForm({
+                url:postUrl,
+                param: postData,
+                success: function () {
+                    $.currentWindow().$("#gridList").trigger("reloadGrid");
+                }
+            }) 
+        }
+        
+        function ChangeTypeVal(ckVal)
+        {
+        	switch(ckVal)
+    		{
+    			case "5776fcd1b1bc4c0cb15abc25247d94ab":
+    				$("#trContent").css("display","table-row");
+    				break;
+    			case "ccdfa1d85d6d4e168bff67c650a44f38":
+    				$("#trContent").css("display","none");
+        			break;
+    			case "c18d40b7e65745f7aca0dac82bae0750":
+    				$("#trContent").css("display","none");
+        			break;
+    		}
+        }
+        function disableBtn(str) {
+            var div = document.getElementById('btns');
+            var btns = domUtils.getElementsByTagName(div, "button");
+            for (var i = 0, btn; btn = btns[i++];) {
+                if (btn.id == str) {
+                    domUtils.removeAttributes(btn, ["disabled"]);
+                } else {
+                    btn.setAttribute("disabled", "true");
+                }
+            }
+        }
+    </script>
+</body>
+</html>

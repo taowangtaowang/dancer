@@ -1,0 +1,35 @@
+<head>
+    <title>上传文件</title>
+    <link href="../../Content/css/framework-font.css" rel="stylesheet" />
+    <link href="../../Content/css/framework-theme.css" rel="stylesheet" />
+    <script src="../../Content/js/jquery/jquery-2.1.1.min.js"></script>
+    <script src="../../Content/js/bootstrap/bootstrap.js"></script>
+    <link href="../../Content/js/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <script src="../../Content/js/uploadify/uploadify.css"></script>
+    <script src="../../Content/js/uploadify/jquery.uploadify.js"></script>
+    <script type="text/javascript">
+	$(function() {
+		$('#file_upload').uploadify({
+		    'fileTypeDesc' : 'Image Files',
+            'fileTypeExts' : '*.gif; *.jpg; *.png',
+			'swf'      : '../../Content/js/uploadify/uploadify.swf',
+			'uploader' : '../../Content/js/uploadify/uploadify.ashx',
+			'auto'     : false
+			// Your options here
+		});
+	});
+	</script>
+</head>
+<body>
+    <div>
+        <input type="file" name="file_upload" id="file_upload" />
+        <p>
+            <a href="javascript:$('#file_upload').uploadify('cancel')">Cancel First File</a>
+            |<a href="javascript:$('#file_upload').uploadify('cancel', '*')">Clear the Queue</a>
+            |<a href="javascript:$('#file_upload').uploadify('upload', '*')">Upload the Files</a>
+        </p>
+    </div>
+</body>
+</html>
+
+uploadify.ashx

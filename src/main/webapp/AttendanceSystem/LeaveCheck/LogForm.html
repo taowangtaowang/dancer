@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" />
+    <title>标题</title>
+    <link href="../../Content/css/framework-font.css" rel="stylesheet" />
+    <link href="../../Content/css/framework-theme.css" rel="stylesheet" />
+    <script src="../../Content/js/jquery/jquery-2.1.1.min.js"></script>
+    <script src="../../Content/js/bootstrap/bootstrap.js"></script>
+    <link href="../../Content/js/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <script src="../../Content/js/wdtree/tree.js"></script>
+    <link href="../../Content/js/wdtree/tree.css" rel="stylesheet" />
+    <link href="../../Content/js/select2/select2.min.css" rel="stylesheet" />
+    <script src="../../Content/js/select2/select2.min.js"></script>
+    <link href="../../Content/js/wizard/wizard.css" rel="stylesheet" />
+    <script src="../../Content/js/wizard/wizard.js"></script>
+    <script src="../../Content/js/validate/jquery.validate.min.js"></script>
+    <script src="../../Content/js/datepicker/WdatePicker.js"></script>
+    <link href="../../Content/css/framework-ui.css" rel="stylesheet" />
+    <script src="../../Content/js/framework-ui.js"></script>
+    <script>
+        var keyValue = $.request("keyValue");
+        var pathFile = "";
+        var fileName = "";
+        $(function () {
+        	
+            if (!!keyValue) {
+            	loadData(keyValue);
+                $.ajax({
+                    url: $.sysStaticData().urlExt+"/lvLeaveApply/queryOnelvApprovalFlow",//查询对应请假审核信息
+                    data: { id: keyValue },
+                    dataType: "json",
+                    async: false,
+                    success: function (data) {
+                    	console.log(data);
+                    	var fileVal = data.filename;
+                    	if(fileVal!=null && fileVal!=""){
+                    		pathFile = data.path;
+                    		fileName = data.filename;
+                    		var htm_fileTr = [];
+                    		//如果有文件  那么就显示附件一栏  没有则不显示;
+                    		htm_fileTr.push(
+                    				'<td class="formValue text-primary" bgcolor="#f1fefb" style="text-align:center;">附件：</td>'+
+                                    '<td class="formValue" style=" text-align:left; color:#666 ; padding:0" >'+
+                                    '<table >'+
+              <!--                         <tr> -->
+              <!--                           <th class="formTitle"  style="text-align:center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 名称</th> -->
+              <!--                           <th class="formTitle"  style="text-align:center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 文件大小</th> -->
+              <!--                           <th class="formTitle"  style="text-align:center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 发布时间</th> -->
+              <!--                           <th class="formTitle"  style="text-align:center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 操作</th> -->
+              <!--                         </tr> -->
+                                      '<tr id="downLoadTr">'+
+                                      '<td class="formValue" style="text-align:center;">'+
+                                      '<input id="filename" name="filename" type="text" class="form-control" style="text-align:left;width: 370px"/>'+
+                                          '</td>'+
+                <!--                           <td class="formValue" style="text-align:center;"> -->
+                <!--                             <input id="FileSize" name="FileSize" type="text" class="form-control" style="text-align:center;"/> -->
+                <!--                           </td> -->
+                <!--                           <td class="formValue" style="text-align:center;"> -->
+                <!--                             <input id="PushTime" name="PushTime" type="text" class="form-control" style="text-align:center;"/> -->
+                <!--                           </td> -->
+                                          '<td class="formValue" style="text-align:center;">'+
+                                            '<div class="co_btn">'+
+                <!--                                 <a href="#" title="查看" class=" clo_lan" style="margin-right:10px;">查看</a> -->
+                     '<a id="downloadFile" href="" title="下载" class="clr_yel text-primary">下载附件</a>'+
+                                                /* <a id="exportThree" href="<@url value='/exportThree/downloadOne?excelName=报表'/>" style="display:none"></a>* */
+                                            '</div>'+
+                                          '</td>'+
+                                      '</tr>'+
+                                    '</table>'+
+                                    '</td>');
+                            $("#fileTr").html(htm_fileTr.join(''));
+                    	}else{
+                    		var htm = [];
+                    		htm.push("</br></br>");
+                    		$("#fileTr").empty();
+                    		$("#fileTr").html(htm.join(''));
+                    	}
+                        $("#form1").formSerialize(data);
+                        $("#downloadFile").attr("href",$.sysStaticData().urlExt+"/common/downloadFileByPath?pathFile="+pathFile+"&fileName="+fileName);
+                    }
+                });
+            }  
+          //附件下载
+            /* $("#downloadFile").click(function () {
+            	$("#downloadFile").attr("href",$.sysStaticData().urlExt+"/common/downloadFileByPath?pathFile="+pathFile+"&fileName="+fileName);
+                $("#downloadFile").click();
+            
+            }); */
+            
+        });
+        
+        function loadData(keyValue) {
+          	var uri = $.sysStaticData().urlExt+"/lvApprovalFlowRecord/findAuditorInfo";
+          	$.ajax({
+                  url: uri,//请假审批
+                  data: { 
+                  	"id": keyValue
+                  },
+                  dataType: "json",
+                  async: false,
+                  success: function (data) {
+                  	if(data!=null || data!=""){
+                  		$("#ReplyName").val(data.auditorName);
+                  		$("#ReplyIdea").val(data.approvalStatus);
+                  		$("#ReplyTime").val(data.LastModifyTime);
+                  	}
+                  }
+              });
+        }
+        
+        
+        
+        
+    </script>
+</head>
+<body>
+    <form id="form1">
+        <div style="margin-top: 10px; margin-left: 10px; margin-right: 10px;">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#">审批信息</a></li>
+            </ul>
+            <div style="padding-top: 20px; margin-right: 30px;">
+                <table class="form">
+                    <tr>
+                        <th class="formTitle">请假流程：</th>
+                        <td class="formValue">
+                            <input id="leaveFlowTemplateId" name="leaveFlowTemplateId" type="text" class="form-control"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="formTitle">请 假 人：</th>
+                        <td class="formValue">
+                            <input id="leaveApplyUserIdStr" name="leaveApplyUserIdStr" type="text" class="form-control" />
+                        </td>
+                    </tr>
+<!--                     <tr> -->
+<!--                         <th class="formTitle">代请假人：</th> -->
+<!--                         <td class="formValue"> -->
+<!--                             <input id="substituteLeaveUser" name="substituteLeaveUser" type="text" class="form-control"/> -->
+<!--                         </td> -->
+<!--                     </tr> -->
+<!--                     <tr> -->
+<!--                         <th class="formTitle">工作代理人：</th> -->
+<!--                         <td class="formValue"> -->
+<!--                             <input id="WorkingAgent" name="WorkingAgent" type="text" class="form-control"/> -->
+<!--                         </td> -->
+<!--                     </tr> -->
+                    <tr>
+                        <th class="formTitle">请假类别：</th>
+                        <td class="formValue">
+                            <input id="leaveTypeId" name="leaveTypeId" type="text" class="form-control"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="formTitle">请假事由：</th>
+                        <td class="formValue">
+                            <input id="leaveCause" name="leaveCause" type="text" class="form-control"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="formTitle">请假时间：</th>
+                        <td class="formValue">
+                            <input id="deleteUserId" name="deleteUserId" type="text" class="form-control"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="formTitle">请假时长(小时)：</th>
+                        <td class="formValue">
+                            <input id="leaveDays" name="leaveDays" type="text" class="form-control"/>
+                        </td>
+                    </tr>
+                    <tr id="fileTr">
+                    </tr>
+                    
+                    
+                    <tr>
+                        <th class="formTitle">批复人：</th>
+                        <td class="formValue">
+                        <input id="ReplyName" name="ReplyName" type="text" class="form-control required"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="formTitle">批复意见：</th>
+                        <td class="formValue">
+                        <input id="ReplyIdea" name="ReplyIdea" type="text" class="form-control required"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="formTitle">批复时间：</th>
+                        <td class="formValue">
+                            <input id="ReplyTime" name="ReplyTime" type="text" class="form-control required"/>
+                        </td>
+                    </tr>
+                    
+                </table>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

@@ -1,0 +1,197 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" />
+    <title>角色管理-新增/修改</title>
+    <link href="../../Content/css/framework-font.css" rel="stylesheet" />
+    <link href="../../Content/css/framework-theme.css" rel="stylesheet" />
+    <script src="../../Content/js/jquery/jquery-2.1.1.min.js"></script>
+    <script src="../../Content/js/bootstrap/bootstrap.js"></script>
+    <link href="../../Content/js/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <script src="../../Content/js/wdtree/tree.js"></script>
+    <link href="../../Content/js/wdtree/tree.css" rel="stylesheet" />
+    <link href="../../Content/js/select2/select2.min.css" rel="stylesheet" />
+    <script src="../../Content/js/select2/select2.min.js"></script>
+    <link href="../../Content/js/wizard/wizard.css" rel="stylesheet" />
+    <script src="../../Content/js/wizard/wizard.js"></script>
+    <script src="../../Content/js/validate/jquery.validate.min.js"></script>
+    <script src="../../Content/js/datepicker/WdatePicker.js"></script>
+    <link href="../../Content/css/framework-ui.css" rel="stylesheet" />
+    <script src="../../Content/js/framework-ui.js"></script>
+    <script>
+    var keyValue = $.request("keyValue");
+    $(function () {
+    	loadselect();
+    	LoadrollingSpeedMode();
+    	loadWindows();
+        if (!!keyValue) {
+            $.ajax({
+                url: $.sysStaticData().urlExt +"/hallScreenShow/findOne",
+                data: { keyValue: keyValue },
+                dataType: "json",
+                async: false,
+                success: function (data) {
+                    $("#form1").formSerialize(data);
+                    $("#deviceId").attr("disabled","disabled");
+                    if(data.showWindows!=null){
+              		  var showWindows = data.showWindows.split(',');
+                  	  for(i=0;i<showWindows.length;i++){
+                  		  $("#Windows"+showWindows[i]+"").attr("checked","checked");
+                  	  }
+              	  }
+                }
+            });
+        }
+    })
+    //加载运行中的设备编号
+   function loadselect(){
+    	$("#deviceId").bindSelectByPostRowsdevice({
+  		  url: $.sysStaticData().urlExt +"/device/selectByTypeAndState",
+  		 	param: { deviceType: "daping",runState:"1", enabledMark:"true"},
+  			id: "id",
+            text:"deviceName"
+  	});
+    }
+    //加载数据字典中的RollingSpeedMode
+    function LoadrollingSpeedMode(){
+        var defaults =
+        {
+            id: "id",
+            text: "fullname",
+            search: false,
+            url: "",
+            param: [],
+            change: null,
+            data: top.clients.dataItems.RollingSpeedMode
+        };
+    	$("#rollingSpeedMode").bindSelectByDataItems(defaults);
+    }
+    //加载CheckBox
+    function loadWindows()
+    {
+    	var html =[];
+    	  $.ajax({
+              url: $.sysStaticData().urlExt+"/rnBusiness/businnessWindows/findAll",//查询      
+              dataType: "json",
+              async: false,
+              success: function (Result) {
+            	  $.each(Result, function (i) {
+               		var cobjdata = Result[i];
+               		if(cobjdata.enabledMark){
+               			html.push("<li><div class='ckbox'><input id='Windows"+cobjdata.windowNo+"' value='"+cobjdata.windowNo+"' name='selectWindows' type='checkbox'><label for='Windows"+cobjdata.windowNo+"'>"+cobjdata.windowName+"</label></div></li>");
+               		}      		
+                   });
+              }
+          });
+    	$(".SelectedWindows").html(html.join(''));
+    }
+    
+   function submitForm() {
+        if (!$('#form1').formValid()) {
+            return false;
+        }
+        var selectWindows="";
+        var formoneoen=new Object();
+        var deviceId = $("#deviceId").val();
+        var windowss=$("input[name='selectWindows']:checked");
+        var rollingSpeed =$("#rollingSpeed").val();
+        var rollingSpeedMode = $("#rollingSpeedMode").val();
+        var enabledMark = $("#enabledMark").is(":checked");
+    	for(i=0;i<windowss.length;i++)
+    	{
+    		if(selectWindows){
+    			selectWindows+=","
+    		}
+    		selectWindows+=windowss[i].value;
+    	}
+        formoneoen["deviceId"] = deviceId;
+        formoneoen["showWindows"]=selectWindows;
+        formoneoen["rollingSpeed"]=rollingSpeed;
+        formoneoen["rollingSpeedMode"]=rollingSpeedMode;
+        formoneoen["enabledMark"]=enabledMark;
+        if (!!keyValue) {
+             $.submitFormNormal({
+            url: $.sysStaticData().urlExt+"/hallScreenShow/update?keyValue=" + keyValue,//编辑 
+            param: formoneoen,
+            success: function () {
+                $.currentWindow().$("#gridList").trigger("reloadGrid");
+            }
+        })
+        }
+        else{
+            $.submitFormNormal({
+            url:$.sysStaticData().urlExt+"/hallScreenShow/insert",//新增
+            param: formoneoen,
+            success: function () {
+                $.currentWindow().$("#gridList").trigger("reloadGrid");
+            }
+        });
+        }
+    }
+    </script>
+    <style>
+    .SelectedWindows li {
+        float: left;
+    	list-style-type:none;
+    }
+    .SelectedWindows{
+	    width:450px;
+	    height:100px;
+	    overflow: auto;
+    }
+    </style>
+</head>
+<body>
+   <form id="form1">
+        <div style="margin-top: 10px; margin-left: 10px; margin-right: 10px;">
+            <ul class="nav nav-tabs">
+                <li role="presentation" class="active"><a href="#">基本信息</a></li>
+               
+            </ul>
+            <div style="padding-top: 20px; margin-right: 30px;">
+                <table class="form">
+                    <tr>
+                        <th class="formTitle">设备编号</th>
+                        <td class="formValue" colspan="3">
+                        <select id="deviceId" name="deviceId" class="form-control required">
+                        	<option value=''>==请选择设备==</option>
+                        </select>
+                        </td>
+                        <th class="formTitle">是否有效</th>
+                        <td class="formValue" colspan="3">
+                        <div class="ckbox">
+                             <input id="enabledMark" name="enabledMark" type="checkbox" checked="checked"><label for="enabledMark">有效</label>
+                        </div>
+                        </td>
+                    </tr>
+                    <tr>
+                    <tr>
+                        <th class="formTitle" style="vertical-align:top">显示窗口</th>
+                        <td class="formValue" colspan="6">
+                           <ul class="SelectedWindows">
+                           
+                           </ul>
+                        </td>
+                    </tr>
+                     <tr>
+                       <th class="formTitle">滚动速度</th>
+                        <td class="formValue" colspan="3">
+                        <select id="rollingSpeed" name="rollingSpeed" class="form-control required">
+                        	<option value='0'>慢</option>
+                        	<option value='1'>正常</option>
+                        	<option value='2'>快</option>
+                        </select>
+                    	</td>
+                    	<th class="formTitle">滚动方式</th>
+                        <td class="formValue" colspan="3">
+                        <select id="rollingSpeedMode" name="rollingSpeedMode" class="form-control required">
+                        </select>
+                    	</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

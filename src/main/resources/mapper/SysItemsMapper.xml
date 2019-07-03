@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wt.overflow.dao.SysItemsMapper" >
+  <resultMap id="BaseResultMap" type="com.wt.overflow.bean.SysItems" >
+    <result column="F_Id" property="fId" jdbcType="VARCHAR" />
+    <result column="F_ParentId" property="fParentid" jdbcType="VARCHAR" />
+    <result column="F_EnCode" property="fEncode" jdbcType="VARCHAR" />
+    <result column="F_FullName" property="fFullname" jdbcType="VARCHAR" />
+    <result column="F_IsTree" property="fIstree" jdbcType="BIT" />
+    <result column="F_Layers" property="fLayers" jdbcType="INTEGER" />
+    <result column="F_SortCode" property="fSortcode" jdbcType="INTEGER" />
+    <result column="F_DeleteMark" property="fDeletemark" jdbcType="BIT" />
+    <result column="F_EnabledMark" property="fEnabledmark" jdbcType="BIT" />
+    <result column="F_Description" property="fDescription" jdbcType="VARCHAR" />
+    <result column="F_CreatorTime" property="fCreatortime" jdbcType="TIMESTAMP" />
+    <result column="F_CreatorUserId" property="fCreatoruserid" jdbcType="VARCHAR" />
+    <result column="F_LastModifyTime" property="fLastmodifytime" jdbcType="TIMESTAMP" />
+    <result column="F_LastModifyUserId" property="fLastmodifyuserid" jdbcType="VARCHAR" />
+    <result column="F_DeleteTime" property="fDeletetime" jdbcType="TIMESTAMP" />
+    <result column="F_DeleteUserId" property="fDeleteuserid" jdbcType="VARCHAR" />
+    <collection property="sysItemsdetails" resultMap="BaseResultSysItemsdetail" />
+  </resultMap>
+  
+  
+   <resultMap  id="BaseResultSysItemsdetail" type="com.wt.overflow.bean.SysItemsdetail">
+  	 <result column="id"  property="id"  jdbcType="INTEGER"/>
+    <result column="F_ItemCode" property="fItemcode" jdbcType="VARCHAR" />
+    <result column="F_ItemName" property="fItemname" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  
+  <sql id="Base_Column_List" >
+      F_Id, F_ParentId, F_EnCode, 
+      F_FullName, F_IsTree, F_Layers, 
+      F_SortCode, F_DeleteMark, F_EnabledMark, 
+      F_Description, F_CreatorTime, F_CreatorUserId, 
+      F_LastModifyTime, F_LastModifyUserId, F_DeleteTime, 
+      F_DeleteUserId
+  </sql>
+  
+  <select id="queryByEnCode" resultMap="BaseResultMap" parameterType="com.wt.overflow.bean.SysItems" >
+    select 
+    <include refid="Base_Column_List" />
+    from Sys_Items where F_DeleteMark = 0  and  F_EnCode like ('%'+#{fEncode}+'%')  
+  </select> 
+  
+  <select id="queryAllData" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from Sys_Items where F_DeleteMark = 0 order by F_ParentId
+  </select> 
+  
+  <select id="queryOneById" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from Sys_Items where F_DeleteMark = 0 and  F_Id= #{keyword,jdbcType=VARCHAR} 
+  </select> 
+  
+  
+  <select id="queryCodeName" resultMap="BaseResultMap" parameterType="java.util.Map" >
+		  SELECT
+			it.F_EnCode,
+			it.F_FullName,
+			dt.F_ItemCode,
+			dt.F_ItemName
+		FROM
+			[dbo].[Sys_Items] it
+		INNER JOIN [Sys_ItemsDetail] dt ON it.F_Id = dt.F_ItemId
+		WHERE
+			it.F_EnCode = 'Investigationtype'
+  </select> 
+  
+  
+  
+  
+  
+  <update id="deleteItemsByFId" parameterType="java.util.Map">
+		update Sys_Items set F_DeleteMark  = 1,F_DeleteUserId =#{F_DeleteUserId,jdbcType=VARCHAR} ,F_DeleteTime =#{F_DeleteTime,jdbcType=TIMESTAMP} 
+		where F_Id=#{itemsId,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="queryAllByPId" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+ 	<include refid="Base_Column_List" />
+    from Sys_Items 
+    <where>
+    	F_DeleteMark = 0 
+    	<if test="fId != null and fId !='' ">
+				and F_ParentId = #{fId,jdbcType=VARCHAR}
+		</if>
+    </where>
+  </select>
+  
+  
+  <insert id="addSysItems" parameterType="com.wt.overflow.bean.SysItems" >
+    insert into Sys_Items
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fId != null" >
+        F_Id,
+      </if>
+      <if test="fParentid != null" >
+        F_ParentId,
+      </if>
+      <if test="fEncode != null" >
+        F_EnCode,
+      </if>
+      <if test="fFullname != null" >
+        F_FullName,
+      </if>
+      <if test="fIstree != null" >
+        F_IsTree,
+      </if>
+      <if test="fLayers != null" >
+        F_Layers,
+      </if>
+      <if test="fSortcode != null" >
+        F_SortCode,
+      </if>
+      <if test="fDeletemark != null" >
+        F_DeleteMark,
+      </if>
+      <if test="fEnabledmark != null" >
+        F_EnabledMark,
+      </if>
+      <if test="fDescription != null" >
+        F_Description,
+      </if>
+      <if test="fCreatortime != null" >
+        F_CreatorTime,
+      </if>
+      <if test="fCreatoruserid != null" >
+        F_CreatorUserId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fId != null" >
+        #{fId,jdbcType=VARCHAR},
+      </if>
+      <if test="fParentid != null" >
+        #{fParentid,jdbcType=VARCHAR},
+      </if>
+      <if test="fEncode != null" >
+        #{fEncode,jdbcType=VARCHAR},
+      </if>
+      <if test="fFullname != null" >
+        #{fFullname,jdbcType=VARCHAR},
+      </if>
+      <if test="fIstree != null" >
+        #{fIstree,jdbcType=BIT},
+      </if>
+      <if test="fLayers != null" >
+        #{fLayers,jdbcType=INTEGER},
+      </if>
+      <if test="fSortcode != null" >
+        #{fSortcode,jdbcType=INTEGER},
+      </if>
+      <if test="fDeletemark != null" >
+        #{fDeletemark,jdbcType=BIT},
+      </if>
+      <if test="fEnabledmark != null" >
+        #{fEnabledmark,jdbcType=BIT},
+      </if>
+      <if test="fDescription != null" >
+        #{fDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="fCreatortime != null" >
+        #{fCreatortime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fCreatoruserid != null" >
+        #{fCreatoruserid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateItems" parameterType="com.wt.overflow.bean.SysItems" >
+    update Sys_Items
+    <set >
+      <if test="fParentid != null" >
+        F_ParentId = #{fParentid,jdbcType=VARCHAR},
+      </if>
+      <if test="fEncode != null" >
+        F_EnCode = #{fEncode,jdbcType=VARCHAR},
+      </if>
+      <if test="fFullname != null" >
+        F_FullName = #{fFullname,jdbcType=VARCHAR},
+      </if>
+      <if test="fIstree != null" >
+        F_IsTree = #{fIstree,jdbcType=BIT},
+      </if>
+      <if test="fLayers != null" >
+        F_Layers = #{fLayers,jdbcType=INTEGER},
+      </if>
+      <if test="fSortcode != null" >
+        F_SortCode = #{fSortcode,jdbcType=INTEGER},
+      </if>
+      <if test="fEnabledmark != null" >
+        F_EnabledMark = #{fEnabledmark,jdbcType=BIT},
+      </if>
+      <if test="fDescription != null" >
+        F_Description = #{fDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="fLastmodifytime != null" >
+        F_LastModifyTime = #{fLastmodifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fLastmodifyuserid != null" >
+        F_LastModifyUserId = #{fLastmodifyuserid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where F_Id = #{fId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+	<title>标题</title>
+    <link href="../../Content/css/framework-font.css" rel="stylesheet" />
+    <link href="../../Content/css/framework-theme.css" rel="stylesheet" />
+    <script src="../../Content/js/jquery/jquery-2.1.1.min.js"></script>
+    <script src="../../Content/js/bootstrap/bootstrap.js"></script>
+    <link href="../../Content/js/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <script src="../../Content/js/jqgrid/jqgrid.min.js"></script>
+    <link href="../../Content/js/jqgrid/jqgrid.css" rel="stylesheet" />
+    <script src="../../Content/js/jqgrid/grid.locale-cn.js"></script>
+    <link href="../../Content/css/framework-ui.css" rel="stylesheet" />
+    <script src="../../Content/js/framework-ui.js"></script>
+      <script>
+        $(function () {
+        	loadDeviceType();
+            gridList();
+        })
+        function gridList() {
+            var $gridList = $("#gridList");
+            $gridList.dataGrid({
+                url: $.sysStaticData().urlExt+"/device/getBaseInfoList.do",
+                height: $(window).height() - 128,
+                colModel: [
+                    { label: '主键', name: 'id', hidden: true },
+                    { label: '设备编号', name: 'deviceNO', width: 130, align: 'left' },
+                    { label: '设备类型', name: 'deviceTypeName', width: 70, align: 'left' },
+                    { label: '设备名称', name: 'deviceName', width: 130, align: 'left' },
+                    {label: '设备描述', name: 'description', width: 130, align: 'left'},
+                    {label: '设备IP', name: 'deviceIp', width: 160, align: 'center'},
+                    {label:'运行状态',name:'runState',width: 100, align: 'center',
+                    	 formatter: function (cellvalue) {
+                             if (cellvalue == 0) {
+                                  return "未运行";
+                              } else if (cellvalue == 1) {
+                                  return "运行中";	
+                              } else if (cellvalue == 2) {
+                                  return "已报废";
+                              } 
+                          }},
+                    {label: "是否有效", name: "enabledMark", width: 100, align: "center",
+                              formatter: function (cellvalue) {
+          						return cellvalue == 1 ? "<i class=\"fa fa-toggle-on\"></i>" : "<i class=\"fa fa-toggle-off\"></i>";
+                          }
+                    },
+                    {
+                        label: "状态更新", name: "lastModifyTime", width: 120, align: "center",
+                        formatter: function (cellvalue) {
+                        	if(cellvalue==null){
+                        		return "";
+                        	}else 
+                        	{
+                        		return $.changeDateFormat(cellvalue).DateExt;
+                        	}
+                         }
+                    }
+                ],
+                pager: "#gridPager",
+                sortname: 'lastModifyTime',
+                viewrecords: true,
+                sord:"desc",
+                postData: { title: $("#txt_keyword").val(),type:"",status:"" },
+            });
+         $("#txt_condition .dropdown-menu li").click(function () {
+             var text = $(this).find('a').html();
+             var value = $(this).find('a').attr('data-value');
+             $("#txt_condition .dropdown-text").html(text).attr('data-value', value)
+         	});
+         
+            $("#btn_search").click(function () {
+               var  condition=$("#txt_condition").find('.dropdown-text').attr('data-value');
+                $gridList.jqGrid('setGridParam', {
+                    postData: { description: $("#txt_keyword").val(),deviceType:condition },
+                }).trigger('reloadGrid');
+            });
+        }
+        
+        function loadDeviceType()
+        {
+        	var html = [];
+        	var datatype= top.clients.dataItems.DeviceType;
+        	if(datatype!=null&&datatype!=undefined){
+        		$.each(datatype, function (i) {
+          		  html.push("<li><a href='javascript:' data-value="+i+">"+datatype[i]+"</a></li>");
+          	  });
+        	}
+        	  $("#txt_condition .dropdown-menu").append(html.join(''));
+        }
+        //新增
+        function btn_add() {
+            $.modalOpen({
+                id: "Form",
+                title: "新增设备",
+                url: $.sysStaticData().urlExt+"/HardwareManage/Device/Form.html",
+                width: "600px",
+                height: "520px",
+                callBack: function (iframeId) {
+                    top.frames[iframeId].submitForm();
+                }
+            });
+        }
+        //编辑
+        function btn_edit() {
+            var keyValue = $("#gridList").jqGridRowValue().id;
+            if(!keyValue)
+            {
+				$.modalAlert("请选择需要修改的设备！");
+                return false;
+            }
+            $.modalOpen({
+                id: "Form",
+                title: "修改设备",
+                url: $.sysStaticData().urlExt+"/HardwareManage/Device/Form.html?keyValue=" + keyValue,
+                width: "600px",
+                height: "520px",
+                callBack: function (iframeId) {
+                    top.frames[iframeId].submitForm();
+                }
+            });
+        }
+        //报废
+        function btn_deleteBaoFei() {
+            var keyValue = $("#gridList").jqGridRowValue().id;
+            if(!keyValue)
+            {
+				$.modalAlert("请选择需要报废的设备！");
+                return false;
+            }
+            $.scrapAllForm({
+                url: $.sysStaticData().urlExt+"/device/scrapDevice.do",
+                param: { ids: $("#gridList").jqGridRowValue().id },
+                success: function () {
+                    $.currentWindow().$("#gridList").trigger("reloadGrid");
+                }
+            });
+        }
+        //删除
+        function btn_delete(){
+        	  var keyValue = $("#gridList").jqGridRowValue().id;
+        	  var runState = $("#gridList").jqGridRowValue().runState;
+              if(!keyValue)
+              {
+  				$.modalAlert("请选择需要删除的设备！");
+                  return false;
+              }
+              if(runState!="已报废"){
+            	  $.modalAlert("该设备未报废，不能删除！");
+                  return false;
+              }
+        	   $.deleteAllForm({
+                   url: $.sysStaticData().urlExt+"/device/deleteDeviceByIds.do",
+                   param: { ids: $("#gridList").jqGridRowValue().id },
+                   success: function () {
+                       $.currentWindow().$("#gridList").trigger("reloadGrid");
+                   }
+               });
+        }
+        //查看详情
+        function btn_details() {
+        	 var keyValue = $("#gridList").jqGridRowValue().id;
+             if(!keyValue)
+             {
+ 				$.modalAlert("请选择需要查看的设备！");
+                 return false;
+             }
+            $.modalOpen({
+                id: "Details",
+                title: "查看设备",
+                url: $.sysStaticData().urlExt+"/HardwareManage/Device/Details.html?keyValue=" + keyValue,
+                width: "600px",
+                height: "520px",
+                btn: null,
+            });
+        }
+    </script>
+</head>
+<body>
+	<div class="topPanel">
+        <div class="toolbar">
+            <div class="btn-group">
+                <a class="btn btn-primary" onclick="$.reload()"><span class="glyphicon glyphicon-refresh"></span></a>
+            </div>
+            <div class="btn-group">
+                <a id="NF-add" authorize="yes" class="btn btn-primary dropdown-text" onclick="btn_add()"><i class="fa fa-plus"></i>新增设备</a>
+            </div>
+            <div class="operate">
+                <ul class="nav nav-pills">
+                    <li class="first">已选中<span>1</span>项</li>
+                    <li><a id="NF-edit" authorize="yes" onclick="btn_edit()"><i class="fa fa-pencil-square-o"></i>修改设备</a></li>
+                  
+                   <li><a id="NF-btn_deleteBaoFei" authorize="yes" onclick="btn_deleteBaoFei()"><i class="fa fa-trash-o"></i>报废设备</a></li>
+                    <li><a id="NF-delete" authorize="yes" onclick="btn_delete()"><i class="fa fa-trash-o"></i>删除设备</a></li>
+                    <li><a id="NF-Details" authorize="yes" onclick="btn_details()"><i class="fa fa-search-plus"></i>查看设备</a></li>
+                   
+                </ul>
+                <a href="javascript:;" class="close"></a>
+            </div>
+        </div>
+        <div class="search">
+            <table>
+                <tr>
+                <td>
+                        <div id="txt_condition" class="btn-group">
+                        <a class="btn btn-default dropdown-text" data-toggle="dropdown" aria-expanded="false">选择条件</a>
+                        <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                           <li><a href="javascript:" data-value="">所有</a></li> 
+                        </ul>
+                    </div>
+                </td>
+                <td style="padding-left: 2px;">
+                    <div class="input-group">
+
+                   
+                        <input id="txt_keyword" type="text" class="form-control" placeholder="请输入要查询的标题" style="width: 200px;">
+                        <span class="input-group-btn">
+                            <button id="btn_search" type="button" class="btn  btn-primary"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                </td>
+            </tr>
+            </table>
+        </div>
+    </div>
+    <div class="gridPanel">
+        <table id="gridList"></table>
+        <div id="gridPager"></div>
+    </div>
+
+
+
+</body>
+</html>

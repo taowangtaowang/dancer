@@ -1,0 +1,161 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>标题</title>
+    <link href="../../Content/css/framework-font.css" rel="stylesheet" />
+    <link href="../../Content/css/framework-theme.css" rel="stylesheet" />
+    <script src="../../Content/js/jquery/jquery-2.1.1.min.js"></script>
+    <script src="../../Content/js/bootstrap/bootstrap.js"></script>
+    <link href="../../Content/js/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <script src="../../Content/js/jqgrid/jqgrid.min.js"></script>
+    <link href="../../Content/js/jqgrid/jqgrid.css" rel="stylesheet" />
+    <script src="../../Content/js/jqgrid/grid.locale-cn.js"></script>
+    <link href="../../Content/css/framework-ui.css" rel="stylesheet" />
+    <script src="../../Content/js/framework-ui.js"></script>
+    <script>
+        $(function () {
+            gridList();
+        })
+        function gridList() {
+            var $gridList = $("#gridList");
+            $gridList.dataGrid({
+                url: $.sysStaticData().urlExt +"/rnItemAccessRecord/findItemAccessRecord",
+                height: $(window).height() - 128,
+                jsonReader: {
+                    root: "data"
+                },
+                colModel: [
+                    { label: '主键', name: 'id', hidden: true },
+                    { label: '存取柜编号', name: 'boxNo', width: 170, align: 'center' },
+                    { label: '操作状态', name: 'operationType', width: 160, align: 'center',
+                        formatter: function (cellvalue) {
+                            if (cellvalue == 1) {
+                                return "存件";
+                            }
+                            if (cellvalue == 2) {
+                                return "取件";
+                            }
+                            if (cellvalue == 3) {
+                                return "锁定";
+                            }
+                            if (cellvalue == 4) {
+                                return "开箱";
+                            }
+                            if (cellvalue == 5) {
+                                return "清箱";
+                            }
+                            if (cellvalue == 6) {
+                                return "解除锁定";
+                            }
+                      }
+                    },
+                    {
+                        label: '操作人员', name: 'userType', width: 160, align: 'center',
+                        formatter: function (cellvalue) {
+                            if (cellvalue == 1) {
+                                return "用户";
+                            }
+                            if (cellvalue == 2) {
+                                return "管理员";
+                            }
+                            if (cellvalue == 3) {
+                                return "邮递员";
+                            }
+                        }
+                    },
+                    {
+                        label: '是否有效', name: 'enabledMark', width: 130, align: 'center',
+                     	formatter: function (cellvalue) {
+       						return cellvalue == 1 ? "<i class=\"fa fa-toggle-on\"></i>" : "<i class=\"fa fa-toggle-off\"></i>";
+                       }
+                     },
+                    {label: '创建时间', name: 'creatorTime', width: 130, align: 'left',
+                   	 formatter: function (cellvalue) {
+                		 if(cellvalue==null){
+                			 return "";
+                		 }else{
+                			 return cellvalue.replace(".0"," "); //$.changeDateFormat(cellvalue).DateExt;
+                		 }
+                     }
+                    },
+                ],
+                pager: "#gridPager",
+                sortname: 'needFileMark',
+                viewrecords: true,
+                sord:"desc",
+                postData: { userSign: $("#txt_keyword").val(),enabledMark:$("#enabledMark").val() },
+            });
+         $("#txt_condition .dropdown-menu li").click(function () {
+             var text = $(this).find('a').html();
+             var value = $(this).find('a').attr('data-value');
+             $("#txt_condition .dropdown-text").html(text).attr('data-value', value)
+         	});
+
+            $("#btn_search").click(function () {
+               var  condition=$("#txt_condition").find('.dropdown-text').attr('data-value');
+                $gridList.jqGrid('setGridParam', {
+                    postData: { userSign: $("#txt_keyword").val(),enabledMark:$("#enabledMark").val() },
+                }).trigger('reloadGrid');
+            });
+        }
+    </script>
+</head>
+
+
+<body>
+    <div class="topPanel">
+        <div class="toolbar">
+            <div class="btn-group">
+                <a class="btn btn-primary" onclick="$.reload()"><span class="glyphicon glyphicon-refresh"></span></a>
+            </div>
+            <!--<div class="btn-group">
+                <a id="NF-add" authorize="yes" class="btn btn-primary dropdown-text" onclick="btn_add()"><i class="fa fa-plus"></i>新增类别</a>
+            </div>-->
+            <!--<div class="operate">
+                <ul class="nav nav-pills">
+                    <li class="first">已选中<span>1</span>项</li>
+                    <li><a id="NF-edit" authorize="yes" onclick="btn_edit()"><i class="fa fa-pencil-square-o"></i>修改类别</a></li>
+
+                    <li><a id="NF-delete" authorize="yes" onclick="btn_delete()"><i class="fa fa-trash-o"></i>删除类别</a></li>
+                    <li><a id="NF-Details" authorize="yes" onclick="btn_details()"><i class="fa fa-search-plus"></i>查看类别</a></li>
+
+                </ul>
+                <a href="javascript:;" class="close"></a>
+            </div>-->
+        </div>
+        <div class="search">
+            <table>
+                <tr>
+                    <th class="formTitle" style="padding-left:30px ;padding-right:10px  ">有效标志:</th>
+                    <td class="formValue" colspan="3">
+                        <div id="txt_condition" class="btn-group">
+                            <select id="enabledMark" name="enabledMark" class="form-control required" style="height:17px;width:50px;">
+                                <option value="1">有效</option>
+                                <option value="0">无效</option>
+                            </select>
+                        </div>
+                    </td>
+                    <td style="padding-left: 60px;">
+                        <div class="input-group">
+
+
+                            <input id="txt_keyword" type="text" class="form-control" placeholder="请输入要查询的用户标识（如身份证号、手机号或登陆账号）" style="width: 320px;">
+                            <span class="input-group-btn">
+                                <button id="btn_search" type="button" class="btn  btn-primary"><i class="fa fa-search"></i></button>
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="gridPanel">
+        <table id="gridList"></table>
+        <div id="gridPager"></div>
+    </div>
+
+
+
+</body>
+</html>

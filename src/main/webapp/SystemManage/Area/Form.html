@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" />
+    <title>区域管理-新增/修改</title>
+    <link href="../../Content/css/framework-font.css" rel="stylesheet" />
+    <link href="../../Content/css/framework-theme.css" rel="stylesheet" />
+    <script src="../../Content/js/jquery/jquery-2.1.1.min.js"></script>
+    <script src="../../Content/js/bootstrap/bootstrap.js"></script>
+    <link href="../../Content/js/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <script src="../../Content/js/wdtree/tree.js"></script>
+    <link href="../../Content/js/wdtree/tree.css" rel="stylesheet" />
+    <link href="../../Content/js/select2/select2.min.css" rel="stylesheet" />
+    <script src="../../Content/js/select2/select2.min.js"></script>
+    <link href="../../Content/js/wizard/wizard.css" rel="stylesheet" />
+    <script src="../../Content/js/wizard/wizard.js"></script>
+    <script src="../../Content/js/validate/jquery.validate.min.js"></script>
+    <script src="../../Content/js/datepicker/WdatePicker.js"></script>
+    <link href="../../Content/css/framework-ui.css" rel="stylesheet" />
+    <script src="../../Content/js/framework-ui.js"></script>
+    <link rel="stylesheet" href="../../Content/ztree/css/demo.css" type="text/css">
+	<link rel="stylesheet" href="../../Content/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css">
+	<script type="text/javascript" src="../../Content/ztree/js/jquery.ztree.core.js"></script>
+    <script>
+        var keyValue = $.request("keyValue");
+        var setting = {
+    			view: {
+    				dblClickExpand: false
+    			},
+    			data: {
+    				simpleData: {
+    					enable: true,
+    					idKey:"id",
+    					pIdKey:"pid"
+    				}
+    			},
+    			async: {
+                    enable: true,
+                    url:$.sysStaticData().urlExt+"/area/findAll",
+                    autoParam: ["id", "name=n", "level=lv"]
+                },
+    			callback: {
+    				onClick: onClick
+    			}
+    		};
+        $(function () {
+            initControl();
+            if (!!keyValue) {
+                $.ajax({
+                    url: $.sysStaticData().urlExt+"/area/findOne",
+                    data: { fId: keyValue },
+                    dataType: "json",
+                    async: false,
+                    success: function (data) {
+                        $("#form1").formSerialize(data);
+                    }
+                });
+            }
+            $.fn.zTree.init($("#treeArea"), setting);
+        });
+        function initControl() {
+            //$("#fParentid").bindSelect({
+            //    url: $.sysStaticData().urlExt+"/area/findAll"
+            //});
+        }
+        function submitForm() {
+            if (!$('#form1').formValid()) {
+                return false;
+            }
+			var num = document.getElementById("fSortcode").value;
+			if (num=="" || !(/(^[1-9]\d*$)/.test(num)))
+			{
+				$.modalAlert("请输入类型为非负整数的排序！");
+                return false;
+			}
+            var urlExt;
+        	if(!!keyValue)
+            {
+        		urlExt = $.sysStaticData().urlExt +"/area/updateArea?fId=" + keyValue;
+            }
+        	else
+        	{
+        		urlExt = $.sysStaticData().urlExt +"/area/insertArea";
+        	}
+            $.submitForm({
+                url: urlExt,
+                param: $("#form1").formSerialize(),
+                success: function () {
+                    $.currentWindow().$("#gridList").resetSelection();
+                    $.currentWindow().$("#gridList").trigger("reloadGrid");
+                }
+            })
+        }
+        function onClick(e, treeId, treeNode) {
+			var zTree = $.fn.zTree.getZTreeObj("treeArea"),
+			nodes = zTree.getSelectedNodes(),
+			name = "",
+			val ="";
+			nodes.sort(function compare(a,b){return a.id-b.id;});
+			for (var i=0, l=nodes.length; i<l; i++) {
+				name += nodes[i].name + ",";
+				val +=nodes[i].id+ ",";
+			}
+			if (val.length > 0 ) val = val.substring(0, val.length-1);
+			if (name.length > 0 ) name = name.substring(0, name.length-1);
+			
+			$("#fParentid").val(val);
+			$("#fParentname").val(name);
+			hideMenu();
+		}
+		function showMenu() {
+			var cityObj = $("#fParentid");
+			var cityOffset = $("#fParentid").offset();
+			$("#menuContent").css({left:cityOffset.left + "px", top:cityOffset.top + cityObj.outerHeight() + "px"}).slideDown("fast");
+			$("body").bind("mousedown", onBodyDown);
+		}
+		function hideMenu() {
+			$("#menuContent").fadeOut("fast");
+			$("body").unbind("mousedown", onBodyDown);
+		}
+		function onBodyDown(event) {
+			if (!(event.target.id == "menuBtn" || event.target.id == "menuContent" || $(event.target).parents("#menuContent").length>0)) {
+				hideMenu();
+			}
+		}
+    </script>
+    <style>
+    ul.ztree{width:268px !important;height:222px !important;}
+    </style>
+</head>
+<body>
+    <form id="form1">
+        <div style="padding-top: 20px; margin-right: 20px;">
+            <table class="form">
+                <tr>
+                    <th class="formTitle">上级</th>
+                    <td class="formValue">
+                        
+                        <input id="fParentname" name="fParentname" class="form-control required" type="text" readonly value="" style="width:88%;float:left" placeholder="请选择"/>
+                        	<input id="fParentid" name="fParentid" class="form-control" type="hidden"  value=""/>
+                        	<a id="menuBtn" href="javascript:;" onclick="showMenu(); return false;" style="line-height:30px;padding-left:10px;">选择</a>
+                        	<div id="menuContent" class="menuContent" style="display:none; position: absolute;">
+								<ul id="treeArea" class="ztree" style="margin-top:0; width:160px;"></ul>
+							</div>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="formTitle">名称</th>
+                    <td class="formValue">
+                        <input id="fFullname" name="fFullname" type="text" class="form-control required" placeholder="请输入名称" />
+                    </td>
+                </tr>
+                <tr>
+                    <th class="formTitle">编码</th>
+                    <td class="formValue">
+                        <input id="fEncode" name="fEncode" type="text" class="form-control required" placeholder="请输入编码" />
+                    </td>
+                </tr>
+                <tr>
+                    <th class="formTitle">排序</th>
+                    <td class="formValue">
+                        <input id="fSortcode" name="fSortcode" type="text" class="form-control required digits isIntGteZero" placeholder="请输入类型为为非整数的排序" />
+                    </td>
+                </tr>
+                <tr>
+                    <th class="formTitle" style="height: 35px;">选项</th>
+                    <td class="formValue" style="padding-top: 1px;">
+                        <div class="ckbox">
+                            <input id="fEnabledmark" name="fEnabledmark" type="checkbox" checked="checked"><label for="fEnabledmark">有效</label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="formTitle" valign="top" style="padding-top: 5px;">
+                        备注
+                    </th>
+                    <td class="formValue">
+                        <textarea id="fDescription" name="fDescription" class="form-control" style="height: 60px;"></textarea>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </form>
+</body>
+</html>

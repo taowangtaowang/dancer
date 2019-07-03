@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wt.overflow.dao.SysModuleMapper" >
+  <resultMap id="BaseResultMap" type="com.wt.overflow.bean.SysModule" >
+    <result column="F_Id" property="fId" jdbcType="VARCHAR" />
+    <result column="F_ParentId" property="fParentid" jdbcType="VARCHAR" />
+    <result column="F_Layers" property="fLayers" jdbcType="INTEGER" />
+    <result column="F_EnCode" property="fEncode" jdbcType="VARCHAR" />
+    <result column="F_FullName" property="fFullname" jdbcType="VARCHAR" />
+    <result column="F_Icon" property="fIcon" jdbcType="VARCHAR" />
+    <result column="F_UrlAddress" property="fUrladdress" jdbcType="VARCHAR" />
+    <result column="F_Target" property="fTarget" jdbcType="VARCHAR" />
+    <result column="F_IsMenu" property="fIsmenu" jdbcType="BIT" />
+    <result column="F_IsExpand" property="fIsexpand" jdbcType="BIT" />
+    <result column="F_IsPublic" property="fIspublic" jdbcType="BIT" />
+    <result column="F_AllowEdit" property="fAllowedit" jdbcType="BIT" />
+    <result column="F_AllowDelete" property="fAllowdelete" jdbcType="BIT" />
+    <result column="F_SortCode" property="fSortcode" jdbcType="INTEGER" />
+    <result column="F_DeleteMark" property="fDeletemark" jdbcType="TINYINT" />
+    <result column="F_EnabledMark" property="fEnabledmark" jdbcType="BIT" />
+    <result column="F_Description" property="fDescription" jdbcType="VARCHAR" />
+    <result column="F_CreatorTime" property="fCreatortime" jdbcType="TIMESTAMP" />
+    <result column="F_CreatorUserId" property="fCreatoruserid" jdbcType="VARCHAR" />
+    <result column="F_LastModifyTime" property="fLastmodifytime" jdbcType="TIMESTAMP" />
+    <result column="F_LastModifyUserId" property="fLastmodifyuserid" jdbcType="VARCHAR" />
+    <result column="F_DeleteTime" property="fDeletetime" jdbcType="TIMESTAMP" />
+    <result column="F_DeleteUserId" property="fDeleteuserid" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="modulesMap" type="com.wt.overflow.bean.SysModules">
+    <result column="F_Id" property="fId" jdbcType="VARCHAR" />
+    <result column="F_ParentId" property="fParentid" jdbcType="VARCHAR" />
+    <result column="F_Layers" property="fLayers" jdbcType="INTEGER" />
+    <result column="F_EnCode" property="fEncode" jdbcType="VARCHAR" />
+    <result column="F_FullName" property="fFullname" jdbcType="VARCHAR" />
+    <result column="F_Icon" property="fIcon" jdbcType="VARCHAR" />
+    <result column="F_UrlAddress" property="fUrladdress" jdbcType="VARCHAR" />
+    <result column="F_Target" property="fTarget" jdbcType="VARCHAR" />
+    <result column="F_IsMenu" property="fIsmenu" jdbcType="BIT" />
+    <result column="F_IsExpand" property="fIsexpand" jdbcType="BIT" />
+    <result column="F_IsPublic" property="fIspublic" jdbcType="BIT" />
+    <result column="F_AllowEdit" property="fAllowedit" jdbcType="BIT" />
+    <result column="F_AllowDelete" property="fAllowdelete" jdbcType="BIT" />
+    <result column="F_SortCode" property="fSortcode" jdbcType="INTEGER" />
+    <result column="F_DeleteMark" property="fDeletemark" jdbcType="TINYINT" />
+    <result column="F_EnabledMark" property="fEnabledmark" jdbcType="BIT" />
+    <result column="F_Description" property="fDescription" jdbcType="VARCHAR" />
+    <result column="F_CreatorTime" property="fCreatortime" jdbcType="TIMESTAMP" />
+    <result column="F_CreatorUserId" property="fCreatoruserid" jdbcType="VARCHAR" />
+    <result column="F_LastModifyTime" property="fLastmodifytime" jdbcType="TIMESTAMP" />
+    <result column="F_LastModifyUserId" property="fLastmodifyuserid" jdbcType="VARCHAR" />
+    <result column="F_DeleteTime" property="fDeletetime" jdbcType="TIMESTAMP" />
+    <result column="F_DeleteUserId" property="fDeleteuserid" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+      F_Id, F_ParentId, F_Layers, 
+      F_EnCode, F_FullName, F_Icon, 
+      F_UrlAddress, F_Target, F_IsMenu, 
+      F_IsExpand, F_IsPublic, F_AllowEdit, 
+      F_AllowDelete, F_SortCode, F_DeleteMark, 
+      F_EnabledMark, F_Description, F_CreatorTime, 
+      F_CreatorUserId, F_LastModifyTime, F_LastModifyUserId, 
+      F_DeleteTime, F_DeleteUserId
+  </sql>
+  
+  
+  <select id="queryAllData" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from Sys_Module
+  </select> 
+  
+  
+  <select id="SelectByfParentid" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+    select top(1) 
+     *
+    from  Sys_Module  where F_ParentId=#{fParentid,jdbcType=VARCHAR} and ISNULL( F_DeleteMark, 0) != 1
+  </select>
+  
+  <select id="findListParentid" resultMap="modulesMap" parameterType="java.lang.String">
+    select * from Sys_Module where F_ParentId=#{fParentid,jdbcType=VARCHAR} and ISNULL( F_DeleteMark, 0) != 1 ORDER BY F_SortCode ASC
+  </select>
+  
+    <select id="findListFullName" resultMap="modulesMap" parameterType="java.lang.String" >
+    
+    <if test="null == fFullname or '' == fFullname ">
+    select 
+     <include refid="Base_Column_List" />
+    from Sys_Module
+     where ISNULL( F_DeleteMark, 0) != 1 and F_ParentId='0' ORDER BY F_SortCode ASC
+     </if>
+     <if test="fFullname != null and fFullname != '' ">
+    WITH cte AS
+     (
+     SELECT o.*
+     FROM Sys_Module o WHERE F_FullName like #{fFullname,jdbcType=VARCHAR} AND ISNULL( F_DeleteMark, 0) != 1
+		 
+     UNION ALL
+		 
+     SELECT o.*
+		 FROM Sys_Module o INNER JOIN cte AS c on c.F_ParentId=o.F_Id
+     )
+     SELECT DISTINCT * FROM cte ORDER BY F_SortCode ASC
+     </if>
+     
+  </select>
+  
+  
+  <select id="queryAllSysModuleByIsAdmin" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from Sys_Module 
+    <where>
+    	F_ParentId Is not null and F_DeleteMark =0
+    	<if test=" F_EnabledMark!=null and F_EnabledMark != '' " >
+	      	and F_EnabledMark = 1
+	    </if>
+	    <if test="isAdmin != 1" >
+	      	and F_Id in (
+				select F_ItemId from Sys_RoleAuthorize where F_ObjectId =  #{userRoleId,jdbcType=VARCHAR} and F_ItemType=1
+			)
+	    </if>
+    </where>
+    
+    
+  </select> 
+  
+     <select id="findListPage" resultMap="modulesMap" parameterType="java.util.Map">
+    select 
+     <include refid="Base_Column_List" />
+    from Sys_Module where F_DeleteMark is null or F_DeleteMark =0
+     <if test="fFullname != null and fFullname != '' ">
+    RIGHT JOIN
+	(select
+      F_Id f, F_ParentId f1
+    from Sys_Module where F_FullName like '%${fFullname,jdbcType=VARCHAR}%') as a on Sys_Module.F_SortCode=a.f or Sys_Module.F_SortCode=a.f1 where Sys_Module.F_DeleteMark is null or Sys_Module.F_DeleteMark =0
+    group by 
+     <include refid="Base_Column_List" />
+     </if>
+  </select>
+  
+   
+  
+  
+  
+  
+   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from Sys_Module
+    where F_Id = #{fId,jdbcType=VARCHAR} and  F_DeleteMark =0
+  </select>
+  
+    <insert id="insertModule" parameterType="com.wt.overflow.bean.SysModule" >
+    insert into Sys_Module (F_Id, F_ParentId, F_Layers, 
+      F_EnCode, F_FullName, F_Icon, 
+      F_UrlAddress, F_Target, F_IsMenu, 
+      F_IsExpand, F_IsPublic, F_AllowEdit, 
+      F_AllowDelete, F_SortCode, F_DeleteMark, 
+      F_EnabledMark, F_Description, F_CreatorTime, 
+      F_CreatorUserId, F_LastModifyTime, F_LastModifyUserId, 
+      F_DeleteTime, F_DeleteUserId)
+    values (#{fId,jdbcType=VARCHAR}, #{fParentid,jdbcType=VARCHAR}, #{fLayers,jdbcType=INTEGER}, 
+      #{fEncode,jdbcType=VARCHAR}, #{fFullname,jdbcType=VARCHAR}, #{fIcon,jdbcType=VARCHAR}, 
+      #{fUrladdress,jdbcType=VARCHAR}, #{fTarget,jdbcType=VARCHAR}, #{fIsmenu,jdbcType=BIT}, 
+      #{fIsexpand,jdbcType=BIT}, #{fIspublic,jdbcType=BIT}, #{fAllowedit,jdbcType=BIT}, 
+      #{fAllowdelete,jdbcType=BIT}, #{fSortcode,jdbcType=INTEGER}, #{fDeletemark,jdbcType=TINYINT}, 
+      #{fEnabledmark,jdbcType=BIT}, #{fDescription,jdbcType=VARCHAR}, #{fCreatortime,jdbcType=TIMESTAMP}, 
+      #{fCreatoruserid,jdbcType=VARCHAR}, #{fLastmodifytime,jdbcType=TIMESTAMP}, #{fLastmodifyuserid,jdbcType=VARCHAR}, 
+      #{fDeletetime,jdbcType=TIMESTAMP}, #{fDeleteuserid,jdbcType=VARCHAR})
+  </insert>
+  
+  
+  <update id="deleteByModuleKey" parameterType="com.wt.overflow.bean.SysModule" >
+    update Sys_Module
+    <set >
+      <if test="fParentid != null" >
+        F_ParentId = #{fParentid,jdbcType=VARCHAR},
+      </if>
+      <if test="fLayers != null" >
+        F_Layers = #{fLayers,jdbcType=INTEGER},
+      </if>
+      <if test="fEncode != null" >
+        F_EnCode = #{fEncode,jdbcType=VARCHAR},
+      </if>
+      <if test="fFullname != null" >
+        F_FullName = #{fFullname,jdbcType=VARCHAR},
+      </if>
+      <if test="fIcon != null" >
+        F_Icon = #{fIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="fUrladdress != null" >
+        F_UrlAddress = #{fUrladdress,jdbcType=VARCHAR},
+      </if>
+      <if test="fTarget != null" >
+        F_Target = #{fTarget,jdbcType=VARCHAR},
+      </if>
+      <if test="fIsmenu != null" >
+        F_IsMenu = #{fIsmenu,jdbcType=BIT},
+      </if>
+      <if test="fIsexpand != null" >
+        F_IsExpand = #{fIsexpand,jdbcType=BIT},
+      </if>
+      <if test="fIspublic != null" >
+        F_IsPublic = #{fIspublic,jdbcType=BIT},
+      </if>
+      <if test="fAllowedit != null" >
+        F_AllowEdit = #{fAllowedit,jdbcType=BIT},
+      </if>
+      <if test="fAllowdelete != null" >
+        F_AllowDelete = #{fAllowdelete,jdbcType=BIT},
+      </if>
+      <if test="fSortcode != null" >
+        F_SortCode = #{fSortcode,jdbcType=INTEGER},
+      </if>
+      <if test="fDeletemark != null" >
+        F_DeleteMark = #{fDeletemark,jdbcType=TINYINT},
+      </if>
+      <if test="fEnabledmark != null" >
+        F_EnabledMark = #{fEnabledmark,jdbcType=BIT},
+      </if>
+      <if test="fDescription != null" >
+        F_Description = #{fDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="fCreatortime != null" >
+        F_CreatorTime = #{fCreatortime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fCreatoruserid != null" >
+        F_CreatorUserId = #{fCreatoruserid,jdbcType=VARCHAR},
+      </if>
+      <if test="fLastmodifytime != null" >
+        F_LastModifyTime = #{fLastmodifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fLastmodifyuserid != null" >
+        F_LastModifyUserId = #{fLastmodifyuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="fDeletetime != null" >
+        F_DeleteTime = #{fDeletetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fDeleteuserid != null" >
+        F_DeleteUserId = #{fDeleteuserid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where F_Id = #{fId,jdbcType=VARCHAR}
+  </update>
+  
+  
+   <update id="updateByPrimaryKeySelective" parameterType="com.wt.overflow.bean.SysModule" >
+    update Sys_Module
+    <set >
+      <if test="fParentid != null" >
+        F_ParentId = #{fParentid,jdbcType=VARCHAR},
+      </if>
+      <if test="fLayers != null" >
+        F_Layers = #{fLayers,jdbcType=INTEGER},
+      </if>
+      <if test="fEncode != null" >
+        F_EnCode = #{fEncode,jdbcType=VARCHAR},
+      </if>
+      <if test="fFullname != null" >
+        F_FullName = #{fFullname,jdbcType=VARCHAR},
+      </if>
+      <if test="fIcon != null" >
+        F_Icon = #{fIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="fUrladdress != null" >
+        F_UrlAddress = #{fUrladdress,jdbcType=VARCHAR},
+      </if>
+      <if test="fTarget != null" >
+        F_Target = #{fTarget,jdbcType=VARCHAR},
+      </if>
+      <if test="fIsmenu != null" >
+        F_IsMenu = #{fIsmenu,jdbcType=BIT},
+      </if>
+      <if test="fIsexpand != null" >
+        F_IsExpand = #{fIsexpand,jdbcType=BIT},
+      </if>
+      <if test="fIspublic != null" >
+        F_IsPublic = #{fIspublic,jdbcType=BIT},
+      </if>
+      <if test="fAllowedit != null" >
+        F_AllowEdit = #{fAllowedit,jdbcType=BIT},
+      </if>
+      <if test="fAllowdelete != null" >
+        F_AllowDelete = #{fAllowdelete,jdbcType=BIT},
+      </if>
+      <if test="fSortcode != null" >
+        F_SortCode = #{fSortcode,jdbcType=INTEGER},
+      </if>
+      <if test="fDeletemark != null" >
+        F_DeleteMark = #{fDeletemark,jdbcType=TINYINT},
+      </if>
+      <if test="fEnabledmark != null" >
+        F_EnabledMark = #{fEnabledmark,jdbcType=BIT},
+      </if>
+      <if test="fDescription != null" >
+        F_Description = #{fDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="fCreatortime != null" >
+        F_CreatorTime = #{fCreatortime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fCreatoruserid != null" >
+        F_CreatorUserId = #{fCreatoruserid,jdbcType=VARCHAR},
+      </if>
+      <if test="fLastmodifytime != null" >
+        F_LastModifyTime = #{fLastmodifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fLastmodifyuserid != null" >
+        F_LastModifyUserId = #{fLastmodifyuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="fDeletetime != null" >
+        F_DeleteTime = #{fDeletetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fDeleteuserid != null" >
+        F_DeleteUserId = #{fDeleteuserid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where F_Id = #{fId,jdbcType=VARCHAR}
+  </update>
+  
+  
+</mapper>

@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wt.overflow.dao.SysUserLogOnMapper">
+  <resultMap id="BaseResultMap" type="com.wt.overflow.bean.SysUserLogOn">
+    <id column="F_Id" jdbcType="VARCHAR" property="fId" />
+    <result column="F_UserId" jdbcType="VARCHAR" property="fUserid" />
+    <result column="F_UserPassword" jdbcType="VARCHAR" property="fUserpassword" />
+    <result column="F_UserSecretkey" jdbcType="VARCHAR" property="fUsersecretkey" />
+    <result column="F_AllowStartTime" jdbcType="TIMESTAMP" property="fAllowstarttime" />
+    <result column="F_AllowEndTime" jdbcType="TIMESTAMP" property="fAllowendtime" />
+    <result column="F_LockStartDate" jdbcType="TIMESTAMP" property="fLockstartdate" />
+    <result column="F_LockEndDate" jdbcType="TIMESTAMP" property="fLockenddate" />
+    <result column="F_FirstVisitTime" jdbcType="TIMESTAMP" property="fFirstvisittime" />
+    <result column="F_PreviousVisitTime" jdbcType="TIMESTAMP" property="fPreviousvisittime" />
+    <result column="F_LastVisitTime" jdbcType="TIMESTAMP" property="fLastvisittime" />
+    <result column="F_ChangePasswordDate" jdbcType="TIMESTAMP" property="fChangepassworddate" />
+    <result column="F_MultiUserLogin" jdbcType="BIT" property="fMultiuserlogin" />
+    <result column="F_LogOnCount" jdbcType="INTEGER" property="fLogoncount" />
+    <result column="F_UserOnLine" jdbcType="BIT" property="fUseronline" />
+    <result column="F_Question" jdbcType="VARCHAR" property="fQuestion" />
+    <result column="F_AnswerQuestion" jdbcType="VARCHAR" property="fAnswerquestion" />
+    <result column="F_CheckIPAddress" jdbcType="BIT" property="fCheckipaddress" />
+    <result column="F_Language" jdbcType="VARCHAR" property="fLanguage" />
+    <result column="F_Theme" jdbcType="VARCHAR" property="fTheme" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    F_Id, F_UserId, F_UserPassword, F_UserSecretkey, F_AllowStartTime, F_AllowEndTime, 
+    F_LockStartDate, F_LockEndDate, F_FirstVisitTime, F_PreviousVisitTime, F_LastVisitTime, 
+    F_ChangePasswordDate, F_MultiUserLogin, F_LogOnCount, F_UserOnLine, F_Question, F_AnswerQuestion, 
+    F_CheckIPAddress, F_Language, F_Theme
+  </sql>
+  
+  
+  
+  <insert id="addSysUserPassWord" parameterType="com.wt.overflow.bean.SysUserLogOn">
+    insert into Sys_UserLogOn
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="fId != null">
+        F_Id,
+      </if>
+      <if test="fUserid != null">
+        F_UserId,
+      </if>
+      <if test="fUserpassword != null">
+        F_UserPassword,
+      </if>
+      <if test="fUsersecretkey != null">
+        F_UserSecretkey,
+      </if>
+      <if test="fAllowstarttime != null">
+        F_AllowStartTime,
+      </if>
+      <if test="fAllowendtime != null">
+        F_AllowEndTime,
+      </if>
+      <if test="fLockstartdate != null">
+        F_LockStartDate,
+      </if>
+      <if test="fLockenddate != null">
+        F_LockEndDate,
+      </if>
+      <if test="fFirstvisittime != null">
+        F_FirstVisitTime,
+      </if>
+      <if test="fPreviousvisittime != null">
+        F_PreviousVisitTime,
+      </if>
+      <if test="fLastvisittime != null">
+        F_LastVisitTime,
+      </if>
+      <if test="fChangepassworddate != null">
+        F_ChangePasswordDate,
+      </if>
+      <if test="fMultiuserlogin != null">
+        F_MultiUserLogin,
+      </if>
+      <if test="fLogoncount != null">
+        F_LogOnCount,
+      </if>
+      <if test="fUseronline != null">
+        F_UserOnLine,
+      </if>
+      <if test="fQuestion != null">
+        F_Question,
+      </if>
+      <if test="fAnswerquestion != null">
+        F_AnswerQuestion,
+      </if>
+      <if test="fCheckipaddress != null">
+        F_CheckIPAddress,
+      </if>
+      <if test="fLanguage != null">
+        F_Language,
+      </if>
+      <if test="fTheme != null">
+        F_Theme,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="fId != null">
+        #{fId,jdbcType=VARCHAR},
+      </if>
+      <if test="fUserid != null">
+        #{fUserid,jdbcType=VARCHAR},
+      </if>
+      <if test="fUserpassword != null">
+        #{fUserpassword,jdbcType=VARCHAR},
+      </if>
+      <if test="fUsersecretkey != null">
+        #{fUsersecretkey,jdbcType=VARCHAR},
+      </if>
+      <if test="fAllowstarttime != null">
+        #{fAllowstarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fAllowendtime != null">
+        #{fAllowendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fLockstartdate != null">
+        #{fLockstartdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fLockenddate != null">
+        #{fLockenddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fFirstvisittime != null">
+        #{fFirstvisittime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fPreviousvisittime != null">
+        #{fPreviousvisittime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fLastvisittime != null">
+        #{fLastvisittime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fChangepassworddate != null">
+        #{fChangepassworddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fMultiuserlogin != null">
+        #{fMultiuserlogin,jdbcType=BIT},
+      </if>
+      <if test="fLogoncount != null">
+        #{fLogoncount,jdbcType=INTEGER},
+      </if>
+      <if test="fUseronline != null">
+        #{fUseronline,jdbcType=BIT},
+      </if>
+      <if test="fQuestion != null">
+        #{fQuestion,jdbcType=VARCHAR},
+      </if>
+      <if test="fAnswerquestion != null">
+        #{fAnswerquestion,jdbcType=VARCHAR},
+      </if>
+      <if test="fCheckipaddress != null">
+        #{fCheckipaddress,jdbcType=BIT},
+      </if>
+      <if test="fLanguage != null">
+        #{fLanguage,jdbcType=VARCHAR},
+      </if>
+      <if test="fTheme != null">
+        #{fTheme,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateSysUserPassWord" parameterType="com.wt.overflow.bean.SysUserLogOn">
+    update Sys_UserLogOn
+    <set>
+      <if test="fUserid != null">
+        F_UserId = #{fUserid,jdbcType=VARCHAR},
+      </if>
+      <if test="fUserpassword != null">
+        F_UserPassword = #{fUserpassword,jdbcType=VARCHAR},
+      </if>
+      <if test="fUsersecretkey != null">
+        F_UserSecretkey = #{fUsersecretkey,jdbcType=VARCHAR},
+      </if>
+      <if test="fAllowstarttime != null">
+        F_AllowStartTime = #{fAllowstarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fAllowendtime != null">
+        F_AllowEndTime = #{fAllowendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fLockstartdate != null">
+        F_LockStartDate = #{fLockstartdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fLockenddate != null">
+        F_LockEndDate = #{fLockenddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fFirstvisittime != null">
+        F_FirstVisitTime = #{fFirstvisittime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fPreviousvisittime != null">
+        F_PreviousVisitTime = #{fPreviousvisittime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fLastvisittime != null">
+        F_LastVisitTime = #{fLastvisittime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fChangepassworddate != null">
+        F_ChangePasswordDate = #{fChangepassworddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fMultiuserlogin != null">
+        F_MultiUserLogin = #{fMultiuserlogin,jdbcType=BIT},
+      </if>
+      <if test="fLogoncount != null">
+        F_LogOnCount = #{fLogoncount,jdbcType=INTEGER},
+      </if>
+      <if test="fUseronline != null">
+        F_UserOnLine = #{fUseronline,jdbcType=BIT},
+      </if>
+      <if test="fQuestion != null">
+        F_Question = #{fQuestion,jdbcType=VARCHAR},
+      </if>
+      <if test="fAnswerquestion != null">
+        F_AnswerQuestion = #{fAnswerquestion,jdbcType=VARCHAR},
+      </if>
+      <if test="fCheckipaddress != null">
+        F_CheckIPAddress = #{fCheckipaddress,jdbcType=BIT},
+      </if>
+      <if test="fLanguage != null">
+        F_Language = #{fLanguage,jdbcType=VARCHAR},
+      </if>
+      <if test="fTheme != null">
+        F_Theme = #{fTheme,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where F_UserId = #{fUserid,jdbcType=VARCHAR}
+  </update>
+</mapper>

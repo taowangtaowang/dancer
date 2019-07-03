@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<title>绵阳一体化政务服务考勤系统</title>
+
+ <link href="../../Content/css/framework-font.css" rel="stylesheet" />
+    <link href="../../Content/css/framework-theme.css" rel="stylesheet" />
+    <script src="../../Content/js/jquery/jquery-2.1.1.min.js"></script>
+    <script src="../../Content/js/bootstrap/bootstrap.js"></script>
+    <link href="../../Content/js/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <script src="../../Content/js/wdtree/tree.js"></script>
+    <link href="../../Content/js/wdtree/tree.css" rel="stylesheet" />
+    <link href="../../Content/js/select2/select2.min.css" rel="stylesheet" />
+    <script src="../../Content/js/select2/select2.min.js"></script>
+    <link href="../../Content/js/wizard/wizard.css" rel="stylesheet" />
+    <script src="../../Content/js/wizard/wizard.js"></script>
+    <script src="../../Content/js/validate/jquery.validate.min.js"></script>
+    <script src="../../Content/js/datepicker/WdatePicker.js"></script>
+    <link href="../../Content/css/framework-ui.css" rel="stylesheet" />
+    <script src="../../Content/js/framework-ui.js"></script>
+<script src="../../Content/js/work.js"></script>
+    <script src="../../Content/js/datepicker/WdatePicker.js"></script>
+<link href="../../Content/css/my_kq.css" rel="stylesheet" />
+<script>
+$(function () {
+	//类别加载
+	$.loadlist_rows("category","id","leaveTypeName","/lvLeaveType/queryLvLeaveTypeList");
+	//请假人加载
+	$.loadlist_rowd("persons","fId","fRealname","/sysUser/querySysUserByOrganId");
+	//移除请假人
+	$("#deletetns").click(function(){
+		$("#person").val("");
+		$("#pons").val("");
+	});
+	//初始化操作
+	$("#person").val(top.clients.user.fRealname);
+	$("#pons").val(top.clients.user.fId);
+	$("input[id=personpd]").change(function(){
+		var pd=$("input[type='radio']:checked").val();
+		if(pd==0){
+			$("#onperson").css("display","none");
+			$("#persons").css("display","none");
+		}else if(pd==1){
+			$("#person").val("");
+			$("#pons").val("");
+			$("#onperson").css("display","");
+			$("#persons").css("display","");
+			
+		}
+	});
+	//请假时间总计
+	$("#ontime").click(function(){
+		//"2013-07-01 00:00:00"
+		var ontime=$("#ontime_1").val();
+		var uptime=$("#uptime_1").val();
+		var startNum = new Date(ontime.replace("-", "/").replace("-", "/"));  
+        var endNum = new Date(uptime.replace("-", "/").replace("-", "/")); 
+        if(ontime.length <=1 || uptime.length<=1){
+        	$.modalAlert("数据为空！","error");
+        	return;
+        }
+        if (startNum >= endNum) {
+            $.modalAlert("结束时间不能在开始时间之前！","error");
+            return;
+        }else{
+        	var pd=endNum-startNum;
+        	var hours=Math.floor(pd/1000/60/60);
+        	var day=parseInt(hours/24);
+        	var hh=hours-day*24;
+        	$("#time").html(day+"天 "+hh+"小时");
+        	$("#hs").val(hours);
+        }
+	});
+	//上传文件
+	$("#upload").click(function(){
+		var files=$("#file").val();
+		if($("#paths").text().length>=1 || files.length==0){
+			$.modalAlert("文件为空或文件已存在！","error");
+			return;
+		}
+		var pd=files.substr(files.lastIndexOf(".")+1,5);
+		if(!(pd=="txt" || pd=="doc" || pd=="pdf" || pd=="docx" || pd=="xls" || pd=="xlsx")){
+			$.modalAlert("文件以txt,doc,pdf,docx,xls,xlsx结尾！","error");
+			return;
+		}
+		
+		var formData = new FormData($('#uploadForm')[0]);  
+        $.ajax({  
+            type: 'post',  
+            url: $.sysStaticData().urlExt +"/common/uploadFileTrueName",  
+            data: formData,  
+            cache: false,  
+            processData: false,  
+            contentType: false,
+            success: function (data) {
+                if (data.status == "success") {
+                	$.modalAlert("上传成功！","success");
+                	var list=data.Path;
+            		var path=list.substr(list.lastIndexOf("/")+1,list.length);
+            		$("#files").val(list);
+                	$("#uploads").append($("<span style='color:red;margin-left: 32%;float: left;' id='paths'>"+path+"</span><a style='float: left;' class='btn_sc_x' href='#' id='de' onclick=\"deletes('"+list+"')\" title='删除'></a>"));
+                }else {
+                	$.modalAlert(data.message,"error");
+                }
+             }     
+        }); 	
+	});
+
+	
+	//请假人选择
+	$("#onperson").click(function(){
+		var ps=$("#persons option:selected").val();
+		var ps_1=$("#person").val();
+		var ps_2=$("#persons option:selected").text();
+		if(ps==0){
+			$.modalAlert("数据无效！","error");	
+			return;
+		}
+		if(ps_1.indexOf(ps_2) >= 0 ) { 
+		    $.modalAlert("请勿重复选择！","error");
+		    return;
+		}
+		if(ps_1.length<=1){
+			$("#person").val(ps_2);
+		}else{
+			$("#person").val(ps_1+","+ps_2);
+		}
+		var pvalue=$("#pons").val();
+		if(pvalue.length==0){
+			$("#pons").val(ps);
+		}else{
+			$("#pons").val(pvalue+","+ps);
+		}
+	});
+	
+	
+	
+});
+//移除上传文件
+function deletes(value){
+	$("#uploads").children().remove();
+	$("#files").val("");
+	$("#file").val("");
+	$.modalAlert("删除文件成功！","success");
+	$.ajax({
+		url: $.sysStaticData().urlExt +"/common/deleteFileByPath",
+        data:{"filePath":$.trim(value)},
+        type: "post",
+        success: function (data) {
+        	/* if (data.state == "success") {
+        		$.modalAlert("删除文件成功！","success");
+        		$("#uploads").children().remove();
+        		$("#files").val("");
+        		
+            }else {
+            	$.modalAlert("删除文件失败！","error");
+            } */
+        }
+	});
+}
+//添加功能
+function submitForm() {
+	var list=$("#files").val();//上传文件全路径
+	var se=$('#category option:selected').val();//请假类别
+	var ontime=$("#ontime_1").val();//请假时间
+	var uptime=$("#uptime_1").val();//请假时间
+	var con=$("#content").val();//事由
+	var ps=$("#pons").val();//请假人ＩＤ
+	var hours=$("#hs").val();//请假小时
+	
+	if(se==0 || ontime.length == 0 || uptime.length == 0 || con.length == 0 || ps.length == 0 || hours.length==0){
+		$.modalAlert("数据不完善！","error");
+		return;
+	}
+	if(con.length>=1001){
+		$.modalAlert("请假事由不得超过1000字！","error");
+		return;
+	}
+	var filePath="";
+	var suffix="";
+	var path="";
+	if(list.length >=1){
+		path=list.substr(list.lastIndexOf("/")+1,list.length);
+		filePath=list.substr(0,list.lastIndexOf("/"));
+		suffix=path.substr(path.indexOf(".")+1,path.length);
+	}
+	
+	var formData ={
+			"tempFileName":path,
+			"filePath":filePath,
+			"suffix":suffix,
+			"LeaveApplyUserId":ps,
+			"IsReplaceLeave":$("input[type='radio']:checked").val(),
+			"LeaveCause":con,
+			"LeaveTypeId":se,
+			"LeaveStratDate":ontime.substr(0,10),
+			"LeaveStratHour":ontime.substr(11,2),
+			"LeaveStratMinute":ontime.substr(14,2),
+			"LeaveEndDate":uptime.substr(0,10),
+			"LeaveEndHour":uptime.substr(11,2),
+			"LeaveEndMinute":uptime.substr(14,2),
+			"LeaveDays":hours
+		};
+	$.submitForm({
+        url: $.sysStaticData().urlExt+"/lvLeaveApply/addlvApprovalFlow",//新增
+        param: formData,
+        success: function () {
+            $.currentWindow().$("#gridList").trigger("reloadGrid");
+        }
+    });
+}
+
+</script>
+</head>
+<body>
+<div class="ck_div" style="-moz-transform:scale(2,2); -webkit-transform:scale(0.99,0.99); -o-transform:scale(2,2); ">
+  <div class="tab_con">
+  <div class="co_con_big" style="padding-top:0; border-bottom:0;">
+    <div class="co_con_a">
+    <form>
+      <div class="sc_in_group">
+        <label class="tc03"><span class="tsclass">*</span>类别：</label>
+        <select class="input-ss" style="width:10%;height:32px;" id="category">
+          <option value="0">―请选择―</option>
+        </select>
+        </div>
+        <div class="sc_in_group">
+          <label class="tc03"><span class="tsclass">*</span>时间：</label>
+        <input type="text" placeholder="开始时间" class="input-ss in-u-s-11" placeholder="" style="margin-right:5px; height:32px;" onfocus="WdatePicker({ dateFmt: 'yyyy-MM-dd HH:mm:ss' })" id="ontime_1" />
+        到
+        <input type="text" placeholder="结束时间" id="uptime_1" class="input-ss in-u-s-11" placeholder="" style="margin-right:5px; margin-left:5px;height:32px;" onfocus="WdatePicker({ dateFmt: 'yyyy-MM-dd HH:mm:ss' })" />
+        <a href="#" class="btn_kq btn_tj" id="ontime" style="margin-left:10px;">添加</a>&nbsp;
+        </div>
+        <div class="sc_in_group">
+          <label class="tc03"><span class="tsclass">*</span>总计：</label><font class=" clr_yel" id="time"></font>
+        </div>
+        <div class="sc_in_group">
+          <label class="tc03"><span class="tsclass">*</span>请假类别：</label>
+        <input type="radio" checked="checked" name="check" value="0" id="personpd"> 本人请假&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" id="personpd" name="check" value="1"> 代人请假
+        </div>
+        <div class="sc_in_group">
+          <label class="tc03"><span class="tsclass">*</span>请假人：</label>
+        <input type="text" class="input-ss in-u-s-4" id="person" placeholder=""  value=" " disabled="disabled">
+        <select class="input-ss" style="width:10.5%;height:32px;display: none;" id="persons" >
+          <option value="0">请假人</option>
+        </select>
+        <a href="#" class="btn_kq btn_tj" id="onperson" style="margin-left:10px;display: none;">添加</a>
+        <input type="hidden" id="pons" />
+        <br />
+        <label class="tc03"></label><a href="#" id="deletetns" class="btn_kq btn_tj" style="margin-top:10px; margin-left:5px;">移除请假人</a>
+        </div>
+       <div class="sc_in_group">
+          <label class="tc03"><span class="tsclass">*</span>事由：</label>
+        <textarea id="content" rows="3" class="input-ss inpu_ta in-u-s-4 " placeholder="" style="margin: 0px; height: 146px; width: 549px;"></textarea>
+        </div></form><br/>
+        <div class="sc_in_gsroup" style="margin-left: 5.1%;">
+          <label class="tc03" style="float: left;margin-top: 2px;">附件：</label>
+          <form id="uploadForm" enctype="multipart/form-data">  
+          <input id="file" class="btn_kq btn_tj" type="file" style="float: left;padding-right: 10px; padding: 0 0 0 0;" name="file"/>    
+          </form>
+        <a href="#" class="btn_kq btn_tj" id="upload" style="margin-left:5px;">上传附件</a>
+        <input type="hidden" id="files" />
+        <br/><br/>
+        <ul>
+         <li id="uploads">
+            
+         </li>
+        </ul>
+       </div>
+        <div class="sc_in_group" style="clear: both;display: none;">
+        <label class="tc03">&nbsp;</label>
+        <a class="btn_kq btn_sea" id="inleave" href="#">确定</a><a href="#" class="btn_kq btn_tj" style=" margin-left:10px;">取消</a>
+      </div>
+    <div class="clr"></div>
+</div>
+</div>
+  </div>
+  <div class="clr"></div>
+  <input type="hidden" id="hs"/>
+</div>
+<div class="gridPanel">
+        <table id="gridList"></table>
+        <div id="gridPager"></div>
+    </div>
+</body>
+</html>

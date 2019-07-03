@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>标题</title>
+    <meta name="viewport" content="width=device-width" />
+    <title>标题</title>
+    <link href="../../Content/css/framework-font.css" rel="stylesheet" />
+    <link href="../../Content/css/framework-theme.css" rel="stylesheet" />
+    <script src="../../Content/js/jquery/jquery-2.1.1.min.js"></script>
+    <script src="../../Content/js/bootstrap/bootstrap.js"></script>
+    <script src="../../Content/js/jqgrid/jqgrid.min.js"></script>
+    <link href="../../Content/js/jqgrid/jqgrid.css" rel="stylesheet" />
+    <link href="../../Content/js/select2/select2.min.css" rel="stylesheet" />
+    <script src="../../Content/js/select2/select2.min.js"></script>
+    <link href="../../Content/js/wizard/wizard.css" rel="stylesheet" />
+    <script src="../../Content/js/wizard/wizard.js"></script>
+    <script src="../../Content/js/jqgrid/grid.locale-cn.js"></script>
+    <link href="../../Content/css/framework-ui.css" rel="stylesheet" />
+    <link href="../../Content/js/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <script src="../../Content/js/framework-ui.js"></script>
+        <script src="../../Content/js/validate/jquery.validate.min.js"></script>
+    <script src="../../Content/js/datepicker/WdatePicker.js"></script>
+    
+    <script type="text/javascript">
+        $(function () {
+        	loadRole();
+            gridList();
+        })
+        
+        function gridList() {
+        	
+        	var date = new Date();
+            var initStartDate = startDate = "2018-01-01";
+            var initEndDate = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
+        	
+            var $gridList = $("#gridList");
+            $gridList.dataGrid({
+                url: $.sysStaticData().urlExt+"/lvApprovalFlowRecord/queryAllRecordByPage",
+                height: $(window).height() - 128,
+                colModel: [
+                    { label: '主键', name: 'id', hidden: true },
+                    { label: '请假人', name: 'leaveApplyUserId', width: 150, align: 'left'},
+                    { label: '请假人单位', name: 'leaveApplyUserOrganId', width: 200, align: 'left'},
+                    { label: '请假类别', name: 'leaveTypeId', width: 130, align: 'left'},
+                    { label: '请假时间', name: 'creatorTime', width: 150, align: 'left',
+                    	formatter: function (value, row, index) {
+                            return  $.changeDateFormat(value).DateExt
+                        } 
+                    },
+                    { label: '请假时间段', name: 'deleteUserId', width: 265, align: 'left'},
+                    { label: '请假时长', name: 'leaveDays', width: 120, align: 'left',
+                    	formatter: function (cellvalue) {
+                            return cellvalue+"小时";
+                       }
+                    },
+                    { label: '备注', name: 'leaveCause', width: 250, align: 'left'},
+//                     { label: '批准人', name: 'approver', width: 100, align: 'left'}
+                ],
+                pager: "#gridPager",
+                sortname: '',
+                viewrecords: true,
+                sord:"",
+                postData: { 
+//                     title: $("#txt_keyword").val(),
+                    startDate:initStartDate,
+                    endDate:initEndDate,
+//                     organId:"",
+                    userId:$("#user").val(),
+                    approvalStatus: $("#state").val()
+                },
+            });
+         $("#txt_condition .dropdown-menu li").click(function () {
+             var text = $(this).find('a').html();
+             var value = $(this).find('a').attr('data-value');
+             $("#txt_condition .dropdown-text").html(text).attr('data-value', value)
+            });
+         
+            $("#btn_search").click(function () {
+                 var startDate = $("#leaveStartDate").val();
+                 var endDate = $("#leaveEndDate").val();
+                 if(startDate==null || startDate==""){
+                     startDate = "2018-01-01";
+                 }
+                 if(endDate==null || endDate==""){
+                     var date = new Date();
+                     endDate = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
+                 }
+                 
+               var  condition=$("#txt_condition").find('.dropdown-text').attr('data-value');
+                $gridList.jqGrid('setGridParam', {
+                    postData: { 
+//                     	leaveType: $("#txt_keyword").val(),
+                    	approvalStatus: $("#state").val(),
+//                     	dept: $("#dept").val(),
+                    	userId: $("#user").val(),
+                    	startDate: startDate,
+                    	endDate: endDate 
+                    },
+                }).trigger('reloadGrid');
+            });
+            
+        }
+        
+        function loadRole(){
+            var html = [];
+            var html2 = [];
+            $.ajax({
+                url: $.sysStaticData().urlExt+"/sysUser/querySysUserByOrganId",//查询所有角色
+                dataType: "json",
+                async: false,
+                success: function (data) {
+                    if(data!=null){
+                    	html2.push('<option value="">全部</option>');
+                        for(var i=0;i<data.data.length;i++){
+                            html2.push("<option value="+data.data[i].fId+">"+data.data[i].fRealname+"</option>");
+                        }
+                        $("#user").html(html2.join(''));
+                    }
+                }
+            });
+        }
+      //审批
+        function btn_details() {
+        	 //只有未审核数据才能点击审批
+            if($("#state").val()!="0"){
+           	 $.modalAlert("该项已审批");
+                return false;
+            }
+             var keyValue = $("#gridList").jqGridRowValue().id;
+             if(!keyValue){
+                $.modalAlert("请选择需要查看的请假信息！");
+                 return false;
+             }
+            $.modalOpen({
+                id: "Details",
+                title: "审批",
+                url: $.sysStaticData().urlExt+"/AttendanceSystem/LeaveCheck/Form.html?keyValue=" + keyValue,
+                width: "600px",
+                height: "500px",
+                btn: null,
+            });
+        }
+      
+      
+      //查看日志
+        function btn_details2() {
+             var keyValue = $("#gridList").jqGridRowValue().id;
+             if(!keyValue){
+                $.modalAlert("请选择需要查看的请假信息！");
+                 return false;
+             }
+            $.modalOpen({
+                id: "Details",
+                title: "查看日志",
+                url: $.sysStaticData().urlExt+"/AttendanceSystem/LeaveCheck/LogForm.html?keyValue=" + keyValue,
+                width: "600px",
+                height: "550px",
+                btn: null,
+            });
+        }
+      
+//         function btn_edit() {
+//             var keyValue = $("#gridList").jqGridRowValue().id;
+//             $.modalOpen({
+//                 id: "Form",
+//                 title: "审批",
+//                 url: $.sysStaticData().urlExt +"/AttendanceSystem/LeaveCheck/Form.html?keyValue=" + keyValue,
+//                 width: "500px",
+//                 height: "600px",
+//                 callBack: function (iframeId) {
+//                     top.frames[iframeId].submitForm();
+//                 }
+//             });
+//         }
+    </script>
+</head>
+
+<body>
+  <div class="topPanel">
+        <div class="toolbar">
+            <div class="btn-group">
+                <a class="btn btn-primary" onclick="$.reload()"><span class="glyphicon glyphicon-refresh"></span></a>
+            </div>
+<!--             <div class="btn-group"> -->
+<!--                 <a id="NF-add" authorize="yes" class="btn btn-primary dropdown-text" onclick="btn_add()"><i class="fa fa-plus"></i>新增设备</a> -->
+<!--             </div> -->
+            <div class="operate">
+                <ul class="nav nav-pills">
+                    <li class="first">已选中<span>1</span>项</li>
+<!--                     <li><a id="NF-edit" authorize="yes" onclick="btn_edit()"><i class="fa fa-pencil-square-o"></i>审批</a></li> -->
+                    <li><a id="NF-edit" authorize="yes" onclick="btn_details2()"><i class="fa fa-pencil-square-o"></i>查看日志</a></li>
+                    <li><a id="NF-edit" authorize="yes" onclick="btn_details()"><i class="fa fa-pencil-square-o"></i>审批</a></li>
+                </ul>
+                <a href="javascript:;" class="close"></a>
+            </div>
+            
+        </div>
+        <div class="search">
+            <table>
+                <tr>
+                <th class="formTitle" style="padding-left:20px ;padding-right:10px  ">请假时间:</th>
+                    <td class="formValue" colspan="3">
+                      <div id="txt_condition" class="btn-group" >
+                          <input id="leaveStartDate"  placeholder="请假开始时间" name="leaveStartDate" class="form-control input-wdatepicker required" onfocus="WdatePicker({ dateFmt: 'yyyy-MM-dd' })" />
+                      </div>
+                    </td>
+                    <td>&nbsp;至&nbsp; </td>
+                    <td class="formValue" colspan="3">
+                        <div id="txt_condition" class="btn-group" >
+                          <input id="leaveEndDate"  placeholder="请假结束时间" name="leaveEndDate" class="form-control input-wdatepicker required" onfocus="WdatePicker({ dateFmt: 'yyyy-MM-dd' })" />
+                        </div>
+                    </td>
+                 <th class="formTitle" style="padding-left:30px ;padding-right:10px  ">请假状态:</th>
+                        <td class="formValue" colspan="3">
+                        <div id="txt_condition" class="btn-group">
+<!--                             <input id="state" type="text" class="form-control" placeholder="类别名称" style="width: 200px;"> -->
+                            <select id="state" name="state" class="form-control required" style="height:33px">
+                                <option value="0">暂未审批</option>
+                                <option value="1">审批未通过</option>
+                                <option value="2">审批已通过</option>
+                            </select>
+                        </div>
+                  </td>
+<!--                 <th class="formTitle" style="padding-left:20px ;padding-right:10px  ">部门:</th>
+                        <td class="formValue" colspan="3">
+                        <div id="txt_condition" class="btn-group">
+                            <input id="dept" type="text" class="form-control" placeholder="请假人单位" style="width: 100px;">
+                        </div>
+                  </td>
+-->
+                  <th class="formTitle"  style="padding-left:30px ;padding-right:10px ;">人员:</th>
+                        <td class="formValue" colspan="3">
+                        <div id="txt_condition" class="btn-group">
+                            <select id="user" name="user" class="form-control required" style="height:33px">
+                                <option value="">全部</option>
+                            </select>
+<!--                             <input id="user" type="text" class="form-control" placeholder="请假人名称" style="width: 100px;"> -->
+                        </div>  
+                  </td>
+                <td style="padding-left: 30px;">
+                    <div class="input-group">
+<!--                         <input id="txt_keyword" type="text" class="form-control"  style="width: 0px;"> -->
+                        <span class="input-group-btn">
+                            <button id="btn_search" type="button" class="btn  btn-primary"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                </td>
+            </tr>
+            </table>
+        </div>
+    </div>
+    <div class="gridPanel">
+        <table id="gridList"></table>
+        <div id="gridPager"></div>
+    </div>
+</body>
+
+</html>

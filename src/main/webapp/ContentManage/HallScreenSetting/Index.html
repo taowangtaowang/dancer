@@ -1,0 +1,168 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" />
+    <title>角色管理-列表</title>
+   <link href="../../Content/css/framework-font.css" rel="stylesheet" />
+    <link href="../../Content/css/framework-theme.css" rel="stylesheet" />
+    <script src="../../Content/js/jquery/jquery-2.1.1.min.js"></script>
+    <script src="../../Content/js/bootstrap/bootstrap.js"></script>
+    <link href="../../Content/js/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <script src="../../Content/js/jqgrid/jqgrid.min.js"></script>
+    <link href="../../Content/js/jqgrid/jqgrid.css" rel="stylesheet" />
+    <script src="../../Content/js/jqgrid/grid.locale-cn.js"></script>
+    <link href="../../Content/css/framework-ui.css" rel="stylesheet" />
+    <script src="../../Content/js/framework-ui.js"></script>
+    <script>
+        $(function () {
+            gridList();
+        })
+        function gridList() {
+            var $gridList = $("#gridList");
+            $gridList.dataGrid({
+                url: $.sysStaticData().urlExt+"/hallScreenShow/selectListPage",
+                height: $(window).height() - 96,
+                colModel: [
+                    { label: "主键", name: "id", hidden: true },
+                    { label: '设备编号', name: 'deviceNO', width: 150, align: 'center' },
+                    { label: '设备名称', name: 'deviceName', width: 130, align: 'center' },
+                    { label: '设备描述', name: 'description', width: 130, align: 'center'   },
+                    { label: '显示窗口', name: 'showWindows', width: 130, align: 'center'   },
+                    { label: '页面滚动速度', name: 'rollingSpeed', width: 100, align: 'center',
+                    	 formatter: function (cellvalue) {
+                    		 if(cellvalue==0){
+                    			 return "慢";
+                    		 }else if(cellvalue==1){
+                    			 return "正常";
+                    		 }else if(cellvalue==2){
+                    			 return "快";
+                    		 }
+                         }
+                    },
+                    { label: '页面滚动方式', name: 'rollingSpeedName', width: 130, align: 'center'},
+                    { label: '是否有效', name: 'enabledMark', width: 100, align: 'center',
+                    	  formatter: function (cellvalue) {
+        						return cellvalue == 1 ? "<i class=\"fa fa-toggle-on\"></i>" : "<i class=\"fa fa-toggle-off\"></i>";
+                        }
+                    },
+                    { label: '状态更新', name: 'lastModifyTime', width: 130, align: 'center',
+                    	 formatter: function (cellvalue) {
+                    		 if(cellvalue==null){
+                    			 return "";
+                    		 }else{
+                    			 return $.changeDateFormat(cellvalue).DateExt;
+                    		 }
+                         }
+                    }
+               ]
+            });
+            $("#btn_search").click(function () {
+                $gridList.jqGrid('setGridParam', {
+                    postData: { keyword: $("#txt_keyword").val() },
+                }).trigger('reloadGrid');
+            });
+        }
+        function btn_add() {
+            $.modalOpen({
+                id: "Form",
+                title: "新增大厅显示屏",
+                url: $.sysStaticData().urlExt +"/ContentManage/HallScreenSetting/Form.html",
+                width: "600px",
+                height: "600px",
+                callBack: function (iframeId) {
+                    top.frames[iframeId].submitForm();
+                }
+            });
+        }
+        function btn_edit() {
+            var keyValue = $("#gridList").jqGridRowValue().id;
+            if(!keyValue)
+            {
+				$.modalAlert("请选择需要修改的大厅显示屏！");
+                return false;
+            }
+            $.modalOpen({
+                id: "Form",
+                title: "修改大厅显示屏",
+                url: $.sysStaticData().urlExt +"/ContentManage/HallScreenSetting/Form.html?keyValue=" + keyValue,
+                width: "600px",
+                height: "600px",
+                callBack: function (iframeId) {
+                    top.frames[iframeId].submitForm();
+                }
+            });
+        }
+        function btn_delete() {
+        	var keyValue = $("#gridList").jqGridRowValue().id;
+        	 if(!keyValue)
+             {
+ 				$.modalAlert("请选择需要删除的大厅显示屏！");
+                 return false;
+             }
+            $.deleteAllForm({
+                url: $.sysStaticData().urlExt +"/hallScreenShow/delete",
+                param: { keyValue: $("#gridList").jqGridRowValue().id },
+                success: function () {
+                    $.currentWindow().$("#gridList").trigger("reloadGrid");
+                }
+            })
+        }
+        function btn_details() {
+            var keyValue = $("#gridList").jqGridRowValue().id;
+       	 	if(!keyValue)
+            {
+				$.modalAlert("请选择需要查看的大厅显示屏！");
+                return false;
+            }
+            $.modalOpen({
+                id: "Form",
+                title: "查看大厅显示屏",
+                url: $.sysStaticData().urlExt +"/ContentManage/HallScreenSetting/Form.html?keyValue=" + keyValue,
+                width: "600px",
+                height: "600px",
+                btn: null,
+            });
+        }
+    </script>
+</head>
+<body>
+     <div class="topPanel">
+        <div class="toolbar">
+            <div class="btn-group">
+                <a class="btn btn-primary" onclick="$.reload()"><span class="glyphicon glyphicon-refresh"></span></a>
+            </div>
+            <div class="btn-group">
+                <a id="NF-add" authorize="yes" class="btn btn-primary dropdown-text" onclick="btn_add()"><i class="fa fa-plus"></i>新增大屏</a>
+            </div>
+            <div class="operate">
+                <ul class="nav nav-pills">
+                    <li class="first">已选中<span>1</span>项</li>
+                    <li><a id="NF-edit" authorize="yes" onclick="btn_edit()"><i class="fa fa-pencil-square-o"></i>修改大屏</a></li>
+                    <li><a id="NF-delete" authorize="yes" onclick="btn_delete()"><i class="fa fa-trash-o"></i>删除大屏</a></li>
+                    <li><a id="NF-Details" authorize="yes" onclick="btn_details()"><i class="fa fa-search-plus"></i>查看大屏</a></li>
+                </ul>
+                <a href="javascript:;" class="close"></a>
+            </div>
+        </div>
+        <div class="search">
+            <table>
+                <tr>
+                <td style="padding-left: 2px;">
+                    <div class="input-group">
+                        <input id="txt_keyword" type="text" class="form-control" placeholder="请输入要查询的设备名称" style="width: 200px;">
+                        <span class="input-group-btn">
+                            <button id="btn_search" type="button" class="btn  btn-primary"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                </td>
+            </tr>
+            </table>
+        </div>
+    </div>
+    <div class="gridPanel">
+        <table id="gridList"></table>
+        <div id="gridPager"></div>
+    </div>
+</body>
+</html>

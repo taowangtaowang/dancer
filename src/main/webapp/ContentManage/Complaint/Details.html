@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" />
+    <title>投诉建议管理-查看</title>
+    <link href="../../Content/css/framework-font.css" rel="stylesheet" />
+    <link href="../../Content/css/framework-theme.css" rel="stylesheet" />
+    <script src="../../Content/js/jquery/jquery-2.1.1.min.js"></script>
+    <script src="../../Content/js/bootstrap/bootstrap.js"></script>
+    <link href="../../Content/js/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <script src="../../Content/js/wdtree/tree.js"></script>
+    <link href="../../Content/js/wdtree/tree.css" rel="stylesheet" />
+    <link href="../../Content/js/select2/select2.min.css" rel="stylesheet" />
+    <script src="../../Content/js/select2/select2.min.js"></script>
+    <link href="../../Content/js/wizard/wizard.css" rel="stylesheet" />
+    <script src="../../Content/js/wizard/wizard.js"></script>
+    <script src="../../Content/js/validate/jquery.validate.min.js"></script>
+    <script src="../../Content/js/datepicker/WdatePicker.js"></script>
+    <link href="../../Content/css/framework-ui.css" rel="stylesheet" />
+    <script src="../../Content/js/framework-ui.js"></script>
+    <script>
+	    var keyValue = $.request("keyValue");
+	    $(function () {
+	        if (!!keyValue) {
+	            $.ajax({
+	                url:$.sysStaticData().urlExt +"/complaint/findById",
+	                data: { id: keyValue },
+	                dataType: "json",
+	                async: false,
+	                success: function (data) {
+	                    $("#form1").formSerializeByData(data);
+	                    $("#form1").find('.form-control,select,input').attr('readonly', 'readonly');
+	                    $("#form1").find('div.ckbox label').attr('for', '');
+	                }
+	            });
+	            //将状态修改为已查看
+	            $.ajax({
+	                url:$.sysStaticData().urlExt +"/complaint/updataType",
+	                data: { id: keyValue },
+	                dataType: "json",
+	                async: false,
+	                success: function (data) {
+	                    $.currentWindow().$("#gridList").trigger("reloadGrid");
+	                }
+	            });
+	        }
+	    });
+    </script>
+</head>
+<body>
+    <form id="form1">
+        <div style="padding-top: 20px; margin-right: 20px;">
+            <table class="form">
+                <tr>
+                    <th class="formTitle">填写人姓名</th>
+                    <td class="formValue">
+                        <input id="name" name="name" type="text" class="form-control" />
+                    </td>
+                </tr>
+                <tr>
+                    <th class="formTitle">联系方式</th>
+                    <td class="formValue">
+                        <input id="phone" name="phone" type="text" class="form-control" />
+                    </td>
+                </tr>
+                <tr>
+                    <th class="formTitle" valign="top" style="padding-top: 5px;">内容</th>
+                    <td class="formValue">
+                        <textarea id="feedbackContent" name="feedbackContent" class="form-control" style="height: 60px;"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="formTitle">匿名情况</th>
+                    <td class="formValue">
+                        <select id="anonymityMark" name="anonymityMark" class="form-control required">
+	                        <option value="1">公开</option>
+	                        <option value="0">匿名</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </form>
+</body>
+</html>

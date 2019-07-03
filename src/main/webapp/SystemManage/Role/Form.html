@@ -1,0 +1,182 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" />
+    <title>角色管理-新增/修改</title>
+    <link href="../../Content/css/framework-font.css" rel="stylesheet" />
+    <link href="../../Content/css/framework-theme.css" rel="stylesheet" />
+    <script src="../../Content/js/jquery/jquery-2.1.1.min.js"></script>
+    <script src="../../Content/js/bootstrap/bootstrap.js"></script>
+    <link href="../../Content/js/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <script src="../../Content/js/wdtree/tree.js"></script>
+    <link href="../../Content/js/wdtree/tree.css" rel="stylesheet" />
+    <link href="../../Content/js/select2/select2.min.css" rel="stylesheet" />
+    <script src="../../Content/js/select2/select2.min.js"></script>
+    <link href="../../Content/js/wizard/wizard.css" rel="stylesheet" />
+    <script src="../../Content/js/wizard/wizard.js"></script>
+    <script src="../../Content/js/validate/jquery.validate.min.js"></script>
+    <script src="../../Content/js/datepicker/WdatePicker.js"></script>
+    <link href="../../Content/css/framework-ui.css" rel="stylesheet" />
+    <script src="../../Content/js/framework-ui.js"></script>
+    <script>
+        var keyValue = $.request("keyValue");
+        $(function () {
+            initControl();
+            if (!!keyValue) {
+                $.ajax({
+                    url: $.sysStaticData().urlExt +"/role/queryOneByRoleId",
+                    data: { keyValue: keyValue },
+                    dataType: "json",
+                    async: false,
+                    success: function (data) {
+                        $("#form1").formSerialize(data);
+                    }
+                });
+            }
+        })
+        function initControl() {
+            var defaults =
+                {
+                    id: "id",
+                    text: "fullname",
+                    search: false,
+                    url: "",
+                    param: [],
+                    change: null,
+                    data: top.clients.organize
+                };
+            $("#fOrganizeid").bindSelectByData(defaults);
+            $("#fType").bindSelect({
+                url: $.sysStaticData().urlExt +"/sysItemsDetail/queryMainRole",
+                param: { enCode: "RoleType" },
+                id: "fItemcode",
+                text:"fItemname"
+            });
+            $('#wizard').wizard().on('change', function (e, data) {
+                var $finish = $("#btn_finish");
+                var $next = $("#btn_next");
+                if (data.direction == "next") {
+                    switch (data.step) {
+                        case 1:
+                            if (!$('#form1').formValid()) {
+                                return false;
+                            }
+                            $finish.show();
+                            $next.hide();
+                            break;
+                        default:
+                            break;
+                    }
+                } else {
+                    $finish.hide();
+                    $next.show();
+                }
+            });
+            $("#permissionTree").treeview({
+                height: 444,
+                showcheck: true,
+                url: $.sysStaticData().urlExt +"/authorizeMenu/queryAllData",
+                param: { roleId: keyValue }
+            });
+        }
+        function submitForm() {
+            var postData = $("#form1").formSerialize();
+            postData["permissionIds"] = String($("#permissionTree").getCheckedNodes());
+            $.submitForm({
+                url: $.sysStaticData().urlExt +"/authorizeMenu/updateSysRoleAuthorizeMenu?keyValue=" + keyValue,
+                param: postData,
+                success: function () {
+                    $.currentWindow().$("#gridList").trigger("reloadGrid");
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <form id="form1">
+        <div class="widget-body">
+            <div id="wizard" class="wizard" data-target="#wizard-steps" style="border-left: none; border-top: none; border-right: none;">
+                <ul class="steps">
+                    <li data-target="#step-1" class="active"><span class="step">1</span>角色信息<span class="chevron"></span></li>
+                    <li data-target="#step-2"><span class="step">2</span>功能权限<span class="chevron"></span></li>
+                </ul>
+            </div>
+            <div class="step-content" id="wizard-steps" style="border-left: none; border-bottom: none; border-right: none;">
+                <div class="step-pane active" id="step-1" style="margin: 10px; margin-bottom: 0px;">
+                    <div class="alert alert-danger" style="text-align: left; margin-bottom: 10px;">
+                        <i class="fa fa-warning alert-dismissible" style="position: relative; top: 1px; font-size: 15px; padding-right: 5px;"></i>
+                        请填写角色信息，用于创建或修改角色信息！
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">表单信息</h3>
+                        </div>
+                        <div class="panel-body" style="width: 98%;">
+                            <table class="form">
+                                <tr>
+                                    <th style="display:none;" class="formTitle mydisplaynone">归属组织</th>
+                                    <td style="display:none;" class="formValue mydisplaynone">
+                                        <select id="fOrganizeid" name="fOrganizeid" class="form-control required"></select>
+                                    </td>
+                                    <th class="formTitle">角色名称</th>
+                                    <td class="formValue">
+                                        <input id="fFullname" name="fFullname" type="text" class="form-control required" placeholder="请输入角色名称" />
+                                    </td>
+                                </tr>
+                                
+                                <tr style="display:none;">
+                                    <th class="formTitle">角色编号</th>
+                                    <td class="formValue">
+                                        <input id="fEncode" name="fEncode" value="1" type="text" class="form-control required" placeholder="请输入角色编号" />
+                                    </td>
+                                    <th class="formTitle mydisplaynone">角色类型</th>
+                                    <td class="formValue mydisplaynone">
+                                        <select id="fType" name="fType" class="form-control required"></select>
+                                    </td>
+                                </tr>
+                               
+                                <tr>
+                                    <th class="formTitle">显示顺序</th>
+                                    <td class="formValue">
+                                        <input id="fSortcode" name="fSortcode" type="text" class="form-control required digits" placeholder="请输入显示顺序" />
+                                    </td>
+                                    <th class="formTitle" style="height: 35px;">选项</th>
+                                    <td class="formValue" style="padding-top: 1px;">
+<!--                                         <div class="ckbox">
+                                            <input id="fAllowedit" name="fAllowedit" type="checkbox"><label for="fAllowedit">允许编辑</label>
+                                        </div>
+                                        <div class="ckbox">
+                                            <input id="fAllowdelete" name="fAllowdelete" type="checkbox"><label for="fAllowdelete">允许删除</label>
+                                        </div> -->
+                                        <div class="ckbox">
+                                            <input id="fEnabledmark" name="fEnabledmark" type="checkbox" checked="checked"><label for="fEnabledmark">有效</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <th class="formTitle" valign="top" style="padding-top: 5px;">
+                                        备注
+                                    </th>
+                                    <td class="formValue" colspan="3">
+                                        <textarea id="fDescription" name="fDescription" class="form-control" style="height: 60px;"></textarea>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="step-pane" id="step-2">
+                    <div id="permissionTree"></div>
+                </div>
+            </div>
+            <div class="form-button" id="wizard-actions">
+                <a id="btn_last" disabled class="btn btn-default btn-prev">上一步</a>
+                <a id="btn_next" class="btn btn-default btn-next">下一步</a>
+                <a id="btn_finish" class="btn btn-default" style="display: none;" onclick="submitForm()">完成</a>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

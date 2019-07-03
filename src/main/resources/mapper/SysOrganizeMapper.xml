@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wt.overflow.dao.SysOrganizeMapper" >
+  <resultMap id="BaseResultMap" type="com.wt.overflow.bean.SysOrganize" >
+    <result column="F_Id" property="fId" jdbcType="VARCHAR" />
+    <result column="F_ParentId" property="fParentid" jdbcType="VARCHAR" />
+    <result column="F_Layers" property="fLayers" jdbcType="INTEGER" />
+    <result column="F_EnCode" property="fEncode" jdbcType="VARCHAR" />
+    <result column="F_FullName" property="fFullname" jdbcType="VARCHAR" />
+    <result column="F_ShortName" property="fShortname" jdbcType="VARCHAR" />
+    <result column="F_CategoryId" property="fCategoryid" jdbcType="VARCHAR" />
+    <result column="F_ManagerId" property="fManagerid" jdbcType="VARCHAR" />
+    <result column="F_TelePhone" property="fTelephone" jdbcType="VARCHAR" />
+    <result column="F_MobilePhone" property="fMobilephone" jdbcType="VARCHAR" />
+    <result column="F_WeChat" property="fWechat" jdbcType="VARCHAR" />
+    <result column="F_Fax" property="fFax" jdbcType="VARCHAR" />
+    <result column="F_Email" property="fEmail" jdbcType="VARCHAR" />
+    <result column="F_AreaId" property="fAreaid" jdbcType="VARCHAR" />
+    <result column="F_Address" property="fAddress" jdbcType="VARCHAR" />
+    <result column="F_AllowEdit" property="fAllowedit" jdbcType="BIT" />
+    <result column="F_AllowDelete" property="fAllowdelete" jdbcType="BIT" />
+    <result column="F_SortCode" property="fSortcode" jdbcType="INTEGER" />
+    <result column="F_DeleteMark" property="fDeletemark" jdbcType="BIT" />
+    <result column="F_EnabledMark" property="fEnabledmark" jdbcType="BIT" />
+    <result column="F_Description" property="fDescription" jdbcType="VARCHAR" />
+    <result column="F_CreatorTime" property="fCreatortime" jdbcType="TIMESTAMP" />
+    <result column="F_CreatorUserId" property="fCreatoruserid" jdbcType="VARCHAR" />
+    <result column="F_LastModifyTime" property="fLastmodifytime" jdbcType="TIMESTAMP" />
+    <result column="F_LastModifyUserId" property="fLastmodifyuserid" jdbcType="VARCHAR" />
+    <result column="F_DeleteTime" property="fDeletetime" jdbcType="TIMESTAMP" />
+    <result column="F_DeleteUserId" property="fDeleteuserid" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+      F_Id, F_ParentId, F_Layers, 
+      F_EnCode, F_FullName, F_ShortName, 
+      F_CategoryId, F_ManagerId, F_TelePhone, 
+      F_MobilePhone, F_WeChat, F_Fax, 
+      F_Email, F_AreaId, F_Address, 
+      F_AllowEdit, F_AllowDelete, F_SortCode, 
+      F_DeleteMark, F_EnabledMark, F_Description, 
+      F_CreatorTime, F_CreatorUserId, F_LastModifyTime, 
+      F_LastModifyUserId, F_DeleteTime, F_DeleteUserId
+  </sql>
+  
+  <select id="queryAllData" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from Sys_Organize
+    <where>	
+    	F_DeleteMark  = 0 
+    	<if test="nodeid != null and nodeid !='' ">
+				and F_ParentId = #{nodeid} 
+		</if>
+    	<if test="keyword != null and keyword !='' ">
+				and F_FullName like ('%'+#{keyword}+'%') 
+		</if>
+    </where>
+  </select>
+
+  <select id="queryOneByOrganizeId" resultMap="BaseResultMap" parameterType="java.util.Map" >
+       select
+       <include refid="Base_Column_List" />
+       from Sys_Organize where F_DeleteMark  = 0 and F_Id = #{organizeId,jdbcType=VARCHAR}
+  </select>
+  
+  
+  <select id="queryAllByPId" resultMap="BaseResultMap" parameterType="java.util.Map" >
+       select
+       <include refid="Base_Column_List" />
+       from Sys_Organize where F_DeleteMark  = 0 and  F_ParentId = #{fId,jdbcType=VARCHAR}
+  </select>
+  
+  <insert id="addOrganize" parameterType="com.wt.overflow.bean.SysOrganize">
+    insert into Sys_Organize
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="fId != null">
+         F_Id,
+      </if>
+      <if test="fParentid != null">
+         F_ParentId,
+      </if>
+      <if test="fLayers != null">
+         F_Layers,
+      </if>
+      <if test="fEncode != null">
+         F_EnCode,
+      </if>
+      <if test="fFullname != null">
+         F_FullName,
+      </if>
+      <if test="fShortname != null">
+         F_ShortName,
+      </if>
+      <if test="fCategoryid != null">
+         F_CategoryId,
+      </if>
+      <if test="fManagerid != null">
+         F_ManagerId,
+      </if>
+      <if test="fTelephone != null">
+         F_TelePhone,
+      </if>
+      <if test="fMobilephone != null">
+         F_MobilePhone,
+      </if>
+      <if test="fWechat != null">
+         F_WeChat,
+      </if>
+      <if test="fFax != null">
+         F_Fax,
+      </if>
+      <if test="fEmail != null">
+         F_Email,
+      </if>
+      <if test="fAreaid != null">
+         F_AreaId,
+      </if>
+      <if test="fAddress != null">
+         F_Address,
+      </if>
+      <if test="fAllowedit != null">
+         F_AllowEdit,
+      </if>
+      <if test="fAllowdelete != null">
+         F_AllowDelete,
+      </if>
+      <if test="fSortcode != null">
+         F_SortCode,
+      </if>
+      <if test="fDeletemark != null">
+         F_DeleteMark,
+      </if>
+      <if test="fEnabledmark != null">
+         F_EnabledMark,
+      </if>
+      <if test="fDescription != null">
+         F_Description,
+      </if>
+      <if test="fCreatortime != null">
+         F_CreatorTime,
+      </if>
+      <if test="fCreatoruserid != null">
+         F_CreatorUserId,
+      </if>
+      <if test="fLastmodifytime != null">
+         F_LastModifyTime,
+      </if>
+      <if test="fLastmodifyuserid != null">
+         F_LastModifyUserId,
+      </if>
+      <if test="fDeletetime != null">
+         F_DeleteTime,
+      </if>
+      <if test="fDeleteuserid != null">
+         F_DeleteUserId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="fId != null">
+         #{fId,jdbcType=VARCHAR},
+      </if>
+      <if test="fParentid != null">
+         #{fParentid,jdbcType=VARCHAR},
+      </if>
+      <if test="fLayers != null">
+         #{fLayers,jdbcType=INTEGER},
+      </if>
+      <if test="fEncode != null">
+         #{fEncode,jdbcType=VARCHAR},
+      </if>
+      <if test="fFullname != null">
+         #{fFullname,jdbcType=VARCHAR},
+      </if>
+      <if test="fShortname != null">
+         #{fShortname,jdbcType=VARCHAR},
+      </if>
+      <if test="fCategoryid != null">
+         #{fCategoryid,jdbcType=VARCHAR},
+      </if>
+      <if test="fManagerid != null">
+         #{fManagerid,jdbcType=VARCHAR},
+      </if>
+      <if test="fTelephone != null">
+         #{fTelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="fMobilephone != null">
+         #{fMobilephone,jdbcType=VARCHAR},
+      </if>
+      <if test="fWechat != null">
+         #{fWechat,jdbcType=VARCHAR},
+      </if>
+      <if test="fFax != null">
+         #{fFax,jdbcType=VARCHAR},
+      </if>
+      <if test="fEmail != null">
+         #{fEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="fAreaid != null">
+         #{fAreaid,jdbcType=VARCHAR},
+      </if>
+      <if test="fAddress != null">
+         #{fAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="fAllowedit != null">
+         #{fAllowedit,jdbcType=BIT},
+      </if>
+      <if test="fAllowdelete != null">
+         #{fAllowdelete,jdbcType=BIT},
+      </if>
+      <if test="fSortcode != null">
+         #{fSortcode,jdbcType=INTEGER},
+      </if>
+      <if test="fDeletemark != null">
+         #{fDeletemark,jdbcType=BIT},
+      </if>
+      <if test="fEnabledmark != null">
+         #{fEnabledmark,jdbcType=BIT},
+      </if>
+      <if test="fDescription != null">
+         #{fDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="fCreatortime != null">
+         #{fCreatortime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fCreatoruserid != null">
+         #{fCreatoruserid,jdbcType=VARCHAR},
+      </if>
+      <if test="fLastmodifytime != null">
+         #{fLastmodifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fLastmodifyuserid != null">
+         #{fLastmodifyuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="fDeletetime != null">
+         #{fDeletetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fDeleteuserid != null">
+         #{fDeleteuserid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert> 
+  
+  <update id="updateOrganize" parameterType="com.wt.overflow.bean.SysOrganize">
+     update Sys_Organize set
+     F_ParentId = #{fParentid,jdbcType=VARCHAR},
+     F_Layers = #{fLayers,jdbcType=INTEGER},
+     F_EnCode = #{fEncode,jdbcType=VARCHAR},
+     F_FullName = #{fFullname,jdbcType=VARCHAR},
+     F_ShortName = #{fShortname,jdbcType=VARCHAR},
+     F_CategoryId = #{fCategoryid,jdbcType=VARCHAR},
+     F_ManagerId = #{fManagerid,jdbcType=VARCHAR},
+     F_TelePhone = #{fTelephone,jdbcType=VARCHAR},
+     F_MobilePhone = #{fMobilephone,jdbcType=VARCHAR},
+     F_WeChat = #{fWechat,jdbcType=VARCHAR},
+     F_Fax = #{fFax,jdbcType=VARCHAR},
+     F_Email = #{fEmail,jdbcType=VARCHAR},
+     F_AreaId = #{fAreaid,jdbcType=VARCHAR},
+     F_Address = #{fAddress,jdbcType=VARCHAR},
+     F_AllowEdit = #{fAllowedit,jdbcType=BIT},
+     F_AllowDelete = #{fAllowdelete,jdbcType=BIT},
+     F_SortCode = #{fSortcode,jdbcType=INTEGER},
+     F_EnabledMark = #{fEnabledmark,jdbcType=BIT},
+     F_Description = #{fDescription,jdbcType=VARCHAR},
+     F_LastModifyTime = #{fLastmodifytime,jdbcType=TIMESTAMP},
+     F_LastModifyUserId = #{fLastmodifyuserid,jdbcType=VARCHAR}
+     where F_Id = #{fId,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="deleteOrganize">
+     update Sys_Organize set F_DeleteMark  = 1,F_DeleteUserId =#{F_DeleteUserId,jdbcType=VARCHAR} ,F_DeleteTime =#{F_DeleteTime,jdbcType=TIMESTAMP} 
+     where F_Id = #{roleId} 
+  </update>
+  
+  <update id="updateOrganizeDes">
+     update Sys_Organize set F_Description  = #{fDescription,jdbcType=VARCHAR},F_LastModifyTime =#{fLastmodifytime,jdbcType=VARCHAR} ,F_LastModifyUserId =#{fLastmodifyuserid,jdbcType=TIMESTAMP} 
+     where F_Id = #{fId} 
+  </update>
+  
+  <select id="selectAllParentOrganize" resultMap="BaseResultMap">
+     select F_Id, F_FullName, F_EnabledMark from Sys_Organize where F_ParentId = '0'
+  </select>
+</mapper>

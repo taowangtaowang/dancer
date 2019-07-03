@@ -1,0 +1,131 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" />
+    <title>标题</title>
+    <link href="../../Content/css/framework-font.css" rel="stylesheet" />
+    <link href="../../Content/css/framework-theme.css" rel="stylesheet" />
+    <script src="../../Content/js/jquery/jquery-2.1.1.min.js"></script>
+    <script src="../../Content/js/bootstrap/bootstrap.js"></script>
+    <link href="../../Content/js/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <script src="../../Content/js/wdtree/tree.js"></script>
+    <link href="../../Content/js/wdtree/tree.css" rel="stylesheet" />
+    <link href="../../Content/js/select2/select2.min.css" rel="stylesheet" />
+    <script src="../../Content/js/select2/select2.min.js"></script>
+    <link href="../../Content/js/wizard/wizard.css" rel="stylesheet" />
+    <script src="../../Content/js/wizard/wizard.js"></script>
+    <script src="../../Content/js/validate/jquery.validate.min.js"></script>
+    <script src="../../Content/js/datepicker/WdatePicker.js"></script>
+    <link href="../../Content/css/framework-ui.css" rel="stylesheet" />
+    <script src="../../Content/js/framework-ui.js"></script>
+    <script>
+    var keyValue = $.request("keyValue");
+    $(function () {
+    	
+    	loadselect();
+        if (!!keyValue) {
+            $.ajax({
+                url: $.sysStaticData().urlExt+"/windowDeviceBinding/getUpdateSettingInfo.do",//查询
+                data: { id: keyValue },
+                dataType: "json",
+                async: false,
+                success: function (data) {
+                	   $("#form1").formSerialize(data);
+                	   if(data.windowId!=null&&data.windowName!=null){
+                		   $("#WindowId").append("<option value ="+data.windowId+">"+data.windowName+"</option>");
+                	   }
+                    	   $("#WindowId").val(data.windowId);
+                    	   if(data.padId!=null&&data.padDeviceName!=null){
+                    		   $("#PadId").append("<option value ="+data.padId+">"+data.padDeviceName+"</option>");
+                    	   }
+                           $("#PadId").val(data.padId);
+                           if(data.computerId!=null&&data.computerName!=null){
+                        	   $("#ComputerId").append("<option value ="+data.computerId+">"+data.computerName+"</option>");
+                           }
+                           $("#ComputerId").val(data.computerId);
+                           if(data.displayScreenDeviceId!=null&&data.displayScreenDeviceName!=null){
+                        	   $("#DisplayScreenId").append("<option value ="+data.displayScreenDeviceId+">"+data.displayScreenDeviceName+"</option>");
+                           }
+                           $("#DisplayScreenId").val(data.displayScreenDeviceId);
+                   		$("#WindowId").attr("disabled","disabled");
+                }
+            });
+        }
+    });
+   function loadselect(){
+	   var Windowht =[];
+	   var PadIdht =[];
+	   var ComputerIdht =[];
+	   var DisplayScreenIdht =[];
+	   $.ajax({
+           url: $.sysStaticData().urlExt+"/windowDeviceBinding/getAddSettingInfo.do",//查询
+           dataType: "json",
+           async: false,
+           success: function (data) {
+               $(data.data.windowInfo).each(function () {
+            	   Windowht.push("<option value ="+this.windowId+">"+this.windowName+"</option>"); 
+               });
+               $(data.data.padInfo).each(function () {
+            	   PadIdht.push("<option value ="+this.padDeviceIp+">"+this.padDeviceName+"</option>")   
+               });
+               $(data.data.computerInfo).each(function () {
+            	   ComputerIdht.push("<option value ="+this.computerId+">"+this.computerName +"</option>") 
+               }); $(data.data.displayScreenInfo).each(function () {
+            	   DisplayScreenIdht.push("<option value ="+this.displayScreenDeviceId+">"+this.screenName+"</option>") 
+               });
+           $("#WindowId").html(Windowht.join(''));
+           $("#PadId").html(PadIdht.join(''));
+           $("#ComputerId").html(ComputerIdht.join(''));
+           $("#DisplayScreenId").html(DisplayScreenIdht.join(''));
+           }
+       });
+	}
+    </script>
+</head>
+<body>
+  <form id="form1">
+        <div style="margin-top: 10px; margin-left: 10px; margin-right: 10px;">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#">设备绑定</a></li>
+            </ul>
+            <div style="padding-top: 20px; margin-right: 30px;">
+                <table class="form">
+                    <tr>
+                        <th class="formTitle">窗口名称</th>
+                        <td class="formValue" colspan="3">
+                            <select id="WindowId" name="WindowId" class="form-control required"></select>
+                        </td>
+                    </tr>
+                     <tr>
+                        <th class="formTitle">电脑名称</th>
+                        <td class="formValue" colspan="3">
+                            <select id="ComputerId" name="ComputerId" class="form-control required"></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="formTitle">平板名称</th>
+                         <td class="formValue" colspan="3">
+                            <select id="PadId" name="PadId" class="form-control required"></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="formTitle">显示名称</th>
+                        <td class="formValue" colspan="3">
+                            <select id="DisplayScreenId" name="DisplayScreenId" class="form-control required"></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="formTitle">是否有效</th>
+                        <td class="formValue" colspan="3">
+                        <div class="ckbox">
+                             <input id="enabledMark" name="enabledMark" type="checkbox" checked="checked"><label for="enabledMark">有效</label>
+                        </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

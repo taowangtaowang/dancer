@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<title>绵阳一体化政务服务考勤系统</title>
+<link href="../../Content/css/my_kq.css" rel="stylesheet" />
+<script src="../../Content/js/jquery/jquery-2.1.1.min.js"></script>
+<script src="../../Content/js/bootstrap/bootstrap.js"></script>
+<link href="../../Content/js/bootstrap/bootstrap.min.css"
+	rel="stylesheet" />
+<script src="../../Content/js/wdtree/tree.js"></script>
+<link href="../../Content/js/wdtree/tree.css" rel="stylesheet" />
+<link href="../../Content/js/select2/select2.min.css" rel="stylesheet" />
+<script src="../../Content/js/select2/select2.min.js"></script>
+<link href="../../Content/js/wizard/wizard.css" rel="stylesheet" />
+<script src="../../Content/js/wizard/wizard.js"></script>
+<script src="../../Content/js/validate/jquery.validate.min.js"></script>
+<script src="../../Content/js/datepicker/WdatePicker.js"></script>
+<link href="../../Content/css/framework-ui.css" rel="stylesheet" />
+<script src="../../Content/js/framework-ui.js"></script>
+<script>
+$(function () {
+	
+	//初始化上班时间加载
+	initwork();
+	//添加功能
+	$("#inwork").click(function(){
+	    var am1=$("#am_1 option:selected").text();
+	    var am2=$("#am_2 option:selected").text();
+	    var am3=$("#am_3 option:selected").text();
+	    var am4=$("#am_4 option:selected").text();
+	    var pm1=$("#pm_1 option:selected").text();
+	    var pm2=$("#pm_2 option:selected").text();
+	    var pm3=$("#pm_3 option:selected").text();
+	    var pm4=$("#pm_4 option:selected").text();
+	    var aam=am1+am2;var aam2=am3+am4;
+	    var pam=pm1+pm2;var pam2=pm3+pm4;
+	    if(aam2<=aam || pam2<=pam){
+	    	$.modalAlert("结束时间不能在开始时间之前！","error");	
+	    	return;
+	    }
+	    var time=$("#work_pm option:selected").text();
+	    var timeh="";var timem="";
+	    if(time!=null && time!=""){
+	    	timeh=time.substr(0,time.indexOf(":"));
+	    	timem=time.substr(time.indexOf(":")+1,time.length);
+	    }
+	    var formData ={
+	    		"AMStartHour":am1,
+    	    	"AMStartMinute":am2,
+    	    	"AMEndHour":am3,
+    	    	"AMEndMinute":am4,
+    	    	"PMStartHour":pm1,
+    	    	"PMStartMinute":pm2,
+    	    	"PMEndHour":pm3,
+    	    	"PMEndMinute":pm4,
+    	    	"id":$("#ids").val(),
+    	    	"OverTimeHour":timeh,
+    	    	"OverTimeMinute":timem
+			};
+	    $.ajax({  
+            type: 'post',  
+            url: $.sysStaticData().urlExt +"/lvWorkingTimeConfig/updateLvLeaveType",  
+            data: formData,  
+            success: function (data) {
+                if (data.state == "success") {
+                	$.modalAlert("添加配置成功！","success");
+                }else {
+                	$.modalAlert("添加配置失败！","error");
+                }
+             }     
+        }); 	
+		});
+		
+        	
+});
+function initwork(){
+	 $.ajax({  
+         type: 'post',  
+         url: $.sysStaticData().urlExt +"/lvWorkingTimeConfig/queryOneLvLeaveType",  
+         data:"",  
+         success: function (data) {
+        	 var datas=data.data;
+        	 if (datas !=null){
+            	 for (var i=1;i<=4;i++){
+            		 $("#am_"+i+" option").each(function(){
+                  		var ahour="";
+                  		var pd="";
+                  		if(i==1)pd=datas[0].amstartHour;
+                  		else if(i==2)pd=datas[0].amstartMinute;
+                  		else if(i==3)pd=datas[0].amendHour;
+                  		else if(i==4)pd=datas[0].amendMinute;
+                  	    if(pd<=9)ahour="0"+pd;
+                  	    else ahour=pd;
+                  		if($(this).text()==ahour)$(this).attr("selected","selected");
+                  	});
+              }
+	        	 for (var i=1;i<=4;i++){
+	        		 $("#pm_"+i+" option").each(function(){
+	              		var ahour="";
+	              		var pd="";
+	              		if(i==1)pd=datas[0].pmstartHour;
+	              		else if(i==2)pd=datas[0].pmstartMinute;
+	              		else if(i==3)pd=datas[0].pmendHour;
+	              		else if(i==4)pd=datas[0].pmendMinute;
+	              	    if(pd<=9)ahour="0"+pd;
+	              	    else ahour=pd;
+	              		if($(this).text()==ahour)$(this).attr("selected","selected");
+	              	});
+	          }
+		        	 $("#ids").val(datas[0].id);
+		        	 var hh=data.data[0].overTimeHour
+		        	 var mm=data.data[0].overTimeMinute;
+		        	 if(mm<=9)mm="0"+mm;
+		        	 $("#work_pm option").each(function(){
+		              	if($(this).text()==$.trim(hh+":"+mm))$(this).attr("selected","selected");
+		            });	 
+        	 }	 
+          }    
+     }); 	
+}
+</script>
+</head>
+<body>
+	<div class="ck_div" >
+		<div class="tab_nav">
+			<ul>
+				<li class="dq"><a href="/myweb/AttendanceSystem/LeaveConfiguration/work.html" target="_parent">上班时间</a></li>
+
+			</ul>
+			<div class="clr"></div>
+		</div>
+		<form action="work">
+			<div class="tab_con" style="-moz-transform:scale(2,2); -webkit-transform:scale(1,1); -o-transform:scale(2,2); ">
+				<div class="mb20 co_tl"><span class="tsclass">*</span>时间设置</div>
+				<div class="co_con">
+					<div class="sj_big">
+						<div class="sj_sma">
+							<div class="sc_in_group">
+								<label class="tc01"><span class="tsclass">*</span>上午：</label> 
+								<select
+									class="input-ss in-u-s-5" id="am_1" style="margin-right: 10px;">
+									<option>06</option>
+									<option>07</option>
+									<option>08</option>
+									<option>09</option>
+									<option>10</option>
+									<option>11</option>
+									<option>12</option>
+								</select>时：
+								<select
+									class="input-ss in-u-s-5" id="am_2" style="margin-right: 10px;">
+									<option>00</option>
+									<option>05</option>
+									<option>10</option>
+									<option>15</option>
+									<option>20</option>
+									<option>25</option>
+									<option>30</option>
+									<option>35</option>
+									<option>40</option>
+									<option>55</option>
+									<option>50</option>
+									<option>55</option>
+									
+								</select>分 至
+								<select
+									class="input-ss in-u-s-5" id="am_3" style="margin-right: 10px;">
+									<option>06</option>
+									<option>07</option>
+									<option>08</option>
+									<option>09</option>
+									<option>10</option>
+									<option>11</option>
+									<option>12</option>
+								</select>
+							             时：
+								<select
+									class="input-ss in-u-s-5" id="am_4" style="margin-right: 10px;">
+									<option>00</option>
+									<option>05</option>
+									<option>10</option>
+									<option>15</option>
+									<option>20</option>
+									<option>25</option>
+									<option>30</option>
+									<option>35</option>
+									<option>40</option>
+									<option>55</option>
+									<option>50</option>
+									<option>55</option>
+									
+								</select>分
+							</div>
+							<div class="sc_in_group">
+								<label class="tc01"><span class="tsclass">*</span>下午：</label> 
+								<select class="input-ss in-u-s-5" id="pm_1" style="margin-right: 10px;">
+									<option>13</option>
+									<option>14</option>
+									<option>15</option>
+									<option>16</option>
+									<option>17</option>
+									<option>18</option>
+								</select>时：
+								<select
+									class="input-ss in-u-s-5" id="pm_2" style="margin-right: 10px;">
+									<option>00</option>
+									<option>05</option>
+									<option>10</option>
+									<option>15</option>
+									<option>20</option>
+									<option>25</option>
+									<option>30</option>
+									<option>35</option>
+									<option>40</option>
+									<option>55</option>
+									<option>50</option>
+									<option>55</option>
+									
+								</select>分
+								 至 <select class="input-ss in-u-s-5" id="pm_3" style="margin-right: 10px;">
+									<option>13</option>
+									<option>14</option>
+									<option>15</option>
+									<option>16</option>
+									<option>17</option>
+									<option>18</option>
+								</select>
+								 时：
+								<select
+									class="input-ss in-u-s-5" id="pm_4" style="margin-right: 10px;">
+									<option>00</option>
+									<option>05</option>
+									<option>10</option>
+									<option>15</option>
+									<option>20</option>
+									<option>25</option>
+									<option>30</option>
+									<option>35</option>
+									<option>40</option>
+									<option>55</option>
+									<option>50</option>
+									<option>55</option>	
+								</select>分</div>
+							
+							<div class="sc_in_group">
+								<label class="tc01"><span class="tsclass">*</span>加班开始时间：</label> <select
+									class="input-ss in-u-s-5" id="work_pm" style="width:80px; ">
+									<option>20:00</option>
+									<option>20:30</option>
+									<option>19:00</option>
+									<option>19:30</option>
+									<option>18:00</option>
+									<option>18:30</option>
+									<option>17:00</option>
+									<option>17:30</option>
+								</select>
+							</div>
+							<div class="sc_in_group" style="margin-top: 40px;">
+								<label class="tc02">&nbsp;</label> <a class="btn_kq btn_sea" style="margin-top: 9%;" id="inwork"> 保存</a>
+							</div>
+						</div>
+					</div>
+					<div class="clr"></div>
+					<input type="hidden" id="ids" />
+				</div>
+			</div>
+		</form>
+		<div class="clr"></div>
+	</div>
+</body>
+</html>

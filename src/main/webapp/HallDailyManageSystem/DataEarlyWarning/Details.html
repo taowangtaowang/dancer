@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" />
+    <title>标题</title>
+    <link href="../../Content/css/framework-font.css" rel="stylesheet" />
+    <link href="../../Content/css/framework-theme.css" rel="stylesheet" />
+    <script src="../../Content/js/jquery/jquery-2.1.1.min.js"></script>
+    <script src="../../Content/js/bootstrap/bootstrap.js"></script>
+    <link href="../../Content/js/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <script src="../../Content/js/wdtree/tree.js"></script>
+    <link href="../../Content/js/wdtree/tree.css" rel="stylesheet" />
+    <link href="../../Content/js/select2/select2.min.css" rel="stylesheet" />
+    <script src="../../Content/js/select2/select2.min.js"></script>
+    <link href="../../Content/js/wizard/wizard.css" rel="stylesheet" />
+    <script src="../../Content/js/wizard/wizard.js"></script>
+    <script src="../../Content/js/validate/jquery.validate.min.js"></script>
+    <script src="../../Content/js/datepicker/WdatePicker.js"></script>
+    <link href="../../Content/css/framework-ui.css" rel="stylesheet" />
+    <script src="../../Content/js/framework-ui.js"></script>
+    <script>
+    var keyValue = $.request("keyValue");
+    $(function () {
+
+        if (!!keyValue) {
+            $.ajax({
+                url: $.sysStaticData().urlExt+"/deviceMonitoring/getTechnicalSupportInfo",//查询技术支持信息
+                data: { technicalSupportId: keyValue },
+                dataType: "json",
+                async: false,
+                success: function (data) {
+                    $("#form1").formSerialize(data[0]);
+                  
+                }
+            });
+        }
+    });
+    </script>
+</head>
+<body>
+     <form id="form1">
+        <div style="margin-top: 10px; margin-left: 10px; margin-right: 10px;">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#">技术支持信息</a></li>
+            </ul>
+            <div style="padding-top: 20px; margin-right: 30px;">
+                <table class="form">
+                     <tr>
+                        <th class="formTitle">系统名称</th>
+                        <td class="formValue" colspan="3">
+                            <input id="systemName" name="systemName" type="text" class="form-control required"/>
+                        </td>
+                        <th class="formTitle">技术支持单位</th>
+                        <td class="formValue" colspan="3">
+                            <input id="technicalSupportUnit" name="technicalSupportUnit" type="text" class="form-control required"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="formTitle">联系电话</th>
+                        <td class="formValue" colspan="3">
+                            <input id="telphone" name="telphone" type="text" class="form-control required"/>
+                        </td>
+                        <th class="formTitle">支持QQ</th>
+                        <td class="formValue" colspan="3">
+                            <input id="supportQQ" name="supportQQ" type="text" class="form-control required"/>
+                        </td>
+                        
+                    </tr>
+                    <tr>
+                        <th class="formTitle">创建时间</th>
+                        <td class="formValue" colspan="3">
+                            <input id="creatorTime" name="creatorTime" type="text" class="form-control required"/>
+                        </td>
+                       
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

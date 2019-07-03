@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+	<title>事项列表</title>
+    <link href="../../Content/css/my_kq.css" rel="stylesheet" />
+       <link href="../../Content/css/framework-font.css" rel="stylesheet" />
+    <link href="../../Content/css/framework-theme.css" rel="stylesheet" />
+    <script src="../../Content/js/jquery/jquery-2.1.1.min.js"></script>
+    <script src="../../Content/js/bootstrap/bootstrap.js"></script>
+    <link href="../../Content/js/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <script src="../../Content/js/jqgrid/jqgrid.min.js"></script>
+    <link href="../../Content/js/jqgrid/jqgrid.css" rel="stylesheet" />
+    <script src="../../Content/js/jqgrid/grid.locale-cn.js"></script>
+    <link href="../../Content/css/framework-ui.css" rel="stylesheet" />
+    <script src="../../Content/js/framework-ui.js"></script>
+    <script src="../../Content/js/datepicker/WdatePicker.js"></script>
+      <script src="../../Content/js/work.js"></script>
+        <script>
+        $(function () {
+            gridList();
+          　　　　　　//类别加载
+        	$.loadlist_rows("category","id","leaveTypeName","/lvLeaveType/queryLvLeaveTypeList");
+        })
+        function gridList() {
+            var $gridList = $("#gridList");
+            $gridList.dataGrid({
+                url: $.sysStaticData().urlExt+"/lvLeaveApply/queryAlllvApprovalFlowByLogUser",
+                height: $(window).height() - 128,
+                colModel: [
+                	{ label: '主键', name: 'id', hidden: true },
+                    { label: '请假日期', name: 'deleteUserId', width: 280},
+                    { label: '总时间', name: 'leaveDays', width: 155, align: 'left' },
+                    { label: '请假类别', name: 'leaveTypeId', width: 155, align: 'center' },
+                    { label: '状态', name: 'approvalStatus', width: 155, align: 'center',
+                    	formatter: function (cellvalue) {
+                            if (cellvalue == 0 || cellvalue==null) {
+                                 return "未审核";
+                             } else if (cellvalue == 1) {
+                                 return "不同意";	
+                             } else if (cellvalue == 2) {
+                                 return "已审核";
+                             } 
+                         }},
+                    { label: '代请假', name: 'isReplaceLeave', width: 155, align: 'center',
+                    	formatter: function (cellvalue) {
+                            if (cellvalue == 0) {
+                                 return "否";
+                             } else{
+                                 return "是";
+                             } 
+                         }},
+                    { label: '请假时间', name: 'creatorTime', width: 155, align: 'center',
+                    	formatter: function (cellvalue) {
+                            if (cellvalue !=null && cellvalue !="") {
+                            	var myDate = new Date(cellvalue);
+                            	var year = myDate.getFullYear();
+                            	var month = myDate.getMonth() + 1;
+                            	var day = myDate.getDate();
+                            	var hours = myDate.getHours();
+                            	var minutes = myDate.getMinutes();
+                            	var second = myDate.getSeconds();
+                            	return year + '-' + month + '-' + day +" "+hours + ':' + minutes + ':' + second;
+                             }
+                         }},
+                    { label: '备注', name: 'leaveCause', width: 155, align: 'center',formatter: function (cellvalue) {
+                        if (cellvalue !=null && cellvalue!=="") {
+                            return cellvalue.substr(0,5)+"...";
+                        }
+                    }}
+                ],
+                pager: "#gridPager",
+                sortname: 'code',
+                viewrecords: true,
+                postData: { keyword: $("#txt_keyword").val() },
+            });
+            $("#txt_condition .dropdown-menu li").click(function () {
+                var text = $(this).find('a').html();
+                var value = $(this).find('a').attr('data-value');
+                $("#txt_condition .dropdown-text").html(text).attr('data-value', value)
+            	});
+            //查询
+            $("#btn_search").click(function () {
+            	var data_1=$("#data_1").val();//日期
+            	var data_2=$("#data_2").val();//日期
+            	var leave=$('#category option:selected').val();//请假类别
+                var pd=$('#pd option:selected').val();//状态
+                //&& leave=="00"
+                if(data_1.length<=1 && pd=="00" && data_2.length<=1){
+                	$.modalAlert("参数错误！","error");
+                	return;
+                }
+               
+                if(leave=="00")leave="";
+                if(pd=="00")pd="";
+                var  condition=$("#txt_condition").find('.dropdown-text').attr('data-value');
+                 $gridList.jqGrid('setGridParam', {
+                     postData: { approvalStatus:pd,startDate:data_1,endDate: data_2},
+                 }).trigger('reloadGrid');
+             });
+        }
+        //添加
+        function btn_add() {        	
+            $.modalOpen({
+                id: "toleave",
+                title: "新增请假",
+                url: $.sysStaticData().urlExt +"/AttendanceSystem/LeaveConfiguration/toleave.html",
+                width: "1000px",
+                height: "1040px",
+                callBack: function (iframeId) {
+                    top.frames[iframeId].submitForm();
+                }
+            });
+        }
+        //删除
+        function btn_delete(){
+        	  var keyValue = $("#gridList").jqGridRowValue().id;
+        	  var value=$("#gridList").jqGridRowValue().approvalStatus;
+        	  if("已审核"==value){
+        		  $.modalAlert("无权删除已审核备案数据！","error");
+                  return false;
+        	  }
+              if(!keyValue)
+              {
+  				$.modalAlert("请选择需要删除的数据！");
+                  return false;
+              }
+        	   $.deleteForm({
+                   url: $.sysStaticData().urlExt+"/lvLeaveApply/deleteOnelvApprovalFlowById",
+                   param: { id: $("#gridList").jqGridRowValue().id },
+                   success: function () {
+                       $.currentWindow().$("#gridList").trigger("reloadGrid");
+                       
+                   }
+               });
+        }
+        //修改
+        function btn_edit() { 
+        	var keyValue = $("#gridList").jqGridRowValue().id;
+            if(!keyValue)
+            {
+				$.modalAlert("请选择需要修改的数据！");
+                return false;
+            }
+            $.modalOpen({
+                id: "upleave",
+                title: "修改请假",
+                url: $.sysStaticData().urlExt +"/AttendanceSystem/LeaveConfiguration/upleave.html?keyValue="+keyValue,
+                width: "1000px",
+                height: "1040px",
+                callBack: function (iframeId) {
+                    top.frames[iframeId].submitForm();
+                }
+            });
+        }
+        //查看
+        function btn_details() { 
+        	var keyValue = $("#gridList").jqGridRowValue().id;
+        	if(!keyValue)
+            {
+				$.modalAlert("请选择需要查看的数据！");
+                return false;
+            }
+            $.modalOpen({
+                id: "Form",
+                title: "查看请假",
+                url: $.sysStaticData().urlExt +"/AttendanceSystem/LeaveConfiguration/seleave.html?keyValue="+keyValue,
+                width: "1000px",
+                height: "1040px",
+                callBack: function (iframeId) {
+                    top.frames[iframeId].submitForm();
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div class="topPanel">
+        <div class="toolbar">
+            <div class="btn-group">
+                <a class="btn btn-primary" onclick="$.reload()"><span class="glyphicon glyphicon-refresh"></span></a>
+            </div>
+            <div class="btn-group">
+                <a id="NF-add" authorize="yes" class="btn btn-primary dropdown-text" onclick="btn_add()"><i class="fa fa-plus"></i>新增请假信息</a>
+            </div>
+            <div class="btn-group">
+            </div>
+            <div class="operate">
+                <ul class="nav nav-pills">
+                    <li class="first">已选中<span>1</span>项</li>
+                    <li><a id="NF-edit" authorize="yes" onclick="btn_edit()"><i class="fa fa-pencil-square-o"></i>修改请假信息</a></li>
+                    <li><a id="NF-delete" authorize="yes" onclick="btn_delete()"><i class="fa fa-trash-o"></i>删除请假信息</a></li>
+                    <li><a id="NF-Details" authorize="yes" onclick="btn_details()"><i class="fa fa-search-plus"></i>查看请假信息</a></li>
+                </ul>
+                <a href="javascript:;" class="close"></a>
+            </div>
+        </div>
+        <div class="search">
+            <table>
+                <tr>
+                <td style="padding-left: 2px;">
+                    <div class="input-group" >
+                    <label class="tc04" style="float: left;">请假时间段：</label>
+                    <input placeholder="开始时间" id="data_1" type="text" class="form-control" onfocus="WdatePicker({ dateFmt: 'yyyy-MM-dd HH:mm:ss' })"  style="width: 100px;"/>
+                   &nbsp 至</div>
+                </td>
+                <td style="padding-left: 10px;">
+                    <div class="input-group" >
+                    <input id="data_2" placeholder="结束时间" type="text" class="form-control" onfocus="WdatePicker({ dateFmt: 'yyyy-MM-dd HH:mm:ss' })"  style="width: 100px;"/>
+                    </div>
+                </td>
+                <!-- <td style="padding-left: 15px;">
+                    <div class="input-group" >
+                    <label class="tc04" style="float: left;">请假类别：</label>
+                    <select style="width: 80px;" class="form-control" id="category">
+                       <option value="00">-请选择-</option>
+                    </select>
+                    </div>
+                </td> -->
+                <td style="padding-left: 10px;">
+                    <div class="input-group" >
+                    <label class="tc04" style="float: left;">状态：</label>
+                    <select style="width: 80px;" id="pd" class="form-control">
+                       <option value="00">-请选择-</option>
+                       <option value="2">已审核</option>
+                       <option value="1">不同意</option>
+                       <option value="0">未审核</option>
+                    </select>
+                    </div>
+                </td>
+                <td style="padding-left: 20px;">
+                    <div class="input-group" style="float: left;">
+                    <span class="input-group-btn">
+                            <button id="btn_search" type="button" class="btn  btn-primary"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                </td>
+            </tr>
+            </table>
+        </div>
+    </div>
+    <div class="gridPanel">
+        <table id="gridList"></table>
+        <div id="gridPager"></div>
+    </div>
+</body>
+</html>

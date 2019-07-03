@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wt.overflow.dao.SysItemsDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.wt.overflow.bean.SysItemsdetail" >
+    <result column="F_Id" property="fId" jdbcType="VARCHAR" />
+    <result column="F_ItemId" property="fItemid" jdbcType="VARCHAR" />
+    <result column="F_ParentId" property="fParentid" jdbcType="VARCHAR" />
+    <result column="F_ItemCode" property="fItemcode" jdbcType="VARCHAR" />
+    <result column="F_ItemName" property="fItemname" jdbcType="VARCHAR" />
+    <result column="F_SimpleSpelling" property="fSimplespelling" jdbcType="VARCHAR" />
+    <result column="F_IsDefault" property="fIsdefault" jdbcType="BIT" />
+    <result column="F_Layers" property="fLayers" jdbcType="INTEGER" />
+    <result column="F_SortCode" property="fSortcode" jdbcType="INTEGER" />
+    <result column="F_DeleteMark" property="fDeletemark" jdbcType="BIT" />
+    <result column="F_EnabledMark" property="fEnabledmark" jdbcType="BIT" />
+    <result column="F_Description" property="fDescription" jdbcType="VARCHAR" />
+    <result column="F_CreatorTime" property="fCreatortime" jdbcType="TIMESTAMP" />
+    <result column="F_CreatorUserId" property="fCreatoruserid" jdbcType="VARCHAR" />
+    <result column="F_LastModifyTime" property="fLastmodifytime" jdbcType="TIMESTAMP" />
+    <result column="F_LastModifyUserId" property="fLastmodifyuserid" jdbcType="VARCHAR" />
+    <result column="F_DeleteTime" property="fDeletetime" jdbcType="TIMESTAMP" />
+    <result column="F_DeleteUserId" property="fDeleteuserid" jdbcType="VARCHAR" />
+  </resultMap>
+  
+   <sql id="Base_Column_List" >
+      F_Id, F_ItemId, F_ParentId, 
+      F_ItemCode, F_ItemName, F_SimpleSpelling, 
+      F_IsDefault, F_Layers, F_SortCode, 
+      F_DeleteMark, F_EnabledMark, F_Description, 
+      F_CreatorTime, F_CreatorUserId, F_LastModifyTime, 
+      F_LastModifyUserId, F_DeleteTime, F_DeleteUserId
+  </sql>
+  
+  
+  <update id="deleteItemsDetailByFId" parameterType="java.util.Map">
+		update sys_itemsdetail set F_DeleteMark  = 1,F_DeleteUserId =#{F_DeleteUserId,jdbcType=VARCHAR} ,F_DeleteTime =#{F_DeleteTime,jdbcType=TIMESTAMP} 
+		where F_Id=#{itemsId,jdbcType=VARCHAR}
+  </update>
+  
+   <select id="queryOneByFId" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_itemsdetail where F_DeleteMark = 0 and  F_Id= #{keyword,jdbcType=VARCHAR} 
+  </select> 
+  
+  <select id="queryAllData" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_itemsdetail where F_DeleteMark = 0 
+  </select> 
+  
+  <select id="queryMainRole" resultMap="BaseResultMap" parameterType="java.util.Map" >
+  	SELECT   d.F_Id, d.F_ItemId, d.F_ParentId, 
+      d.F_ItemCode, d.F_ItemName, d.F_SimpleSpelling, 
+      d.F_IsDefault, d.F_Layers, d.F_SortCode, 
+      d.F_DeleteMark, d.F_EnabledMark, d.F_Description, 
+      d.F_CreatorTime, d.F_CreatorUserId, d.F_LastModifyTime, 
+     d.F_LastModifyUserId, d.F_DeleteTime, d.F_DeleteUserId
+	
+	FROM   Sys_ItemsDetail d INNER  JOIN Sys_Items i ON i.F_Id = d.F_ItemId
+		WHERE   1 = 1 AND i.F_EnCode = 'RoleType' AND d.F_EnabledMark = 1 AND d.F_DeleteMark = 0
+	ORDER BY d.F_SortCode ASC
+  </select> 
+  
+  
+  <select id="queryAllDataByPage" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+ 	<include refid="Base_Column_List" />
+    from sys_itemsdetail 
+    <where>
+    	F_DeleteMark = 0 and F_ItemId = #{itemId,jdbcType=VARCHAR}
+    	<if test="keyword != null and keyword !='' ">
+				 and (F_ItemName like ('%'+#{keyword}+'%') or F_ItemCode like
+				('%'+#{keyword}+'%') )
+		</if>
+		
+    </where>
+    <if test=" sidx!=null and sidx!='' ">
+	   order by  ${sidx}  ${sord} 
+   </if>
+  </select>
+  
+  
+  <insert id="addSysItemsDetail" parameterType="com.wt.overflow.bean.SysItemsdetail" >
+    insert into Sys_ItemsDetail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fId != null" >
+        F_Id,
+      </if>
+      <if test="fItemid != null" >
+        F_ItemId,
+      </if>
+      <if test="fParentid != null" >
+        F_ParentId,
+      </if>
+      <if test="fItemcode != null" >
+        F_ItemCode,
+      </if>
+      <if test="fItemname != null" >
+        F_ItemName,
+      </if>
+      <if test="fSimplespelling != null" >
+        F_SimpleSpelling,
+      </if>
+      <if test="fIsdefault != null" >
+        F_IsDefault,
+      </if>
+      <if test="fLayers != null" >
+        F_Layers,
+      </if>
+      <if test="fSortcode != null" >
+        F_SortCode,
+      </if>
+      <if test="fEnabledmark != null" >
+        F_EnabledMark,
+      </if>
+      <if test="fDescription != null" >
+        F_Description,
+      </if>
+      <if test="fDeletemark != null" >
+        F_DeleteMark,
+      </if>
+      <if test="fCreatortime != null" >
+        F_CreatorTime,
+      </if>
+      <if test="fCreatoruserid != null" >
+        F_CreatorUserId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fId != null" >
+        #{fId,jdbcType=VARCHAR},
+      </if>
+      <if test="fItemid != null" >
+        #{fItemid,jdbcType=VARCHAR},
+      </if>
+      <if test="fParentid != null" >
+        #{fParentid,jdbcType=VARCHAR},
+      </if>
+      <if test="fItemcode != null" >
+        #{fItemcode,jdbcType=VARCHAR},
+      </if>
+      <if test="fItemname != null" >
+        #{fItemname,jdbcType=VARCHAR},
+      </if>
+      <if test="fSimplespelling != null" >
+        #{fSimplespelling,jdbcType=VARCHAR},
+      </if>
+      <if test="fIsdefault != null" >
+        #{fIsdefault,jdbcType=BIT},
+      </if>
+      <if test="fLayers != null" >
+        #{fLayers,jdbcType=INTEGER},
+      </if>
+      <if test="fSortcode != null" >
+        #{fSortcode,jdbcType=INTEGER},
+      </if>
+      <if test="fEnabledmark != null" >
+        #{fEnabledmark,jdbcType=BIT},
+      </if>
+      <if test="fDescription != null" >
+        #{fDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="fDeletemark != null" >
+        #{fDeletemark,jdbcType=TIMESTAMP},
+      </if>
+      
+      
+      <if test="fCreatortime != null" >
+        #{fCreatortime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fCreatoruserid != null" >
+        #{fCreatoruserid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateItemsDetail" parameterType="com.wt.overflow.bean.SysItemsdetail" >
+    update Sys_ItemsDetail
+    <set >
+      <if test="fItemcode != null" >
+        F_ItemCode = #{fItemcode,jdbcType=VARCHAR},
+      </if>
+      <if test="fItemname != null" >
+        F_ItemName = #{fItemname,jdbcType=VARCHAR},
+      </if>
+      <if test="fSimplespelling != null" >
+        F_SimpleSpelling = #{fSimplespelling,jdbcType=VARCHAR},
+      </if>
+      <if test="fIsdefault != null" >
+        F_IsDefault = #{fIsdefault,jdbcType=BIT},
+      </if>
+      <if test="fLayers != null" >
+        F_Layers = #{fLayers,jdbcType=INTEGER},
+      </if>
+      <if test="fSortcode != null" >
+        F_SortCode = #{fSortcode,jdbcType=INTEGER},
+      </if>
+      <if test="fEnabledmark != null" >
+        F_EnabledMark = #{fEnabledmark,jdbcType=BIT},
+      </if>
+      <if test="fDescription != null" >
+        F_Description = #{fDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="fLastmodifytime != null" >
+        F_LastModifyTime = #{fLastmodifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fLastmodifyuserid != null" >
+        F_LastModifyUserId = #{fLastmodifyuserid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where F_Id = #{fId,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="getSelectJson" resultType="java.util.Map" parameterType="java.lang.String" >
+ 	SELECT  d.F_Id,d.F_ItemName
+       FROM    Sys_ItemsDetail d
+       INNER  JOIN Sys_Items i ON i.F_Id = d.F_ItemId
+       WHERE   1 = 1
+      <if test="enCode != null and '' != enCode ">
+      	AND i.F_EnCode = #{enCode}
+      </if>
+       AND d.F_EnabledMark = 1
+       AND d.F_DeleteMark = 0
+       ORDER BY d.F_SortCode ASC
+  </select> 
+</mapper>

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width" />
+<title>绵阳一体化政务服务考勤系统</title>
+<link href="../../Content/css/my_kq.css" rel="stylesheet" />
+
+</head>
+
+<body>
+<div class="ck_div">
+  <div class="tab_con">
+    <div class="ss_nr">
+      <div>
+      <div class="sc_in_group f_le"><label class="tc04">请假类别：</label><select class="input-ss in-u-s-3" >
+          <option>-请选择-</option>
+          <option>1</option>
+        </select></div>
+        <div class="sc_in_group f_le"><label class="tc04">部门：</label><select class="input-ss in-u-s-3" >
+          <option>-请选择-</option>
+          <option>1</option>
+        </select></div>
+        <div class="sc_in_group f_le"><label class="tc04">人员：</label><select class="input-ss in-u-s-3" >
+          <option>-请选择-</option>
+          <option>1</option>
+        </select></div>
+        <div class="sc_in_group f_le"><label class="tc04">人员分类：</label><select class="input-ss in-u-s-3" >
+          <option>-请选择-</option>
+          <option>1</option>
+        </select></div>
+        <div class="sc_in_group f_le"><label class="tc04">工作类型：</label><select class="input-ss in-u-s-3" >
+          <option>-请选择-</option>
+          <option>1</option>
+        </select></div>
+      <div class="clr"></div>
+      </div>
+      <div style="margin-top:20px;">
+      <div class="sc_in_group f_le1">
+      <a href="#" class="btn_kq btn_tj" style="padding:0 19px;" >当日</a>
+      <a href="#" class="btn_kq btn_tj" style="margin-left:5px;padding:0 19px;">当月</a>
+      <a href="#" class="btn_kq btn_seb" style="margin-left:5px;padding:0 19px;">季度</a>
+      </div>
+      <div class="sc_in_group f_le" style="display:block; width:124px;">
+          <select class="input-ss" >
+          <option>-季度选择-</option>
+          <option>1</option>
+        </select></div>
+        <div class="sc_in_group f_le" style="width:380px;"><label class="tc04">统计时间段：</label><input type="text" class="input-ss in-u-s-4" placeholder="" style="margin-right:5px;" value="2018-04-15 " >-<input type="text" class="input-ss in-u-s-4" placeholder="" style="margin:0 0 0 5px" value="2018-04-15 " ></div>
+<div class="sc_in_group f_le">
+      <a href="#" class="btn_kq btn_tj_tj"  style="padding:0 19px;">统计</a>
+      </div>
+        <div class="clr"></div>
+      </div>
+    </div>
+    <div class="clo_lan" style="padding-left:20px; padding-bottom:10px;">加班单位：小时    其他：次</div>
+    <div class="co_table">
+    
+  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-hover" >
+  <tr>
+    <th rowspan="2" align="center" valign="middle">单位</th>
+    <th rowspan="2" align="center" valign="middle">人员</th>
+    <th rowspan="2" align="center" valign="middle" >应打</th>
+    <th rowspan="2" align="center" valign="middle" >实打</th>
+    <th rowspan="2" align="center" valign="middle" >未打</th>
+    <th rowspan="2" align="center" valign="middle" >矿工</th>
+    <th rowspan="2" align="center" valign="middle" >迟到</th>
+    <th rowspan="2" align="center" valign="middle" >早退</th>
+    <th colspan="9" >请假</th>
+    <th rowspan="2" align="center" valign="middle" >加班<br /><font style="font-weight:normal; color:#888;">（以每天加班小时累计的总和）</font></th>
+  </tr>
+  <tr>
+    <th class="bd_top clo_lan">病假</th>
+    <th class="bd_top clo_lan">事假</th>
+    <th class="bd_top clo_lan">婚假</th>
+    <th class="bd_top clo_lan">产假</th>
+    <th class="bd_top clo_lan">因公</th>
+    <th class="bd_top clo_lan">公休</th>
+    <th class="bd_top clo_lan">哺乳</th>
+    <th class="bd_top clo_lan">丧假</th>
+    <th class="bd_top clo_lan">探亲</th>
+    </tr>
+  <tr>
+    <td>农业厅</td>
+    <td>张三</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td class="clr_red">1</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>农业厅</td>
+    <td>张三</td>
+    <td>1</td>
+    <td>1</td>
+    <td>1</td>
+    <td>1</td>
+    <td class="clr_yel">1</td>
+    <td class="clr_yel">1</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>农业厅</td>
+    <td>张三</td>
+    <td>1</td>
+    <td>1</td>
+    <td>1</td>
+    <td>1</td>
+    <td class="clr_yel">1</td>
+    <td class="clr_yel">1</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>农业厅</td>
+    <td>张三</td>
+    <td>1</td>
+    <td>1</td>
+    <td>1</td>
+    <td>1</td>
+    <td class="clr_yel">1</td>
+    <td class="clr_yel">1</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>农业厅</td>
+    <td>张三</td>
+    <td>1</td>
+    <td>1</td>
+    <td>1</td>
+    <td>1</td>
+    <td class="clr_yel">1</td>
+    <td class="clr_yel">1</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>农业厅</td>
+    <td>张三</td>
+    <td>1</td>
+    <td>1</td>
+    <td>1</td>
+    <td>1</td>
+    <td class="clr_yel">1</td>
+    <td class="clr_yel">1</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>农业厅</td>
+    <td>张三</td>
+    <td>1</td>
+    <td>1</td>
+    <td>1</td>
+    <td>1</td>
+    <td class="clr_yel">1</td>
+    <td class="clr_yel">1</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>农业厅</td>
+    <td>张三</td>
+    <td>1</td>
+    <td>1</td>
+    <td>1</td>
+    <td>1</td>
+    <td class="clr_yel">1</td>
+    <td class="clr_yel">1</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>农业厅</td>
+    <td>张三</td>
+    <td>1</td>
+    <td>1</td>
+    <td>1</td>
+    <td>1</td>
+    <td class="clr_yel">1</td>
+    <td class="clr_yel">1</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>农业厅</td>
+    <td>张三</td>
+    <td>1</td>
+    <td>1</td>
+    <td>1</td>
+    <td>1</td>
+    <td class="clr_yel">1</td>
+    <td class="clr_yel">1</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>农业厅</td>
+    <td>张三</td>
+    <td>1</td>
+    <td>1</td>
+    <td>1</td>
+    <td>1</td>
+    <td class="clr_yel">1</td>
+    <td class="clr_yel">1</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+  </tr>
+</table>
+  </div>
+   <div style=" margin:0 20px;">
+    这里放分页
+    </div>
+  </div>
+  <div class="clr"></div>
+</div>
+</body>
+</html>

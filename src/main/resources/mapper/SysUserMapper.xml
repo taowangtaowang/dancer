@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wt.overflow.dao.SysUserMapper" >
+  <resultMap id="BaseResultMap" type="com.wt.overflow.bean.SysUser" >
+    <id column="F_Id" property="fId" jdbcType="VARCHAR" />
+    <result column="F_Account" property="fAccount" jdbcType="VARCHAR" />
+    <result column="F_RealName" property="fRealname" jdbcType="VARCHAR" />
+    <result column="F_NickName" property="fNickname" jdbcType="VARCHAR" />
+    <result column="F_HeadIcon" property="fHeadicon" jdbcType="VARCHAR" />
+    <result column="F_Gender" property="fGender" jdbcType="BIT" />
+    <result column="F_Birthday" property="fBirthday" jdbcType="TIMESTAMP" />
+    <result column="F_MobilePhone" property="fMobilephone" jdbcType="VARCHAR" />
+    <result column="F_Email" property="fEmail" jdbcType="VARCHAR" />
+    <result column="F_WeChat" property="fWechat" jdbcType="VARCHAR" />
+    <result column="F_ManagerId" property="fManagerid" jdbcType="VARCHAR" />
+    <result column="F_SecurityLevel" property="fSecuritylevel" jdbcType="INTEGER" />
+    <result column="F_Signature" property="fSignature" jdbcType="VARCHAR" />
+    <result column="F_OrganizeId" property="fOrganizeid" jdbcType="VARCHAR" />
+    <result column="F_DepartmentId" property="fDepartmentid" jdbcType="VARCHAR" />
+    <result column="F_RoleId" property="fRoleid" jdbcType="VARCHAR" />
+    <result column="F_DutyId" property="fDutyid" jdbcType="VARCHAR" />
+    <result column="F_IsAdministrator" property="fIsadministrator" jdbcType="BIT" />
+    <result column="F_SortCode" property="fSortcode" jdbcType="INTEGER" />
+    <result column="F_DeleteMark" property="fDeletemark" jdbcType="BIT" />
+    <result column="F_EnabledMark" property="fEnabledmark" jdbcType="BIT" />
+    <result column="F_Description" property="fDescription" jdbcType="VARCHAR" />
+    <result column="F_CreatorTime" property="fCreatortime" jdbcType="TIMESTAMP" />
+    <result column="F_CreatorUserId" property="fCreatoruserid" jdbcType="VARCHAR" />
+    <result column="F_LastModifyTime" property="fLastmodifytime" jdbcType="TIMESTAMP" />
+    <result column="F_LastModifyUserId" property="fLastmodifyuserid" jdbcType="VARCHAR" />
+    <result column="F_DeleteTime" property="fDeletetime" jdbcType="TIMESTAMP" />
+    <result column="F_DeleteUserId" property="fDeleteuserid" jdbcType="VARCHAR" />
+    
+    <result column="F_UserPassword" property="fUserPassword" jdbcType="VARCHAR" />
+    <result column="F_Question" property="fQuestion" jdbcType="VARCHAR" />
+    <result column="F_AnswerQuestion" property="fAnswerQuestion" jdbcType="VARCHAR" />
+    <result column="F_ChangePasswordDate" property="fChangePasswordDate" jdbcType="VARCHAR" />
+    <result column="F_JobNumber" property="fJobNumber" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    F_Id, F_Account, F_RealName, F_NickName, F_HeadIcon, F_Gender, F_Birthday, F_MobilePhone, 
+    F_Email, F_WeChat, F_ManagerId,F_SecurityLevel,F_Signature, F_OrganizeId, F_DepartmentId, 
+    F_RoleId, F_DutyId, F_IsAdministrator, F_SortCode, F_DeleteMark, F_EnabledMark, F_Description, 
+    F_CreatorTime, F_CreatorUserId, F_LastModifyTime, F_LastModifyUserId, F_DeleteTime, F_DeleteUserId,F_JobNumber
+  </sql>
+  
+  <select id="queryByLoginName" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    a.F_Id, a.F_Account, a.F_RealName, a.F_NickName, a.F_HeadIcon, a.F_Gender, a.F_Birthday, a.F_MobilePhone, 
+    a.F_Email, a.F_WeChat, a.F_ManagerId,a.F_SecurityLevel,a.F_Signature, a.F_OrganizeId, a.F_DepartmentId, 
+    a.F_RoleId, a.F_DutyId, a.F_IsAdministrator, a.F_SortCode, a.F_DeleteMark, a.F_EnabledMark, a.F_Description, 
+    a.F_CreatorTime, a.F_CreatorUserId, a.F_LastModifyTime, a.F_LastModifyUserId, a.F_DeleteTime, a.F_DeleteUserId,a.F_JobNumber,
+    
+    b.F_UserPassword,b.F_Question,b.F_AnswerQuestion,b.F_ChangePasswordDate
+    from sys_user a left join Sys_UserLogOn b on a.F_Id = b.F_UserId
+    where F_Account = #{loginname,jdbcType=VARCHAR} and a.F_DeleteMark=0
+  </select> 
+  
+  <update id="updateSysUserHeadIcon" parameterType="java.util.Map" >
+    	update  sys_user set  F_HeadIcon = #{headIcon,jdbcType=VARCHAR}   where F_Id = #{fId,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="queryUserByPage" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user 
+    <where>	
+    	 F_Account != 'admin' and F_DeleteMark = 0
+    	<if test="keyword != null and keyword !='' ">
+				
+				and (F_Account like ('%'+#{keyword}+'%') 
+				or F_RealName like ('%'+#{keyword}+'%')
+				or F_MobilePhone like ('%'+#{keyword}+'%') ) 
+		</if>
+    </where>
+    <if test=" sidx!=null and sidx!='' ">
+	   order by  ${sidx}  ${sord} 
+    </if>
+  </select>
+
+  <update id="deleteSysUser" parameterType="java.util.Map" >
+    update  sys_user set  F_DeleteMark = 1, F_DeleteUserId =#{F_DeleteUserId,jdbcType=VARCHAR} ,F_DeleteTime =#{F_DeleteTime,jdbcType=TIMESTAMP} 
+    where F_Id = #{fId,jdbcType=VARCHAR}
+  </update>
+  
+   <update id="updateSysUserEnabled" parameterType="java.util.Map" >
+    update  sys_user set  F_EnabledMark = #{F_EnabledMark,jdbcType=BIT} , F_LastModifyUserId =#{F_LastModifyUserId,jdbcType=VARCHAR} ,F_LastModifyTime =#{F_LastModifyTime,jdbcType=TIMESTAMP} 
+    where F_Id = #{fId,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateSysUserReset" parameterType="java.util.Map" >
+    update  sys_user set  F_Account = #{F_Account,jdbcType=BIT} , F_RealName = #{F_RealName,jdbcType=BIT} , 
+    		F_LastModifyUserId =#{F_LastModifyUserId,jdbcType=VARCHAR} ,
+    		F_LastModifyTime =#{F_LastModifyTime,jdbcType=TIMESTAMP} 
+    where F_Id = #{fId,jdbcType=VARCHAR}
+  </update>
+  
+  
+  <select id="queryOneBySysUserId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user
+    where F_Id = #{keyValue,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="querySysUserByOrganId" resultMap="BaseResultMap" parameterType="com.wt.overflow.bean.SysUser" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user
+    where F_OrganizeId = #{fOrganizeid,jdbcType=VARCHAR}
+  </select>
+  	
+  <insert id="addSysUser" parameterType="com.wt.overflow.bean.SysUser" >
+    insert into sys_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fId != null" >
+        F_Id,
+      </if>
+      <if test="fAccount != null" >
+        F_Account,
+      </if>
+      <if test="fRealname != null" >
+        F_RealName,
+      </if>
+      <if test="fNickname != null" >
+        F_NickName,
+      </if>
+      <if test="fHeadicon != null" >
+        F_HeadIcon,
+      </if>
+      <if test="fGender != null" >
+        F_Gender,
+      </if>
+      <if test="fBirthday != null" >
+        F_Birthday,
+      </if>
+      <if test="fMobilephone != null" >
+        F_MobilePhone,
+      </if>
+      <if test="fEmail != null" >
+        F_Email,
+      </if>
+      <if test="fWechat != null" >
+        F_WeChat,
+      </if>
+      <if test="fManagerid != null" >
+        F_ManagerId,
+      </if>
+      <if test="fSecuritylevel != null" >
+        F_SecurityLevel,
+      </if>
+      <if test="fSignature != null" >
+        F_Signature,
+      </if>
+      <if test="fOrganizeid != null" >
+        F_OrganizeId,
+      </if>
+      <if test="fDepartmentid != null" >
+        F_DepartmentId,
+      </if>
+      <if test="fRoleid != null" >
+        F_RoleId,
+      </if>
+      <if test="fDutyid != null" >
+        F_DutyId,
+      </if>
+      <if test="fIsadministrator != null" >
+        F_IsAdministrator,
+      </if>
+      <if test="fSortcode != null" >
+        F_SortCode,
+      </if>
+      <if test="fDeletemark != null" >
+        F_DeleteMark,
+      </if>
+      <if test="fEnabledmark != null" >
+        F_EnabledMark,
+      </if>
+      <if test="fDescription != null" >
+        F_Description,
+      </if>
+      <if test="fCreatortime != null" >
+        F_CreatorTime,
+      </if>
+      <if test="fCreatoruserid != null" >
+        F_CreatorUserId,
+      </if>
+      <if test="fLastmodifytime != null" >
+        F_LastModifyTime,
+      </if>
+      <if test="fLastmodifyuserid != null" >
+        F_LastModifyUserId,
+      </if>
+      <if test="fDeletetime != null" >
+        F_DeleteTime,
+      </if>
+      <if test="fDeleteuserid != null" >
+        F_DeleteUserId,
+      </if>
+      <if test="fJobNumber != null" >
+        F_JobNumber,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fId != null" >
+        #{fId,jdbcType=VARCHAR},
+      </if>
+      <if test="fAccount != null" >
+        #{fAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="fRealname != null" >
+        #{fRealname,jdbcType=VARCHAR},
+      </if>
+      <if test="fNickname != null" >
+        #{fNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="fHeadicon != null" >
+        #{fHeadicon,jdbcType=VARCHAR},
+      </if>
+      <if test="fGender != null" >
+        #{fGender,jdbcType=BIT},
+      </if>
+      <if test="fBirthday != null" >
+        #{fBirthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fMobilephone != null" >
+        #{fMobilephone,jdbcType=VARCHAR},
+      </if>
+      <if test="fEmail != null" >
+        #{fEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="fWechat != null" >
+        #{fWechat,jdbcType=VARCHAR},
+      </if>
+      <if test="fManagerid != null" >
+        #{fManagerid,jdbcType=VARCHAR},
+      </if>
+      <if test="fSecuritylevel != null" >
+        #{fSecuritylevel,jdbcType=INTEGER},
+      </if>
+      <if test="fSignature != null" >
+        #{fSignature,jdbcType=VARCHAR},
+      </if>
+      <if test="fOrganizeid != null" >
+        #{fOrganizeid,jdbcType=VARCHAR},
+      </if>
+      <if test="fDepartmentid != null" >
+        #{fDepartmentid,jdbcType=VARCHAR},
+      </if>
+      <if test="fRoleid != null" >
+        #{fRoleid,jdbcType=VARCHAR},
+      </if>
+      <if test="fDutyid != null" >
+        #{fDutyid,jdbcType=VARCHAR},
+      </if>
+      <if test="fIsadministrator != null" >
+        #{fIsadministrator,jdbcType=BIT},
+      </if>
+      <if test="fSortcode != null" >
+        #{fSortcode,jdbcType=INTEGER},
+      </if>
+      <if test="fDeletemark != null" >
+        #{fDeletemark,jdbcType=BIT},
+      </if>
+      <if test="fEnabledmark != null" >
+        #{fEnabledmark,jdbcType=BIT},
+      </if>
+      <if test="fDescription != null" >
+        #{fDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="fCreatortime != null" >
+        #{fCreatortime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fCreatoruserid != null" >
+        #{fCreatoruserid,jdbcType=VARCHAR},
+      </if>
+      <if test="fLastmodifytime != null" >
+        #{fLastmodifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fLastmodifyuserid != null" >
+        #{fLastmodifyuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="fDeletetime != null" >
+        #{fDeletetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fDeleteuserid != null" >
+        #{fDeleteuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="fJobNumber != null" >
+        #{fJobNumber,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>	
+  
+  <update id="updateSysUser" parameterType="com.wt.overflow.bean.SysUser" >
+    update sys_user
+    <set >
+      <if test="fAccount != null" >
+        F_Account = #{fAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="fRealname != null" >
+        F_RealName = #{fRealname,jdbcType=VARCHAR},
+      </if>
+      <if test="fNickname != null" >
+        F_NickName = #{fNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="fHeadicon != null" >
+        F_HeadIcon = #{fHeadicon,jdbcType=VARCHAR},
+      </if>
+      <if test="fGender != null" >
+        F_Gender = #{fGender,jdbcType=BIT},
+      </if>
+      <if test="fBirthday != null" >
+        F_Birthday = #{fBirthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fMobilephone != null" >
+        F_MobilePhone = #{fMobilephone,jdbcType=VARCHAR},
+      </if>
+      <if test="fEmail != null" >
+        F_Email = #{fEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="fWechat != null" >
+        F_WeChat = #{fWechat,jdbcType=VARCHAR},
+      </if>
+      <if test="fManagerid != null" >
+        F_ManagerId = #{fManagerid,jdbcType=VARCHAR},
+      </if>
+      <if test="fSecuritylevel != null" >
+        F_SecurityLevel = #{fSecuritylevel,jdbcType=INTEGER},
+      </if>
+      <if test="fSignature != null" >
+        F_Signature = #{fSignature,jdbcType=VARCHAR},
+      </if>
+      <if test="fOrganizeid != null" >
+        F_OrganizeId = #{fOrganizeid,jdbcType=VARCHAR},
+      </if>
+      <if test="fDepartmentid != null" >
+        F_DepartmentId = #{fDepartmentid,jdbcType=VARCHAR},
+      </if>
+      <if test="fRoleid != null" >
+        F_RoleId = #{fRoleid,jdbcType=VARCHAR},
+      </if>
+      <if test="fDutyid != null" >
+        F_DutyId = #{fDutyid,jdbcType=VARCHAR},
+      </if>
+      <if test="fIsadministrator != null" >
+        F_IsAdministrator = #{fIsadministrator,jdbcType=BIT},
+      </if>
+      <if test="fSortcode != null" >
+        F_SortCode = #{fSortcode,jdbcType=INTEGER},
+      </if>
+      <if test="fDeletemark != null" >
+        F_DeleteMark = #{fDeletemark,jdbcType=BIT},
+      </if>
+      <if test="fEnabledmark != null" >
+        F_EnabledMark = #{fEnabledmark,jdbcType=BIT},
+      </if>
+      <if test="fDescription != null" >
+        F_Description = #{fDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="fCreatortime != null" >
+        F_CreatorTime = #{fCreatortime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fCreatoruserid != null" >
+        F_CreatorUserId = #{fCreatoruserid,jdbcType=VARCHAR},
+      </if>
+      <if test="fLastmodifytime != null" >
+        F_LastModifyTime = #{fLastmodifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fLastmodifyuserid != null" >
+        F_LastModifyUserId = #{fLastmodifyuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="fDeletetime != null" >
+        F_DeleteTime = #{fDeletetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fDeleteuserid != null" >
+        F_DeleteUserId = #{fDeleteuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="fJobNumber != null" >
+        F_JobNumber = #{fJobNumber,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where F_Id = #{fId,jdbcType=VARCHAR}
+  </update>
+  
+   <select id="selectAllExitSysUsers" resultMap="BaseResultMap">
+    select 
+        <include refid="Base_Column_List" />
+    from 
+        sys_user 
+    where 
+        F_DeleteMark=0 
+  </select>
+
+  <select id="selectWindowsUserList" resultMap="BaseResultMap">
+    select u.F_Id, u.F_Account, u.F_RealName from Sys_User u
+    left join Rn_OrganBusinessType t on u.F_OrganizeId = t.OrganId
+    where t.BusinessTypeId = #{businessTypeId} and t.DeleteMark = 0 and t.EnabledMark =1
+    and u.F_DeleteMark = 0 and u.F_EnabledMark =1 and
+    not exists(select 1 from Rn_BusinessWindows w where w.DeleteMark = 0 and w.EnabledMark = 1
+    and w.CurrentLoginUser != '' and u.F_Id like '%'+w.CurrentLoginUser+'%')
+    order by u.F_SortCode asc
+  </select>
+</mapper>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" />
+    <title>系统按钮</title>
+    <link href="../../Content/css/framework-font.css" rel="stylesheet" />
+    <link href="../../Content/css/framework-theme.css" rel="stylesheet" />
+    <script src="../../Content/js/jquery/jquery-2.1.1.min.js"></script>
+    <script src="../../Content/js/bootstrap/bootstrap.js"></script>
+    <link href="../../Content/js/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <script src="../../Content/js/jqgrid/jqgrid.min.js"></script>
+    <link href="../../Content/js/jqgrid/jqgrid.css" rel="stylesheet" />
+    <script src="../../Content/js/jqgrid/grid.locale-cn.js"></script>
+    <link href="../../Content/css/framework-ui.css" rel="stylesheet" />
+    <script src="../../Content/js/framework-ui.js"></script>
+    <script>
+        var moduleId = $.request("moduleId");
+        $(function () {
+            gridList();
+        })
+        function gridList() {
+            $("#gridList").dataGrid({
+                treeGrid: true,
+                treeGridModel: "adjacency",
+                ExpandColumn: "fLocation",
+                url:  $.sysStaticData().urlExt +"/ModuleButton/findList?fModuleid=" + moduleId,
+                height: $(window).height() - 90,
+                colModel: [
+                    { label: "主键", name: "fId", hidden: true, key: true },
+                    { label: "名称", name: "fFullname",  width: 150, align: 'center' },
+                    
+                    {
+                        label: '位置', name: 'fLocation', width: 80, align: 'left',
+                        formatter: function (cellvalue) {
+                            if (cellvalue == 1) {
+                                return "初始";
+                            } else {
+                                return "选中";
+                            }
+                        }
+                    },
+                    { label: '事件', name: 'fJsevent', width: 150, align: 'left' },
+                    { label: '连接', name: 'fUrladdress', width: 270, align: 'left' },
+                    {
+                        label: "分开", name: "fSplit", width: 60, align: "center",
+                        formatter: function (cellvalue) {
+                            return cellvalue == true ? "<i class=\"fa fa-toggle-on\"></i>" : "<i class=\"fa fa-toggle-off\"></i>";
+                        }
+                    },
+                    {
+                        label: "公共", name: "fIspublic", width: 60, align: "center",
+                        formatter: function (cellvalue) {
+                            return cellvalue == true ? "<i class=\"fa fa-toggle-on\"></i>" : "<i class=\"fa fa-toggle-off\"></i>";
+                        }
+                    },
+                    {
+                        label: "有效", name: "fEnabledmark", width: 60, align: "center", autowidth: false,
+                        formatter: function (cellvalue) {
+                            return cellvalue == 1 ? "<i class=\"fa fa-toggle-on\"></i>" : "<i class=\"fa fa-toggle-off\"></i>";
+                        }
+                    }
+                ]
+            });
+        }
+        function btn_add() {
+            $.modalOpen({
+                id: "Form",
+                title: "新建按钮",
+                url:  $.sysStaticData().urlExt +"/SystemManage/ModuleButton/Form.html?moduleId=" + moduleId,
+                width: "700px",
+                height: "440px",
+                callBack: function (iframeId) {
+                    top.frames[iframeId].submitForm();
+                }
+            });
+        }
+        function btn_edit() {
+            var keyValue = $("#gridList").jqGridRowValue().fId;
+            if(!keyValue)
+            {
+				$.modalAlert("请选择需要修改的系统按钮！");
+                return false;
+            }
+            $.modalOpen({
+                id: "Form",
+                title: "修改按钮",
+                url:  $.sysStaticData().urlExt +"/SystemManage/ModuleButton/Form.html?moduleId=" + moduleId + "&keyValue=" + keyValue,
+                width: "700px",
+                height: "440px",
+                callBack: function (iframeId) {
+                    top.frames[iframeId].submitForm();
+                }
+            });
+        }
+        function btn_delete() {
+            var keyValue = $("#gridList").jqGridRowValue().fId;
+            if(!keyValue)
+            {
+				$.modalAlert("请选择需要删除的系统按钮！");
+                return false;
+            }
+            $.deleteAllForm({
+                url:  $.sysStaticData().urlExt +"/ModuleButton/deleModuleButton",
+                param: { fId: $("#gridList").jqGridRowValue().fId },
+                success: function () {
+                    $("#gridList").resetSelection();
+                    $("#gridList").trigger("reloadGrid");
+                }
+            })
+        }
+        function btn_details() {
+            var keyValue = $("#gridList").jqGridRowValue().fId;
+            if(!keyValue)
+            {
+				$.modalAlert("请选择需要查看的系统按钮！");
+                return false;
+            }
+            $.modalOpen({
+                id: "Detalis",
+                title: "查看按钮",
+                url:  $.sysStaticData().urlExt +"/SystemManage/ModuleButton/Details.html?moduleId=" + moduleId + "&keyValue=" + keyValue,
+                width: "700px",
+                height: "490px",
+                btn: null,
+            });
+        }
+        function btn_clonebutton() {
+        	var moduleId = $("#gridList").jqGridRowValue().fId;
+            $.modalOpen({
+                id: "Form",
+                title: "克隆按钮",
+                url:  $.sysStaticData().urlExt +"/SystemManage/ModuleButton/CloneButton.html?moduleId=" + moduleId,
+                width: "400px",
+                height: "600px",
+                callBack: function (iframeId) {
+                    top.frames[iframeId].submitForm();
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div class="topPanel" style="border: 0px;">
+        <div class="search">
+            <table>
+                <tr>
+                    <td>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="请输入要查询的关键字" style="width: 200px;">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn  btn-primary"><i class="fa fa-search"></i></button>
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="toolbar">
+            <div class="btn-group">
+                <a class="btn btn-primary" onclick="$.reload()"><span class="glyphicon glyphicon-refresh"></span></a>
+            </div>
+            <div class="btn-group">
+                <a class="btn btn-primary" onclick="btn_add()"><i class="fa fa-plus"></i>新建按钮</a>
+            </div>
+           <!--  <div class="btn-group">
+                <a class="btn btn-primary" onclick="btn_clonebutton()"><i class="fa fa-paste"></i>克隆按钮</a>
+            </div> -->
+            <div class="operate">
+                <ul class="nav nav-pills">
+                    <li class="first">已选中<span>1</span>项</li>
+                    <li><a onclick="btn_edit()"><i class="fa fa-pencil-square-o"></i>修改按钮</a></li>
+                    <li><a onclick="btn_delete()"><i class="fa fa-trash-o"></i>删除按钮</a></li>
+                    <li><a onclick="btn_details()"><i class="fa fa-search-plus"></i>查看按钮</a></li>
+                </ul>
+                <a href="javascript:;" class="close"></a>
+            </div>
+            <script>$('.toolbar').authorizeButton()</script>
+        </div>
+    </div>
+    <div class="gridPanel">
+        <table id="gridList"></table>
+        <style>
+            .ui-jqgrid {
+                border-left: 0px;
+                border-right: 0px;
+                border-bottom: 0px;
+            }
+        </style>
+    </div>
+</body>
+</html>

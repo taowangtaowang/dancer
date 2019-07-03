@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>标题</title>
+		<link href="../../Content/headupload/ycbootstrap.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../Content/headupload/reset.css"/>
+		 <script src="../../Content/js/jquery/jquery-2.1.1.min.js"></script>
+		<script src="../../Content/headupload/iscroll-zoom.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../Content/headupload/hammer.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../Content/headupload/lrz.all.bundle.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../Content/headupload/jquery.photoClip.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../Content/js/framework-ui.js" type="text/javascript" charset="utf-8"></script>
+		    <link href="../../Content/css/framework-font.css" rel="stylesheet" />
+    <link href="../../Content/css/framework-theme.css" rel="stylesheet" />
+   
+    <script src="../../Content/js/bootstrap/bootstrap.js"></script>
+    <link href="../../Content/js/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <script src="../../Content/js/jqgrid/jqgrid.min.js"></script>
+    <link href="../../Content/js/jqgrid/jqgrid.css" rel="stylesheet" />
+    <script src="../../Content/js/jqgrid/grid.locale-cn.js"></script>
+    <link href="../../Content/css/framework-ui.css" rel="stylesheet" />
+    <script src="../../Content/js/framework-ui.js"></script>
+</head>
+<body>
+		<div class="yc-upload-wrap">
+			<div class="yc-upload-box">
+				<div class="container">
+		        	<div class="row">
+				        <div class="col-md-12 col-sm-12 col-xs-12" style="padding:0;">
+				        	
+				        	<div class="ycupload-mainbox">
+				        		<div class="ycupload-main1" style="overflow:hidden;padding-left:25px;">
+				        			<span style="float:left;color:#ff5a5a;font-size:14px;line-height:60px;font-weight:900;margin-right:7px;">
+				        			</span>
+				        		</div>
+				        		<div class="ycupload-line"></div>
+				        		<div style="height:30px;"></div>
+				        		<div  style="min-height:1px;">
+				        			<div class="container">
+							        	<div class="row">
+									        <div class="col-md-12 col-sm-12 col-xs-12" style="padding-right:0;padding-left:36px;">
+									        	<div style="min-height:1px;line-height:160px;text-align:center;position:relative;" ontouchstart="">
+									        		<div class="cover-wrap" style="display:none;position:fixed;left:0;top:0;width:100%;height:100%;background: rgba(0, 0, 0, 0.4);z-index: 10000000;text-align:center;">	
+									        			<div class="" style="width:600px;height:400px; margin-left: 150px;background-color:#FFFFFF;overflow: hidden;border-radius:4px;">
+									        				<div id="clipArea" style="margin:10px;height: 320px;"></div>
+									        				<div class="" style="height:56px;line-height:36px;text-align: center;padding-top:8px;">
+									        					<button id="clipBtn" style="width:120px;height: 36px;border-radius: 4px;background-color:#1ABC9C;color: #FFFFFF;font-size: 14px;text-align: center;line-height: 36px;outline: none;">保存</button>
+                                                                <button id="closeclipBtn" onclick="closeclipBtn()" style="width:120px;height: 36px;border-radius: 4px;background-color:#1ABC9C;color: #FFFFFF;font-size: 14px;text-align: center;line-height: 36px;outline: none;">关闭</button>
+									        				</div>
+									        			</div>
+									        		</div>
+									        		<div id="view" style="width:214px;height:160.5px;" title="请上传 428*321 的封面图片"></div>
+										        	<div style="height:10px;"></div>
+										        	<div class="" style="width:140px;height:32px;border-radius: 4px;background-color:#1ABC9C;color: #FFFFFF;font-size: 14px;text-align:center;line-height:32px;outline:none;margin-left:37px;position:relative;">
+										        		点击上传头像
+										        		<input type="file" id="file" style="cursor:pointer;opacity:0;filter:alpha(opacity=0);width:100%;height:100%;position:absolute;top:0;left:0;"/>
+										        	</div>
+									        	</div>
+									        	
+												
+								        	</div>
+							        	</div>
+						        	</div>
+						        	
+				        		</div>
+				        		<div style="height:25px;"></div>
+				        	</div>
+				        	
+			        	</div>
+		        	</div>
+	        	</div>
+	        	
+			</div>
+		</div>
+		
+		<form id="form1">
+			<input  type='text'  style='display:none' id='fId'/>
+			<input type='text'  style='display:none' id='fHeadicon' >
+		</form>
+	    <script type="text/javascript">
+	   var topImgSrc= parent.$("#myheadimg").attr("src");
+	   if(topImgSrc.indexOf("scarlet-159")!=-1){
+		   $('#view').css("background-image","url(../../"+topImgSrc+")");
+	   }else {
+		   $('#view').css("background-image","url("+topImgSrc+")");
+	   }
+	   var OldtopImgData_Src = parent.$("#myheadimg").attr("data_src");
+	   $("#fId").val(top.clients.user.fId);
+	   $('#view').css('background-size', '100% 100%');
+	    //上传封面
+	    //document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+		var clipArea = new bjj.PhotoClip("#clipArea", {
+			size: [428, 321],// 截取框的宽和高组成的数组。默认值为[260,260]
+			outputSize: [428, 321], // 输出图像的宽和高组成的数组。默认值为[0,0]，表示输出图像原始大小
+			//outputType: "jpg", // 指定输出图片的类型，可选 "jpg" 和 "png" 两种种类型，默认为 "jpg"
+			file: "#file", // 上传图片的<input type="file">控件的选择器或者DOM对象
+			view: "#view", // 显示截取后图像的容器的选择器或者DOM对象
+			ok: "#clipBtn", // 确认截图按钮的选择器或者DOM对象
+			loadStart: function() {
+				// 开始加载的回调函数。this指向 fileReader 对象，并将正在加载的 file 对象作为参数传入
+				$('.cover-wrap').fadeIn();
+				console.log("照片读取中");
+			},
+			loadComplete: function() {
+				 // 加载完成的回调函数。this指向图片对象，并将图片地址作为参数传入
+				console.log("照片读取完成");
+			},
+			//loadError: function(event) {}, // 加载失败的回调函数。this指向 fileReader 对象，并将错误事件的 event 对象作为参数传入
+			clipFinish: function(dataURL) {
+				 // 裁剪完成的回调函数。this指向图片对象，会将裁剪出的图像数据DataURL作为参数传入
+				 $.ajax({
+					 type:"POST",
+					 url:"/myweb/common/base64UpLoad",
+					 dataType: "json",
+					 data:{base64Data:dataURL,oldPath:OldtopImgData_Src},
+					 success:function(data){
+						 if(data.status=="success"){
+							 $("#fHeadicon").val(data.filePath);
+							 submitForm();
+						 }else {
+							 $.modalAlert(data.message);
+						 }
+					 }
+				 });
+				$('.cover-wrap').fadeOut();
+				$('#view').css('background-size', '100% 100%');
+
+				console.log(dataURL);
+			}
+		});
+		function closeclipBtn() {
+		    $(".cover-wrap").fadeOut();
+		};
+		//提交
+	  function submitForm() {
+			var fid =  $("#fId").val();
+          	var fHeadicon = $("#fHeadicon").val();
+          $.ajax({
+        	  type:"POST",
+        	  url: $.sysStaticData().urlExt+"/sysUser/updateSysUserHeadIcon",//添加图片
+        	  dataType: "json",
+		      data:{fId:fid,fHeadicon:fHeadicon},
+		      success:function(data){
+		    	  if(data.state=="success"){
+		    		  parent.$("#topheadimg").attr("src",$.sysStaticDataUrl().urlExtUrl+$("#form1").formSerialize().fHeadicon);
+	            	  parent.$("#topheadimg").attr("data_src",$("#form1").formSerialize().fHeadicon);
+	            	  parent.$("#myheadimg").attr("src",$.sysStaticDataUrl().urlExtUrl+$("#form1").formSerialize().fHeadicon);
+	            	  parent.$("#myheadimg").attr("data_src",$("#form1").formSerialize().fHeadicon);
+	            	  top.clients.user.fHeadicon=$("#form1").formSerialize().fHeadicon;
+	            	  $.modalAlert(data.message);
+		    	  }else{
+		    		  $.modalAlert(data.message);
+		    	  }
+		      }
+          });
+	  }
+	    </script>
+</body>
+</html>

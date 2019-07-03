@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wt.overflow.dao.SysCheckinInMapper" >
+  <resultMap id="BaseResultMap" type="com.wt.overflow.bean.SysCheckingIn" >
+    <id column="ID" property="ID" jdbcType="VARCHAR" />
+    <result column="LOG_NUM" property="LOG_NUM" jdbcType="VARCHAR" />
+    <result column="CUSTOM_NUM" property="CUSTOM_NUM" jdbcType="VARCHAR" />
+    <result column="NAME" property="NAME" jdbcType="VARCHAR" />
+    <result column="OUT_TIME" property="OUT_TIME" jdbcType="TIMESTAMP" />
+    <result column="OUT_STATUS" property="OUT_STATUS" jdbcType="VARCHAR" />
+    <result column="UPDATE_STATUS" property="UPDATE_STATUS" jdbcType="VARCHAR" />
+    <result column="EXCEPTION_STATUS" property="EXCEPTION_STATUS" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, LOG_NUM, CUSTOM_NUM, NAME, OUT_TIME, OUT_STATUS, UPDATE_STATUS, EXCEPTION_STATUS
+  </sql>
+  
+  
+  <select id="queryAllData" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from Sys_Checking_in 
+    <where>	
+    	(OUT_TIME &gt;= #{startTime}   and OUT_TIME &lt;= #{endTime} 
+    	<!-- <if test="clickType == 1 "> and a.payment_end_date &gt;= #{costEchartsDate} 
+        </if>1 已经缴纳 &lt; 小于
+        <if test="clickType == 2 ">  and a.payment_end_date &lt;= #{costEchartsDate} 
+        </if>2 未缴纳 &gt; 大于 -->
+        
+    	<if test=" userName != null and userName !='' ">
+				and NAME like ('%'+#{userName}+'%')
+		</if>
+		) or OUT_TIME is null
+    </where>
+  </select>
+  
+  
+  <!-- <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from Sys_Checking_in
+    where ID = #{ID,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from Sys_Checking_in
+    where ID = #{ID,jdbcType=VARCHAR}
+  </delete> -->
+  
+</mapper>

@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wt.overflow.dao.SysRoleMapper">
+	<resultMap id="BaseResultMap" type="com.wt.overflow.bean.SysRole">
+		<result column="F_Id" property="fId" jdbcType="VARCHAR" />
+		<result column="F_OrganizeId" property="fOrganizeid" jdbcType="VARCHAR" />
+		<result column="F_Category" property="fCategory" jdbcType="INTEGER" />
+		<result column="F_EnCode" property="fEncode" jdbcType="VARCHAR" />
+		<result column="F_FullName" property="fFullname" jdbcType="VARCHAR" />
+		<result column="F_Type" property="fType" jdbcType="VARCHAR" />
+		<result column="F_AllowEdit" property="fAllowedit" jdbcType="BIT" />
+		<result column="F_AllowDelete" property="fAllowdelete"
+			jdbcType="BIT" />
+		<result column="F_SortCode" property="fSortcode" jdbcType="INTEGER" />
+		<result column="F_DeleteMark" property="fDeletemark" jdbcType="BIT" />
+		<result column="F_EnabledMark" property="fEnabledmark"
+			jdbcType="BIT" />
+		<result column="F_Description" property="fDescription"
+			jdbcType="VARCHAR" />
+		<result column="F_CreatorTime" property="fCreatortime"
+			jdbcType="TIMESTAMP" />
+		<result column="F_CreatorUserId" property="fCreatoruserid"
+			jdbcType="VARCHAR" />
+		<result column="F_LastModifyTime" property="fLastmodifytime"
+			jdbcType="TIMESTAMP" />
+		<result column="F_LastModifyUserId" property="fLastmodifyuserid"
+			jdbcType="VARCHAR" />
+		<result column="F_DeleteTime" property="fDeletetime" jdbcType="TIMESTAMP" />
+		<result column="F_DeleteUserId" property="fDeleteuserid"
+			jdbcType="VARCHAR" />
+		<result column="F_Responsibility" property="fResponsibility"
+			jdbcType="VARCHAR" />	
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		F_Id, F_OrganizeId, F_Category,
+		F_EnCode, F_FullName, F_Type,
+		F_AllowEdit, F_AllowDelete, F_SortCode,
+		F_DeleteMark, F_EnabledMark, F_Description,
+		F_CreatorTime, F_CreatorUserId, F_LastModifyTime,
+		F_LastModifyUserId, F_DeleteTime, F_DeleteUserId,F_Responsibility
+	</sql>
+
+	<select id="queryAllDataByCategory" resultMap="BaseResultMap"
+		parameterType="java.util.Map">
+		select
+		<include refid="Base_Column_List" />
+		from Sys_Role where F_Category = #{F_Category,jdbcType=INTEGER} and F_DeleteMark = 0
+	</select>
+
+
+	<!-- 分页查询 -->
+	<select id="queryRoleByPage" resultMap="BaseResultMap"
+		parameterType="java.util.Map">
+		select
+		<include refid="Base_Column_List" />
+		from Sys_Role
+		<where>
+			F_Category=#{roleType} and F_DeleteMark = 0
+			<if test="keyword != null and keyword !='' ">
+				and (F_FullName like ('%'+#{keyword}+'%') or F_EnCode like
+				('%'+#{keyword}+'%') )
+			</if>
+		</where>
+	</select>
+
+	<select id="queryOneByRoleId" resultMap="BaseResultMap"
+		parameterType="java.util.Map">
+		select
+		<include refid="Base_Column_List" />
+		from Sys_Role where F_Id = #{roleId,jdbcType=INTEGER}
+	</select>
+
+	<insert id="addRole" parameterType="java.util.Map"
+		useGeneratedKeys="true" keyProperty="F_Id">
+		insert into sys_role
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="sysRole.fId != null">
+				F_Id,
+			</if>
+			<if test="sysRole.fOrganizeid != null">
+				F_OrganizeId,
+			</if>
+			<if test="sysRole.fCategory != null">
+				F_Category,
+			</if>
+			<if test="sysRole.fEncode != null">
+				F_EnCode,
+			</if>
+			<if test="sysRole.fFullname != null">
+				F_FullName,
+			</if>
+			<if test="sysRole.fType != null">
+				F_Type,
+			</if>
+			<if test="sysRole.fAllowedit != null">
+				F_AllowEdit,
+			</if>
+			<if test="sysRole.fAllowdelete != null">
+				F_AllowDelete,
+			</if>
+			<if test="sysRole.fSortcode != null">
+				F_SortCode,
+			</if>
+			<if test="sysRole.fDeletemark != null">
+				F_DeleteMark,
+			</if>
+			<if test="sysRole.fEnabledmark != null">
+				F_EnabledMark,
+			</if>
+			<if test="sysRole.fDescription != null">
+				F_Description,
+			</if>
+			<if test="sysRole.fCreatortime != null">
+				F_CreatorTime,
+			</if>
+			<if test="sysRole.fCreatoruserid != null">
+				F_CreatorUserId,
+			</if>
+			<if test="sysRole.fLastmodifytime != null">
+				F_LastModifyTime,
+			</if>
+			<if test="sysRole.fLastmodifyuserid != null">
+				F_LastModifyUserId,
+			</if>
+			<if test="sysRole.fDeletetime != null">
+				F_DeleteTime,
+			</if>
+			<if test="sysRole.fDeleteuserid != null">
+				F_DeleteUserId,
+			</if>
+			<if test="sysRole.fResponsibility != null">
+				F_Responsibility,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="sysRole.fId != null">
+				#{sysRole.fId,jdbcType=VARCHAR},
+			</if>
+			<if test="sysRole.fOrganizeid != null">
+				#{sysRole.fOrganizeid,jdbcType=VARCHAR},
+			</if>
+			<if test="sysRole.fCategory != null">
+				#{sysRole.fCategory,jdbcType=INTEGER},
+			</if>
+			<if test="sysRole.fEncode != null">
+				#{sysRole.fEncode,jdbcType=VARCHAR},
+			</if>
+			<if test="sysRole.fFullname != null">
+				#{sysRole.fFullname,jdbcType=VARCHAR},
+			</if>
+			<if test="sysRole.fType != null">
+				#{sysRole.fType,jdbcType=VARCHAR},
+			</if>
+			<if test="sysRole.fAllowedit != null">
+				#{sysRole.fAllowedit,jdbcType=BIT},
+			</if>
+			<if test="sysRole.fAllowdelete != null">
+				#{sysRole.fAllowdelete,jdbcType=BIT},
+			</if>
+			<if test="sysRole.fSortcode != null">
+				#{sysRole.fSortcode,jdbcType=INTEGER},
+			</if>
+			<if test="sysRole.fDeletemark != null">
+				#{sysRole.fDeletemark,jdbcType=BIT},
+			</if>
+			<if test="sysRole.fEnabledmark != null">
+				#{sysRole.fEnabledmark,jdbcType=BIT},
+			</if>
+			<if test="sysRole.fDescription != null">
+				#{sysRole.fDescription,jdbcType=VARCHAR},
+			</if>
+			<if test="sysRole.fCreatortime != null">
+				#{sysRole.fCreatortime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="sysRole.fCreatoruserid != null">
+				#{sysRole.fCreatoruserid,jdbcType=VARCHAR},
+			</if>
+			<if test="sysRole.fLastmodifytime != null">
+				#{sysRole.fLastmodifytime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="sysRole.fLastmodifyuserid != null">
+				#{sysRole.fLastmodifyuserid,jdbcType=VARCHAR},
+			</if>
+			<if test="sysRole.fDeletetime != null">
+				#{sysRole.fDeletetime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="sysRole.fDeleteuserid != null">
+				#{sysRole.fDeleteuserid,jdbcType=VARCHAR},
+			</if>
+			<if test="sysRole.fResponsibility != null">
+				#{sysRole.fResponsibility,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+
+	<update id="updateRoleByRoleId" parameterType="java.util.Map">
+		update sys_role
+		<set>
+			<if test="sysRole.fOrganizeid != null">
+				F_Organizeid = #{sysRole.fOrganizeid,jdbcType=VARCHAR},
+			</if>
+			<if test="sysRole.fCategory != null">
+				F_Category = #{sysRole.fCategory,jdbcType=INTEGER},
+			</if>
+			<if test="sysRole.fEncode != null">
+				F_Encode = #{sysRole.fEncode,jdbcType=VARCHAR},
+			</if>
+			<if test="sysRole.fFullname != null">
+				F_Fullname = #{sysRole.fFullname,jdbcType=VARCHAR},
+			</if>
+			<if test="sysRole.fType != null">
+				F_Type = #{sysRole.fType,jdbcType=VARCHAR},
+			</if>
+			<if test="sysRole.fAllowedit != null">
+				F_Allowedit = #{sysRole.fAllowedit,jdbcType=BIT},
+			</if>
+			<if test="sysRole.fAllowdelete != null">
+				F_Allowdelete = #{sysRole.fAllowdelete,jdbcType=BIT},
+			</if>
+			<if test="sysRole.fSortcode != null">
+				F_Sortcode = #{sysRole.fSortcode,jdbcType=INTEGER},
+			</if>
+			<if test="sysRole.fDeletemark != null">
+				F_Deletemark = #{sysRole.fDeletemark,jdbcType=BIT},
+			</if>
+			<if test="sysRole.fEnabledmark != null">
+				F_Enabledmark = #{sysRole.fEnabledmark,jdbcType=BIT},
+			</if>
+			<if test="sysRole.fDescription != null">
+				F_Description = #{sysRole.fDescription,jdbcType=VARCHAR},
+			</if>
+			<if test="sysRole.fCreatortime != null">
+				F_Creatortime = #{sysRole.fCreatortime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="sysRole.fCreatoruserid != null">
+				F_Creatoruserid = #{sysRole.fCreatoruserid,jdbcType=VARCHAR},
+			</if>
+			<if test="sysRole.fLastmodifytime != null">
+				F_Lastmodifytime = #{sysRole.fLastmodifytime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="sysRole.fLastmodifyuserid != null">
+				F_Lastmodifyuserid = #{sysRole.fLastmodifyuserid,jdbcType=VARCHAR},
+			</if>
+			<if test="sysRole.fDeletetime != null">
+				F_Deletetime = #{sysRole.fDeletetime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="sysRole.fDeleteuserid != null">
+				F_Deleteuserid = #{sysRole.fDeleteuserid,jdbcType=VARCHAR},
+			</if>
+			<if test="sysRole.fResponsibility != null">
+				F_Responsibility = #{sysRole.fResponsibility,jdbcType=VARCHAR},
+			</if>
+		</set>
+		 where F_Id=#{sysRole.fId,jdbcType=VARCHAR}
+	</update>
+	
+	<update id="deleteRole" parameterType="java.util.Map">
+		update sys_role set F_DeleteMark  = 1,F_DeleteUserId =#{F_DeleteUserId,jdbcType=VARCHAR} ,F_DeleteTime =#{F_DeleteTime,jdbcType=TIMESTAMP} 
+		where F_Id=#{roleId,jdbcType=VARCHAR}
+  	</update>
+  	
+	
+	<!-- 批量修改，根据idCard修改 paymentEndDate -->
+    <!-- <update id="batchUpdateByIdCard" parameterType="java.util.List">
+        <foreach collection="list" item="item" index="index" open="" close="" separator=";"> 
+        	update family_register set payment_end_date = #{item.paymentEndDate} where id_card = #{item.idCard}
+        </foreach>
+    </update> -->
+  	
+  	
+</mapper>

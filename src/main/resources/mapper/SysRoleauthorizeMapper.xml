@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wt.overflow.dao.SysRoleauthorizeMapper" >
+  <resultMap id="BaseResultMap" type="com.wt.overflow.bean.SysRoleauthorize" >
+    <result column="F_Id" property="fId" jdbcType="VARCHAR" />
+    <result column="F_ItemType" property="fItemtype" jdbcType="INTEGER" />
+    <result column="F_ItemId" property="fItemid" jdbcType="VARCHAR" />
+    <result column="F_ObjectType" property="fObjecttype" jdbcType="INTEGER" />
+    <result column="F_ObjectId" property="fObjectid" jdbcType="VARCHAR" />
+    <result column="F_SortCode" property="fSortcode" jdbcType="INTEGER" />
+    <result column="F_CreatorTime" property="fCreatortime" jdbcType="TIMESTAMP" />
+    <result column="F_CreatorUserId" property="fCreatoruserid" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <!-- sys_roleauthorize -->
+  <sql id="Base_Column_List" >
+      F_Id, F_ItemType, F_ItemId, 
+      F_ObjectType, F_ObjectId, F_SortCode, 
+      F_CreatorTime, F_CreatorUserId
+  </sql>
+  
+ <select id="queryMenuByRoleId" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_roleauthorize 
+    <where>
+    	F_DeleteMark  = 0
+    	<if test ="roleId !=null and roleId !='' ">
+    		and F_ObjectId = #{roleId,jdbcType=VARCHAR} 
+    	</if>	
+    	<if test ="FId !=null and FId !='' ">
+    		and F_ItemId = #{FId,jdbcType=VARCHAR} 
+    	</if>
+    	
+    </where>
+    
+  </select>
+  
+  
+  
+  <insert id="addSysRoleauthorize" parameterType="com.wt.overflow.bean.SysRoleauthorize">
+    insert into sys_roleauthorize
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="fId != null">
+        F_Id,
+      </if>
+      <if test="fItemtype != null">
+        F_ItemType,
+      </if>
+      <if test="fItemid != null">
+        F_ItemId,
+      </if>
+      <if test="fObjecttype != null">
+        F_ObjectType,
+      </if>
+      <if test="fObjectid != null">
+        F_ObjectId,
+      </if>
+      <if test="fSortcode != null">
+        F_SortCode,
+      </if>
+      <if test="fCreatortime != null">
+        F_CreatorTime,
+      </if>
+      <if test="fCreatoruserid != null">
+        F_CreatorUserId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="fId != null">
+        #{fId,jdbcType=VARCHAR},
+      </if>
+      <if test="fItemtype != null">
+        #{fItemtype,jdbcType=INTEGER},
+      </if>
+      <if test="fItemid != null">
+        #{fItemid,jdbcType=VARCHAR},
+      </if>
+      <if test="fObjecttype != null">
+        #{fObjecttype,jdbcType=INTEGER},
+      </if>
+      <if test="fObjectid != null">
+        #{fObjectid,jdbcType=VARCHAR},
+      </if>
+      <if test="fSortcode != null">
+        #{fSortcode,jdbcType=INTEGER},
+      </if>
+      <if test="fCreatortime != null">
+        #{fCreatortime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fCreatoruserid != null">
+        #{fCreatoruserid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="deleteAllByRoleId" parameterType="java.util.Map">
+		update sys_roleauthorize set F_DeleteMark  = 1 where F_ObjectId=#{sysRole.fId,jdbcType=VARCHAR}
+  </update>
+</mapper>

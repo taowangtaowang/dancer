@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<style>
+			html,
+			body {
+				width: 100%;
+				height: 100%;
+				overflow: hidden;
+				font-family: sans-serif;
+				margin: 0;
+				padding: 0;
+			}
+			
+			ul {
+				list-style: none;
+				font-size: 2rem;
+				color: #606060;
+			}
+			
+			ul>li {
+				padding: 10px;
+			}
+			
+			.m-header {
+				height: 25%;
+				background-color: #0139af;
+				text-align: center;
+				position: relative;
+				overflow: hidden;
+			}
+			
+			.m-title {
+				width: 75%;
+				height: 100%;
+				float: left;
+				position: relative;
+				/*position: absolute;
+				left: 400px;
+				top: 0;*/
+			}
+			
+			#marquee-container {
+				position: absolute;
+				width: 100%;
+				height: 50%;
+				left: 0;
+				top: 50%;
+				color: #FFFFFF;
+				font-size: 50px;
+				line-height: 2;
+			}
+			
+			.marquee-item {
+				display: inline-block;
+				margin-left: 50px;
+			}
+			
+			#title {
+				font-size: 45px;
+				color: #FFFFFF;
+				display: none;
+				padding: 10px 30px;
+				background-color: #2863E3;
+				border-radius: 60px;
+				margin-top: 20px;
+				color: #FFDE00;
+			}
+			
+			.m-number {
+				font-size: 5rem;
+				width: 130px;
+				height: 130px;
+				position: absolute;
+				z-index: 100;
+				left: 75px;
+				top: 20px;
+				overflow: hidden;
+				line-height: 1.8;
+				border: 5px solid #FFFFFF;
+				color: #FFFFFF;
+				border-radius: 50%;
+				display: inline-block;
+			}
+			
+			.m-number-container {
+				width: 25%;
+				height: 100%;
+				float: left;
+				text-align: center;
+				background: url(img/abc.png) no-repeat right 0 #2863E3;
+				/*position: absolute;
+				left: 0;
+				top: 0;*/
+			}
+			
+			.m-rotate {
+				display: inline-block;
+				width: 100px;
+				height: 150%;
+				position: absolute;
+				left: 150px;
+				top: -40%;
+				z-index: 1;
+				background-color: #2863E3;
+				transform-origin: right bottom;
+				transform: rotate(30deg);
+				-ms-transform: rotate(30deg);
+				/* IE 9 */
+				-moz-transform: rotate(30deg);
+				/* Firefox */
+				-webkit-transform: rotate(30deg);
+				/* Safari 和 Chrome */
+				-o-transform: rotate(30deg);
+				/* Opera */
+			}
+			
+			.m-content {
+				height: 60%;
+				overflow: hidden;
+			}
+			
+			.m-footer {
+				height: 15%;
+				background-color: #0139af;
+				position: relative;
+			}
+			
+			.m-footer .m-v-line {
+				position: absolute;
+				width: 1px;
+				background-color: #FFF8DC;
+				height: 100%;
+				top: 0;
+				left: 50%;
+			}
+			
+			.m-footer>div {
+				width: 50%;
+				height: 100%;
+				float: left;
+				text-align: center;
+				color: #FFFFFF;
+				font-size: 50px;
+				line-height: 2.5;
+			}
+			
+			.m-footer .number {
+				color: #FFDE00;
+			}
+			
+			.m-col-5 {
+				width: 50%;
+				float: left;
+				height: 100%;
+			}
+			
+			.m-col-4 {
+				width: 30%;
+				height: 100%;
+				float: left;
+			}
+			
+			.m-col-6 {
+				width: 70%;
+				height: 100%;
+				float: left;
+			}
+			
+			#user-name {
+				display: inline-block;
+				margin-left: 20px;
+				margin-top: 20px;
+				font-size: 2.5rem;
+				color: #FFFFFF;
+			}
+			
+			.num-container {
+				margin-left: 20px;
+				margin-top: 5px;
+				font-size: 2rem;
+				color: #FFFFFF;
+			}
+			
+			.m-label {
+				color: #FFFFFF;
+				font-size: 2rem;
+				text-align: right;
+				margin-top: 20px;
+			}
+			
+			.m-num-value {
+				color: #F8F819;
+				font-size: 2rem;
+				text-align: left;
+			}
+			
+			.m-call-container {
+				width: 100%;
+				height: 100%;
+				color: red;
+				font-size: 4rem;
+				text-align: center;
+				padding-top: 180px;
+				display: none;
+				background-color: #5DD1FF;
+			}
+			
+			#app-container {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.m-mask {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba(0, 0, 0, 0.8);
+				display: none;
+			}
+			
+			.m-broad {
+				height: 20%;
+				background-color: #EE9A00;
+				font-size: 4rem;
+				color: #FFFFFF;
+				line-height: 2.5;
+				text-align: center;
+			}
+			
+			.v-center {
+				width: 100%;
+				margin: 20px auto;
+				overflow: hidden;
+				padding-left: 80px;
+			}
+			
+			.v-center>li {
+				font-size: 1.8rem;
+				width: 240px;
+				float: left;
+				text-align: center;
+				border: 1px solid gray;
+				margin: 5px;
+				border-radius: 5px;
+			}
+			
+			#honurType {
+				background-color: #0F46BB;
+				display: flex;
+				display: -webkit-flex;
+				align-items: center;
+				justify-content: center;
+			}
+			
+			#honurType>div {
+				width: 80%;
+				height: 100%;
+				/*background: url(img/hongqi.png);*/
+				background-size: cover;
+				text-align: center;
+				color: #FFFFFF;
+				font-size: 3rem;
+				line-height: 3;
+			}
+			
+			.m-list-icon {
+				display: inline-block;
+				width: 15px;
+				height: 32px;
+				background: url(img/list_icon.png);
+				margin-right: 10px;
+				vertical-align: sub;
+			}
+			
+			#device-id {
+				position: absolute;
+				width: 49%;
+				color: black;
+				left: 0;
+				bottom: 10px;
+				font-size: 15px;
+				height: 15px;
+				text-align: left;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="m-header">
+			<div class="m-number-container">
+				<span class="m-number"></span>
+				<!--<span class="m-rotate"></span>-->
+			</div>
+			<div class="m-title">
+				<span id="title"></span>
+				<div id="marquee-container">
+					<!--<marquee id="marquee"></marquee>-->
+				</div>
+			</div>
+
+		</header>
+
+		<div class="m-content">
+			<!--呼叫号码-->
+			<div class="m-call-container">
+				<div>正在呼叫：<span id="call-num"></span></div>
+
+			</div>
+
+			<div class="v-center">
+				<div id="#app-container" style="overflow: hidden;flex-grow:1">
+					<ul id="list">
+						<!--<li><span class="m-list-icon"></span>办理住房公积金联名卡</li>
+						<li><span class="m-list-icon"></span>办理住房公积金联名卡</li>
+						<li><span class="m-list-icon"></span>办理住房公积金联名卡</li>
+						<li><span class="m-list-icon"></span>办理住房公积金联名卡</li>
+						<li><span class="m-list-icon"></span>办理住房公积金联名卡</li>
+						<li><span class="m-list-icon"></span>办理住房公积金联名卡</li>
+						<li><span class="m-list-icon"></span>办理住房公积金联名卡</li>
+						<li><span class="m-list-icon"></span>办理住房公积金联名卡</li>
+						<li><span class="m-list-icon"></span>办理住房公积金联名卡</li>
+						<li><span class="m-list-icon"></span>办理住房公积金联名卡</li>-->
+					</ul>
+				</div>
+			</div>
+
+		</div>
+
+		<footer class="m-footer">
+
+			<!--用户信息-->
+			<div>
+				排队人数：<span id="queen-count" class="number">0</span>
+			</div>
+
+			<div class="m-v-line"></div>
+
+			<!--办理号码-->
+			<div>
+				下一位办理号码：<span id="next-num" class="number"></span>
+			</div>
+
+			<div id="device-id"></div>
+
+		</footer>
+
+		<div class="m-mask">
+			<div class="m-broad">
+				暂停办理
+			</div>
+
+		</div>
+
+	</body>
+
+	<script src="js/mui.min.js"></script>
+	<script src="js/socket.js"></script>
+	<script src="js/common.js"></script>
+	<script src="js/jquery-1.9.1.js"></script>
+	<script src="js/jquery.scroll.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		(function() {
+
+			mui.init();
+
+			mui.plusReady(function() {
+
+				/**
+				 * 初始化退出功能
+				 */
+				intiBackButton();
+
+				//注册websocket长连接
+				WSocket.init(CONSTANTS.SOCKET_URL).registerHandler(function(data) {
+					var msg = data.msg;
+					//用户登陆刷新
+					if(data.callback == CONSTANTS.FLAG_REFRESH) {
+						var user = data.msg;
+						initUser(user);
+					}
+
+					//叫号
+					if(data.callback == CONSTANTS.FLAG_APPLAUSE) {
+						initNum(msg);
+					}
+
+				});
+
+				//初始化页面
+				setTimeout(function() {
+					loadOrganList(plus.device.uuid || ""); //B3D6C2019C40F01
+					loadProjectData(plus.device.uuid || ""); //BEB4C7715B4957F5
+					loadWaitNum(plus.device.uuid);
+					//loadOrganList("B3D6C2019C40F01");//B3D6C2019C40F01
+					//loadProjectData("BEB4C7715B4957F5");//BEB4C7715B4957F5
+				}, 1 * 1000);
+
+			})
+			
+			
+			/**
+			 * 使用定时器，定时加载排队人数
+			 * @param {Object} deviceNo
+			 */
+			function loadWaitNum(deviceNo) {
+				var params = {
+					DeviceNO: deviceNo
+				}
+				CommonUtil.ajaxPostTimer(CONSTANTS.ZZ_APPROVAL_URL + "/ZzApproval/rnlive/getWaitNo", params,
+					function success(result) {
+						if(result && result.status == "success"){
+							var waitNum = result.waitNum;
+							$("#queen-count").text(waitNum || "0");
+						}
+					},
+					function complete() {
+						params = null;
+						setTimeout(function(){
+							loadWaitNum(deviceNo);
+						},5000)
+					})
+			}
+
+			/**
+			 * 刷新用户信息
+			 * @param {Object} user
+			 */
+			function initUser(user) {
+				if(!user) {
+					return;
+				}
+
+				//用户头像
+				var userPhoto = CommonUtil.getNotNullStr(user.UserPhoto);
+				if(!userPhoto || !userPhoto.startsWith("http")) {
+					userPhoto = "img/person.png"; //设置默认图片
+				}
+				$(".m-head-photo").css({
+					"background-image": "url('" + userPhoto + "')"
+				})
+
+				//用户名
+				$("#user-name").text(CommonUtil.getNotNullStr(user.UserName));
+				//用户工号
+				$("#user-num").text(CommonUtil.getNotNullStr(user.JobNumber));
+
+				var honurName = CommonUtil.getNotNullStr(user.HonourType);
+				//个人荣耀
+				$("#honurName").text(honurName);
+				if(honurName == "红旗窗口") {
+					$("#honurName").css("background", "url(img/hongqi.png)");
+				} else {
+					$("#honurName").css("background", "");
+				}
+
+			}
+
+			var callTimer = null;
+
+			/**
+			 * 初始化叫号
+			 * @param {Object} msg
+			 */
+			function initNum(msg) {
+				if(!msg) {
+					return;
+				}
+				$("#current-num").text(CommonUtil.getNotNullStr(msg.currentNum));
+				$("#next-num").text(CommonUtil.getNotNullStr(msg.nextNum));
+				$("#call-num").text(CommonUtil.getNotNullStr(msg.callNum));
+				$("#queen-count").text(CommonUtil.getNotNullStr(msg.waitNum))
+				$(".m-call-container").show();
+				if(callTimer != null) {
+					clearTimeout(callTimer);
+				}
+				callTimer = setTimeout(function() {
+					$(".m-call-container").hide();
+					callTimer = null;
+				}, 6 * 1000)
+			}
+
+			/**
+			 * 初始化公告,
+			 * @param {Object} isOpen
+			 */
+			function intiBroad(isOpen) {
+				if(isOpen) {
+					$(".m-mask").show();
+				} else {
+					$(".m-mask").hide();
+				}
+
+			}
+
+			/**
+			 * 加载事项
+			 */
+			function loadOrganList(BussinissId) {
+
+				if(!BussinissId) {
+					return;
+				}
+				var params = {
+					keyValue: BussinissId
+				}
+				//console.log("bussinessId:" + BussinissId)
+				CommonUtil.ajaxPost(CONSTANTS.ZZ_MANAGE_URL + "/myweb/rnBusiness/organBusinessType/selectByTypeId", params,
+					function success(result) {
+
+						if(result && result.status == "success" && result.data) {
+							var businessTypeName = result.data.businessTypeName;
+							var windowNo = result.data.windowNo;
+							var organList = result.data.organList;
+							//console.log(organList);
+
+							$("#title").css("display", "inline-block").text(businessTypeName || "");
+							$(".m-number").text(windowNo || "");
+							//初始化业务单位
+							//var $table = $("#list").empty();
+							var $marquee = $("<marquee></marquee>");
+							mui.each(organList, function(index, item) {
+								var title = item.organName || "";
+								$marquee.append("<span class='marquee-item'>" + title + "</span>")
+							})
+							if(organList && organList.length) {
+								$("#marquee-container").append($marquee);
+
+							}
+
+						}
+
+					}
+				)
+			}
+
+			/**
+			 * 加载事项
+			 */
+			function loadProjectData(deviceNo) {
+				document.getElementById("list").innerHTML = "";
+				if(!deviceNo) {
+					return;
+				}
+				var params = {
+					deviceNo: deviceNo
+				}
+				CommonUtil.ajaxPostNoProgress(CONSTANTS.ZZ_MANAGE_URL + "/myweb/project/queryRnprojectByDeviceNo", params,
+					function success(result) {
+
+						if(result && result.length) {
+
+							var $table = $("#list").empty();
+
+							mui.each(result, function(index, item) {
+								var title = item.name || "";
+								$table.append($("<li><span class='m-list-icon'></span>" + (title || "") + "</li>"))
+							})
+						}
+						$("#list").initScroll(2 * 1000, 7);
+					}
+				)
+			}
+
+			/**
+			 * 初始化退出应用
+			 */
+			function intiBackButton() {
+				$("#device-id").text("设备编号：" + plus.device.uuid.toUpperCase())
+
+				//重写连续两次 退出应用 
+				var first = null;
+				plus.key.addEventListener('backbutton', function() {
+					//首次按键，提示‘再按一次退出应用’  
+					if(!first) {
+						first = new Date().getTime();
+						setTimeout(function() {
+							first = null;
+						}, 2000);
+					} else {
+						if(new Date().getTime() - first < 2000) {
+							//websoket断开连接
+							WSocket.getInstance().close();
+							plus.runtime.quit();
+						}
+					}
+				}, false);
+			}
+
+		})()
+	</script>
+
+</html>

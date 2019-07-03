@@ -1,0 +1,40 @@
+.pagination {
+            float:left;
+            padding-left:1%;
+            padding-bottom:10px;
+             font-family:"黑体", Geneva, Arial, Helvetica, sans-serif;
+}
+.pagination select{vertical-align:middle;padding:0px;text-align:left;line-height:26px;height:26px;}
+.pagination div{float:left;cursor:pointer; display:inline; margin-right:5px;}
+.btncenter{border:1px solid  #afafaf;border-radius: 4px 4px 4px 4px; color:#fff;height:36px;line-height:32px;min-width:34px}
+.ellipsis .btncenter{cursor:default;border:1px solid  #afafaf;border-radius: 4px 4px 4px 4px; color:#fff;height:36px;line-height:32px;min-width:34px}
+.current .btncenter{border:1px solid  #afafaf;border-radius: 4px 4px 4px 4px;color:#fff;background-color:#428bca;height:36px;line-height:32px;min-width:34px}
+.pagination div.ellipsis,.pagination div.disabled,.pagination div.disabled div,.pagination div.current,.pagination div.current div{cursor:default;}
+.total{height:36px;min-width:160px;display:block;margin-top:0px;padding-top:0px;padding-left:10px;}
+.total lable{height:36px;line-height:34px;display:inline-block;font-weight:200;}
+.total div{height:36px;line-height:34px;display:inline-block;white-space:nowrap;vertical-align: middle;}
+.total div input{height:36px;width:36px;text-align:center;line-height:34px;display:inline-block;border:1px solid  #afafaf;border-radius: 4px 4px 4px 4px;}
+.page_go{display:inline;color:#B8B8B8;background-color:#428bca;width:36px;height:36px;vertical-align: middle;text-align:center;cursor:pointer;border:1px solid #afafaf;border-radius: 4px 4px 4px 4px; color:#fff;}
+/*默认*/
+.pagination div .btncenter{
+	float:left;
+	padding:0 2px;
+	min-width:36px;
+	text-align:center;
+	color: #717171;
+	margin:0;
+}
+/*选中*/
+.pagination div.current .btncenter{
+	color:#F2F2F2;
+}
+/*禁用*/
+.pagination div.disabled .btncenter{
+	color:#B8B8B8;
+}
+
+.pagination .perpagecount{
+  border:1px solid #AFAFAF;
+  vertical-align:middle;
+  height:22px;
+}

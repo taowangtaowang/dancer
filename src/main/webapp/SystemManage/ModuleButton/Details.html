@@ -1,0 +1,164 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" />
+    <title>查看按钮</title>
+    <link href="../../Content/css/framework-font.css" rel="stylesheet" />
+    <link href="../../Content/css/framework-theme.css" rel="stylesheet" />
+    <script src="../../Content/js/jquery/jquery-2.1.1.min.js"></script>
+    <script src="../../Content/js/bootstrap/bootstrap.js"></script>
+    <link href="../../Content/js/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <script src="../../Content/js/wdtree/tree.js"></script>
+    <link href="../../Content/js/wdtree/tree.css" rel="stylesheet" />
+    <link href="../../Content/js/select2/select2.min.css" rel="stylesheet" />
+    <script src="../../Content/js/select2/select2.min.js"></script>
+    <link href="../../Content/js/wizard/wizard.css" rel="stylesheet" />
+    <script src="../../Content/js/wizard/wizard.js"></script>
+    <script src="../../Content/js/validate/jquery.validate.min.js"></script>
+    <script src="../../Content/js/datepicker/WdatePicker.js"></script>
+    <link href="../../Content/css/framework-ui.css" rel="stylesheet" />
+    <script src="../../Content/js/framework-ui.js"></script>
+    <script>
+        var keyValue = $.request("keyValue");
+        var moduleId = $.request("moduleId");
+        $(function () {
+            initControl();
+            $.ajax({
+                url: $.sysStaticData().urlExt +"/ModuleButton/findOne",
+                data: { fId: keyValue },
+                dataType: "json",
+                async: false,
+                success: function (data) {
+                    $("#form1").formSerialize(data.moduleButton);
+                    $("#form1").find('.form-control,select,input').attr('readonly', 'readonly');
+                    $("#form1").find('div.ckbox label').attr('for', '');
+                    if(data.moduleButton.fCreatortime==null){$("#fCreatortime").val('')}
+                    else{$("#fCreatortime").val($.changeDateFormat(data.moduleButton.fCreatortime).DateExt);} 
+                    
+                    if(data.moduleButton.fLastmodifytime==null){$("#fLastmodifytime").val('')}
+                    else{$("#fLastmodifytime").val($.changeDateFormat(data.moduleButton.fLastmodifytime).DateExt);}
+                }
+            });
+        });
+        function initControl() {
+            $("#fLocation").select2({ minimumResultsForSearch: -1 })
+            
+            $("#fParentid").bindSelectByPostRows({
+            	url:  $.sysStaticData().urlExt +"/ModuleButton/findList?moduleId=" + moduleId,                
+                id: "fId",
+                text:"fFullname"
+            }); 
+            
+        }
+    </script>
+</head>
+<body>
+    <form id="form1">
+        <div style="padding-top: 30px; margin-right: 30px;">
+            <table class="form">
+                <tr>
+                    <th class="formTitle">名称</th>
+                    <td class="formValue">
+                        <input id="fFullname" name="fFullname" type="text" class="form-control" />
+                    </td>
+                    <th class="formTitle">编号</th>
+                    <td class="formValue">
+                        <input id="fEncode" name="fEncode" type="text" class="form-control" />
+                    </td>
+                </tr>
+                <tr>
+                    <th class="formTitle">上级</th>
+                    <td class="formValue">
+                        <select id="fParentid" name="fParentid" class="form-control">
+                            <option value="0">父节点</option>
+                        </select>
+                    </td>
+                    <th class="formTitle">位置</th>
+                    <td class="formValue">
+                        <select id="fLocation" name="fLocation" class="form-control">
+                            <option value="">==请选择==</option>
+                            <option value="1">初始</option>
+                            <option value="2">选中</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="formTitle">事件</th>
+                    <td class="formValue">
+                        <input id="fJsevent" name="fJsevent" type="text" class="form-control" />
+                    </td>
+                    <th class="formTitle">连接</th>
+                    <td class="formValue">
+                        <input id="fUrladdress" name="fUrladdress" type="text" class="form-control" />
+                    </td>
+                </tr>
+                <tr>
+                    <th class="formTitle">图标</th>
+                    <td class="formValue">
+                        <div class="input-group">
+                            <input id="fIcon" name="fIcon" type="text" class="form-control">
+                            <span class="input-group-btn">
+                                <a class="btn  btn-primary"><i class="fa fa-ellipsis-h"></i></a>
+                            </span>
+                        </div>
+                    </td>
+                    <th class="formTitle">排序</th>
+                    <td class="formValue">
+                        <input id="fSortcode" name="fSortcode" type="text" class="form-control" />
+                    </td>
+                </tr>
+                <tr>
+                    <th class="formTitle" style="height: 35px;">选项</th>
+                    <td class="formValue" colspan="3" style="padding-top: 1px;">
+                        <div class="ckbox">
+                            <input id="fSplit" name="fSplit" type="checkbox"><label for="fSplit">分开线</label>
+                        </div>
+                        <div class="ckbox">
+                            <input id="fIspublic" name="fIspublic" type="checkbox"><label for="fIspublic">公共</label>
+                        </div>
+                        <div class="ckbox">
+                            <input id="fEnabledmark" name="fEnabledmark" type="checkbox" checked="checked"><label for="fEnabledmark">有效</label>
+                        </div>
+
+                        <div class="ckbox">
+                            <input id="fAllowedit" name="fAllowedit" type="checkbox"><label for="fAllowedit">允许编辑</label>
+                        </div>
+                        <div class="ckbox">
+                            <input id="fAllowdelete" name="fAllowdelete" type="checkbox"><label for="fAllowdelete">允许删除</label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="formTitle" valign="top" style="padding-top: 5px;">
+                        描述
+                    </th>
+                    <td class="formValue" colspan="3">
+                        <textarea id="fDescription" name="fDescription" class="form-control" style="height: 100px;"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="formTitle">创建人员</th>
+                    <td class="formValue">
+                        <input id="fCreatoruserid" name="fCreatoruserid" type="text" class="form-control" />
+                    </td>
+                    <th class="formTitle">创建时间</th>
+                    <td class="formValue">
+                        <input id="fCreatortime" name="fCreatortime" type="text" class="form-control" />
+                    </td>
+                </tr>
+                <tr>
+                    <th class="formTitle">修改人员</th>
+                    <td class="formValue">
+                        <input id="fLastmodifyuserid" name="fLastmodifyuserid" type="text" class="form-control" />
+                    </td>
+                    <th class="formTitle">修改时间</th>
+                    <td class="formValue">
+                        <input id="fLastmodifytime" name="fLastmodifytime" type="text" class="form-control" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </form>
+</body>
+</html>
