@@ -68,50 +68,45 @@
   <select id="queryAllData" resultMap="BaseResultMap" parameterType="java.util.Map" >
     select 
     <include refid="Base_Column_List" />
-    from Sys_Module
+    from sys_Module
   </select> 
   
   
   <select id="SelectByfParentid" parameterType="java.lang.String"
 		resultMap="BaseResultMap">
-    select top(1) 
-     *
-    from  Sys_Module  where F_ParentId=#{fParentid,jdbcType=VARCHAR} and ISNULL( F_DeleteMark, 0) != 1
+    select  *
+    from  sys_Module  where F_ParentId=#{fParentid,jdbcType=VARCHAR} and F_DeleteMark !=1
   </select>
   
   <select id="findListParentid" resultMap="modulesMap" parameterType="java.lang.String">
-    select * from Sys_Module where F_ParentId=#{fParentid,jdbcType=VARCHAR} and ISNULL( F_DeleteMark, 0) != 1 ORDER BY F_SortCode ASC
+    select * from sys_Module where F_ParentId=#{fParentid,jdbcType=VARCHAR} and F_DeleteMark != 1 ORDER BY F_SortCode ASC
   </select>
   
     <select id="findListFullName" resultMap="modulesMap" parameterType="java.lang.String" >
     
-    <if test="null == fFullname or '' == fFullname ">
-    select 
-     <include refid="Base_Column_List" />
-    from Sys_Module
-     where ISNULL( F_DeleteMark, 0) != 1 and F_ParentId='0' ORDER BY F_SortCode ASC
-     </if>
-     <if test="fFullname != null and fFullname != '' ">
-    WITH cte AS
-     (
-     SELECT o.*
-     FROM Sys_Module o WHERE F_FullName like #{fFullname,jdbcType=VARCHAR} AND ISNULL( F_DeleteMark, 0) != 1
-		 
-     UNION ALL
-		 
-     SELECT o.*
-		 FROM Sys_Module o INNER JOIN cte AS c on c.F_ParentId=o.F_Id
-     )
-     SELECT DISTINCT * FROM cte ORDER BY F_SortCode ASC
-     </if>
-     
+      select  <include refid="Base_Column_List" />
+      from sys_Module where F_DeleteMark != 1 and F_ParentId='0' ORDER BY F_SortCode ASC
+      <!--<if test="fFullname != null and fFullname != '' ">
+          WITH cte AS
+           (
+           SELECT o.*
+           FROM sys_Module o WHERE F_FullName like #{fFullname,jdbcType=VARCHAR} AND F_DeleteMark != 1
+
+           UNION ALL
+
+           SELECT o.*
+               FROM sys_Module o INNER JOIN cte AS c on c.F_ParentId=o.F_Id
+           )
+           SELECT DISTINCT * FROM cte ORDER BY F_SortCode ASC
+     </if>-->
+
   </select>
   
   
   <select id="queryAllSysModuleByIsAdmin" resultMap="BaseResultMap" parameterType="java.util.Map" >
     select 
     <include refid="Base_Column_List" />
-    from Sys_Module 
+    from sys_Module
     <where>
     	F_ParentId Is not null and F_DeleteMark =0
     	<if test=" F_EnabledMark!=null and F_EnabledMark != '' " >
@@ -119,7 +114,7 @@
 	    </if>
 	    <if test="isAdmin != 1" >
 	      	and F_Id in (
-				select F_ItemId from Sys_RoleAuthorize where F_ObjectId =  #{userRoleId,jdbcType=VARCHAR} and F_ItemType=1
+				select F_ItemId from sys_RoleAuthorize where F_ObjectId =  #{userRoleId,jdbcType=VARCHAR} and F_ItemType=1
 			)
 	    </if>
     </where>
@@ -130,12 +125,12 @@
      <select id="findListPage" resultMap="modulesMap" parameterType="java.util.Map">
     select 
      <include refid="Base_Column_List" />
-    from Sys_Module where F_DeleteMark is null or F_DeleteMark =0
+    from sys_Module where F_DeleteMark is null or F_DeleteMark =0
      <if test="fFullname != null and fFullname != '' ">
     RIGHT JOIN
 	(select
       F_Id f, F_ParentId f1
-    from Sys_Module where F_FullName like '%${fFullname,jdbcType=VARCHAR}%') as a on Sys_Module.F_SortCode=a.f or Sys_Module.F_SortCode=a.f1 where Sys_Module.F_DeleteMark is null or Sys_Module.F_DeleteMark =0
+    from sys_Module where F_FullName like '%${fFullname,jdbcType=VARCHAR}%') as a on Sys_Module.F_SortCode=a.f or Sys_Module.F_SortCode=a.f1 where Sys_Module.F_DeleteMark is null or Sys_Module.F_DeleteMark =0
     group by 
      <include refid="Base_Column_List" />
      </if>
@@ -149,12 +144,12 @@
    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from Sys_Module
+    from sys_Module
     where F_Id = #{fId,jdbcType=VARCHAR} and  F_DeleteMark =0
   </select>
   
     <insert id="insertModule" parameterType="com.wt.overflow.bean.SysModule" >
-    insert into Sys_Module (F_Id, F_ParentId, F_Layers, 
+    insert into sys_Module (F_Id, F_ParentId, F_Layers,
       F_EnCode, F_FullName, F_Icon, 
       F_UrlAddress, F_Target, F_IsMenu, 
       F_IsExpand, F_IsPublic, F_AllowEdit, 
@@ -174,7 +169,7 @@
   
   
   <update id="deleteByModuleKey" parameterType="com.wt.overflow.bean.SysModule" >
-    update Sys_Module
+    update sys_Module
     <set >
       <if test="fParentid != null" >
         F_ParentId = #{fParentid,jdbcType=VARCHAR},
@@ -248,7 +243,7 @@
   
   
    <update id="updateByPrimaryKeySelective" parameterType="com.wt.overflow.bean.SysModule" >
-    update Sys_Module
+    update sys_Module
     <set >
       <if test="fParentid != null" >
         F_ParentId = #{fParentid,jdbcType=VARCHAR},

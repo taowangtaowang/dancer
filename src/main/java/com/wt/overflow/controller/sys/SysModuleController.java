@@ -34,7 +34,7 @@ public class SysModuleController {
 		@ResponseBody
 		public Object searchsysModule(HttpServletRequest request, String fFullname, String nodeid) {
 			Map<String, Object> data = new HashMap<String, Object>();
-			if (null != nodeid && "" != nodeid) {
+			if (null != nodeid && "" != nodeid) {// 查询某菜单父节点子数据
 				List<SysModules> sysModules = sysModuleService.findListParentid(nodeid);
 				for (SysModules Modules : sysModules) {
 					Modules.ModulesList();
