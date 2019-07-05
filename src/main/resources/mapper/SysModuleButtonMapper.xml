@@ -40,13 +40,13 @@
     <include refid="Base_Column_List" />
     from sys_modulebutton
     <where>
-    	F_DeleteMark =0
-    	<if test=" F_EnabledMark!=null and F_EnabledMark != '' " >
-	      	and F_EnabledMark = 1
+    	deleteMark =0
+    	<if test=" enabledMark!=null and enabledMark != '' " >
+	      	and enabledMark = 1
 		</if>
     	<if test="isAdmin != 1" ><!-- 非admin用户 <if test="isAdmin" > -->
-      		and F_Id in (
-				select F_ObjectId from sys_roleauthorize where F_ObjectId =  #{userRoleId,jdbcType=VARCHAR} and F_ItemType=1
+      		and id in (
+				select objectId from sys_roleauthorize where objectId =  #{userRoleId,jdbcType=VARCHAR} and itemType=1
 			)
     	</if>
     </where>

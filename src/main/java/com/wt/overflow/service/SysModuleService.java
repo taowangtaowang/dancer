@@ -18,11 +18,9 @@ public interface SysModuleService {
     
 	boolean updateByPrimaryKeySelective(SysModule sysModule);
 	
-	List<SysModules> findListParentid(@Param(value = "Parentid") String Parentid);
+	List<SysModules> findListParentid(String parentId);
 	
-	SysModule SelectByfParentid(String fParentid);
+	SysModule SelectByfParentid(String parentid);
 	
-	List<SysOnes> findList();
-	
-	List<SysModules> findListS(String fFullname);
+	List<SysModules> findListS(String fullname);
 }

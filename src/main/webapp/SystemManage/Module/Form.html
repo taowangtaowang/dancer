@@ -26,7 +26,7 @@
             if (!!keyValue) {
                 $.ajax({
                 	url: $.sysStaticData().urlExt +"/sysModule/findOne",
-                    data: { fId: keyValue },
+                    data: { id: keyValue },
                     dataType: "json",
                     async: false,
                     success: function (data) {
@@ -38,8 +38,8 @@
         function initControl() {
 			$("#fParentid").bindSelectByPostRows({
                 url: $.sysStaticData().urlExt +"/sysModule/findList",
-                id: "fId",
-                text:"fFullname"
+                id: "id",
+                text:"fullname"
             });
         }
         function submitForm() {
@@ -48,18 +48,18 @@
             }
             
             var postData = $("#form1").formSerialize();
-            if(postData.fIsmenu){postData.fIsmenu=1}
-            else{postData.fIsmenu=0}
-            if(postData.fIspublic){postData.fIspublic=1}
-            else{postData.fIspublic=0}
-            if(postData.fIsexpand){postData.fIsexpand=1}
-            else{postData.fIsexpand=0}
-            if(postData.fEnabledmark){postData.fEnabledmark=1}
-            else{postData.fEnabledmark=0}
-            if(postData.fAllowedit){postData.fAllowedit=1}
-            else{postData.fAllowedit=0}
-            if(postData.fAllowdelete){postData.fAllowdelete=1}
-            else{postData.fAllowdelete=0}
+            if(postData.ismenu){postData.ismenu=1}
+            else{postData.ismenu=0}
+            if(postData.ispublic){postData.ispublic=1}
+            else{postData.ispublic=0}
+            if(postData.isexpand){postData.isexpand=1}
+            else{postData.isexpand=0}
+            if(postData.enabledmark){postData.enabledmark=1}
+            else{postData.enabledmark=0}
+            if(postData.allowedit){postData.fAllowedit=1}
+            else{postData.allowedit=0}
+            if(postData.allowdelete){postData.allowdelete=1}
+            else{postData.allowdelete=0}
             
             
             if(!!keyValue){
@@ -97,23 +97,23 @@
                     <tr>
                         <th class="formTitle">上级</th>
                         <td class="formValue">
-                            <select id="fParentid" name="fParentid" class="form-control required">
+                            <select id="parentid" name="parentid" class="form-control required">
                                 <option value="0">父节点</option>
                             </select>
                         </td>
                         <th class="formTitle">名称</th>
                         <td class="formValue">
-                            <input id="fFullname" name="fFullname" type="text" class="form-control required" placeholder="请输入名称" />
+                            <input id="fullname" name="fullname" type="text" class="form-control required" placeholder="请输入名称" />
                         </td>
                     </tr>
                     <tr>
                         <th class="formTitle">连接</th>
                         <td class="formValue">
-                            <input id="fUrladdress" name="fUrladdress" type="text" class="form-control" />
+                            <input id="urladdress" name="urladdress" type="text" class="form-control" />
                         </td>
                         <th class="formTitle">目标</th>
                         <td class="formValue">
-                            <select id="fTarget" name="fTarget" class="form-control required">
+                            <select id="target" name="target" class="form-control required">
                                 <option value="">==请选择==</option>
                                 <option value="expand" title="expand">无页面</option>
                                 <option value="iframe" title="iframe">框架页</option>
@@ -126,7 +126,7 @@
                         <th class="formTitle">图标</th>
                         <td class="formValue">
                             <div class="input-group">
-                                <input id="fIcon" name="fIcon" type="text" class="form-control">
+                                <input id="icon" name="icon" type="text" class="form-control">
                                 <span class="input-group-btn">
                                     <a class="btn  btn-primary"><i class="fa fa-ellipsis-h"></i></a>
                                 </span>
@@ -134,29 +134,29 @@
                         </td>
                         <th class="formTitle">排序</th>
                         <td class="formValue">
-                            <input id="fSortcode" name="fSortcode" type="text" class="form-control required number" placeholder="请输入排序" />
+                            <input id="sortcode" name="sortcode" type="text" class="form-control required number" placeholder="请输入排序" />
                         </td>
                     </tr>
                     <tr>
                         <th class="formTitle" style="height: 35px;">选项</th>
                         <td class="formValue" colspan="3" style="padding-top: 1px;">
                             <div class="ckbox">
-                                <input id="fIsmenu" name="fIsmenu" type="checkbox"><label for="fIsmenu">菜单</label>
+                                <input id="ismenu" name="ismenu" type="checkbox"><label for="ismenu">菜单</label>
                             </div>
                             <div class="ckbox">
-                                <input id="fIspublic" name="fIspublic" type="checkbox"><label for="fIspublic">公共</label>
+                                <input id="ispublic" name="ispublic" type="checkbox"><label for="ispublic">公共</label>
                             </div>
                             <div class="ckbox">
-                                <input id="fIsexpand" name="fIsexpand" type="checkbox"><label for="fIsexpand">展开</label>
+                                <input id="isexpand" name="isexpand" type="checkbox"><label for="isexpand">展开</label>
                             </div>
                             <div class="ckbox">
-                                <input id="fEnabledmark" name="fEnabledmark" type="checkbox" checked="checked"><label for="fEnabledmark">有效</label>
+                                <input id="enabledmark" name="enabledmark" type="checkbox" checked="checked"><label for="enabledmark">有效</label>
                             </div>
                             <div class="ckbox">
-                                <input id="fAllowedit" name="fAllowedit" type="checkbox"><label for="fAllowedit">允许编辑</label>
+                                <input id="allowedit" name="allowedit" type="checkbox"><label for="allowedit">允许编辑</label>
                             </div>
                             <div class="ckbox">
-                                <input id="fAllowdelete" name="fAllowdelete" type="checkbox"><label for="fAllowdelete">允许删除</label>
+                                <input id="allowdelete" name="allowdelete" type="checkbox"><label for="allowdelete">允许删除</label>
                             </div>
                         </td>
                     </tr>
@@ -165,7 +165,7 @@
                             介绍
                         </th>
                         <td class="formValue" colspan="3">
-                            <textarea id="fDescription" name="fDescription" class="form-control" style="height: 100px;"></textarea>
+                            <textarea id="description" name="description" class="form-control" style="height: 100px;"></textarea>
                         </td>
                     </tr>
                 </table>

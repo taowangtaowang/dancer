@@ -47,24 +47,24 @@ public class SysUserServiceImpl implements SysUserService {
 		if(StringUtils.isEmpty(sord)){
 			sord="asc";
 		}
-		if(sidx.equals("fRealname")){
-			sidx = "F_Realname";
-		}else if (sidx.equals("fDutyid")){
-			sidx = "F_Dutyid";
-		}else if (sidx.equals("fDepartmentid")){
-			sidx = "F_Departmentid";
-		}else if (sidx.equals("fOrganizeid")){
-			sidx = "F_Organizeid";
-		}else if (sidx.equals("fDescription")){
-			sidx = "F_Description";
-		}else if (sidx.equals("fCreatorTime")){
-			sidx = "F_CreatorTime";
-		}else if (sidx.equals("fMobilePhone")){
-			sidx = "F_MobilePhone";
-		}else if (sidx.equals("fGender")){
-			sidx = "F_Gender";
+		if(sidx.equals("realname")){
+			sidx = "realname";
+		}else if (sidx.equals("dutyid")){
+			sidx = "dutyid";
+		}else if (sidx.equals("departmentid")){
+			sidx = "departmentid";
+		}else if (sidx.equals("organizeid")){
+			sidx = "organizeid";
+		}else if (sidx.equals("description")){
+			sidx = "description";
+		}else if (sidx.equals("creatorTime")){
+			sidx = "creatorTime";
+		}else if (sidx.equals("mobilePhone")){
+			sidx = "mobilePhone";
+		}else if (sidx.equals("gender")){
+			sidx = "gender";
 		}else{
-			sidx = "F_Realname";
+			sidx = "realname";
 		}
 		parameter.put("page", page);
 		parameter.put("sidx", sidx);
@@ -149,10 +149,7 @@ public class SysUserServiceImpl implements SysUserService {
 				sysUser.setCreatoruserid("无");
 			}
 		}else{sysUser.setCreatoruserid("无");}
-		SysOrganize sysOrganize = sysOrganizeMapper.queryOneByOrganizeId(sysUser.getOrganizeid());
-		if(sysOrganize!=null){//fOrganizename
-			sysUser.setOrganizeid(sysOrganize.getFullname());
-		}
+
 		return sysUser ;
 	}
 

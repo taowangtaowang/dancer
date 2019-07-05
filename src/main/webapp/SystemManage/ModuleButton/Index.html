@@ -102,7 +102,7 @@
             }
             $.deleteAllForm({
                 url:  $.sysStaticData().urlExt +"/ModuleButton/deleModuleButton",
-                param: { fId: $("#gridList").jqGridRowValue().fId },
+                param: { id: $("#gridList").jqGridRowValue().fId },
                 success: function () {
                     $("#gridList").resetSelection();
                     $("#gridList").trigger("reloadGrid");

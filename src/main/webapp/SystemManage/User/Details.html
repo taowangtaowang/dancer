@@ -30,25 +30,25 @@
                 async: false,
                 success: function (data) {
                     $("#form1").formSerialize(data);
-                    if(data.fBirthday==null){
-                    	$("#fBirthday").val("");
+                    if(data.birthday==null){
+                    	$("#birthday").val("");
                     }
-                    if(data.fCreatortime==null){
-                    	$("#fCreatortime").val("");
+                    if(data.creatortime==null){
+                    	$("#creatortime").val("");
                     }
-                    if(data.fLastmodifytime==null){
-                    	$("#fLastmodifytime").val("");
+                    if(data.lastmodifytime==null){
+                    	$("#lastmodifytime").val("");
                     }
                     $("#form1").find('.form-control,select,input').attr('readonly', 'readonly');
                     $("#form1").find('div.ckbox label').attr('for', '');
-                    $("#fUserpassword").val("******");
+                    $("#userpassword").val("******");
                 }
             });
         });
         function initControl() {
-            $("#fGender").bindSelect()
-            $("#fIsadministrator").bindSelect()
-            $("#fEnabledmark").bindSelect()
+            $("#gender").bindSelect()
+            $("#isadministrator").bindSelect()
+            $("#enabledmark").bindSelect()
             
             var defaults =
                 {
@@ -60,42 +60,18 @@
                     change: null,
                     data: top.clients.organize
                 };
-            $("#fOrganizeid").bindSelectByData(defaults);
-            $("#fDepartmentid").bindSelectByData(defaults);
-            
+            $("#organizeid").bindSelectByData(defaults);
+            $("#departmentid").bindSelectByData(defaults);
 
-/*             var defaultsRole =
-                {
-                    id: "id",
-                    text: "fullname",
-                    search: false,
-                    url: "",
-                    param: [],
-                    change: null,
-                    data: top.clients.role
-                };
-            $("#fRoleid").bindSelectByData(defaultsRole);
-
-            var defaultsDuty =
-                {
-                    id: "id",
-                    text: "fullname",
-                    search: false,
-                    url: "",
-                    param: [],
-                    change: null,
-                    data: top.clients.duty
-                };
-            $("#fDutyid").bindSelectByData(defaultsDuty); */
-        	$("#fRoleid").bindSelectByPostRowsJueGang({
+        	$("#roleid").bindSelectByPostRowsJueGang({
         		  url: $.sysStaticData().urlExt+"/role/queryRoleByPage?rows=1000&page=1&sidx=&sord=",
-        			id: "fId",
-                  text:"fFullname"
+        			id: "id",
+                  text:"fullname"
         	});
-        	$("#fDutyid").bindSelectByPostRowsJueGang({
+        	$("#dutyid").bindSelectByPostRowsJueGang({
       		  url: $.sysStaticData().urlExt+"/role/queryAllDuty?rows=1000&page=1&sidx=&sord=",
-      			id: "fId",
-                text:"fFullname"
+      			id: "id",
+                text:"fullname"
       	});
         }
     </script>
@@ -118,25 +94,25 @@
                         </td>
                         <th class="formTitle">密码</th>
                         <td class="formValue">
-                            <input id="fUserpassword" name="fUserpassword" type="password" class="form-control" />
+                            <input id="userpassword" name="userpassword" type="password" class="form-control" />
                         </td>
                     </tr>
                     <tr>
                         <th class="formTitle">单位</th>
                         <td class="formValue" colspan="3">
-                        	<input id="fOrganizename" name="fOrganizename" class="form-control required" type="text" readonly value="" style="width:99%;float:left" />
+                        	<input id="organizename" name="organizename" class="form-control required" type="text" readonly value="" style="width:99%;float:left" />
                         </td>
                     </tr>
                     <tr>
                         <th class="formTitle">角色</th>
                         <td class="formValue">
-                            <select id="fRoleid" name="fRoleid" class="form-control">
+                            <select id="roleid" name="roleid" class="form-control">
                                 <option value="">==请选择==</option>
                             </select>
                         </td>
                         <th class="formTitle">岗位</th>
                         <td class="formValue">
-                            <select id="fDutyid" name="fDutyid" class="form-control">
+                            <select id="dutyid" name="dutyid" class="form-control">
                                 <option value="">==请选择==</option>
                             </select>
                         </td>
@@ -144,11 +120,11 @@
                     <tr>
                         <th class="formTitle">姓名</th>
                         <td class="formValue">
-                            <input id=fRealname name="fRealname" type="text" class="form-control" />
+                            <input id="realname" name="realname" type="text" class="form-control" />
                         </td>
                         <th class="formTitle">性别</th>
                         <td class="formValue">
-                            <select id="fGender" name="fGender" class="form-control">
+                            <select id="gender" name="gender" class="form-control">
                                 <option value="true">男</option>
                                 <option value="false">女</option>
                             </select>
@@ -157,34 +133,34 @@
                     <tr>
                         <th class="formTitle">手机</th>
                         <td class="formValue">
-                            <input id="fMobilephone" name="fMobilephone" type="text" class="form-control" />
+                            <input id="mobilephone" name="mobilephone" type="text" class="form-control" />
                         </td>
                         <th class="formTitle">生日</th>
                         <td class="formValue">
-                            <input id="fBirthday" name="fBirthday" type="text" class="form-control" />
+                            <input id="birthday" name="birthday" type="text" class="form-control" />
                         </td>
                     </tr>
                     <tr>
                         <th class="formTitle">微信</th>
                         <td class="formValue">
-                            <input id="fWechat" name="fWechat" type="text" class="form-control" />
+                            <input id="wechat" name="wechat" type="text" class="form-control" />
                         </td>
                         <th class="formTitle">邮箱</th>
                         <td class="formValue">
-                            <input id="fEmail" name="fEmail" type="text" class="form-control" />
+                            <input id="email" name="email" type="text" class="form-control" />
                         </td>
                     </tr>
                     <tr>
                         <th class="formTitle">类型</th>
                         <td class="formValue">
-                            <select id="fIsadministrator" name="fIsadministrator" class="form-control">
+                            <select id="isadministrator" name="isadministrator" class="form-control">
                                 <option value="false">普通用户</option>
                                 <option value="true">系统管理员</option>
                             </select>
                         </td>
                         <th class="formTitle">允许登录</th>
                         <td class="formValue">
-                            <select id="fEnabledmark" name="fEnabledmark" class="form-control">
+                            <select id="enabledmark" name="enabledmark" class="form-control">
                                 <option value="true">是</option>
                                 <option value="false">否</option>
                             </select>
@@ -193,7 +169,7 @@
                     <tr>
                         <th class="formTitle">工号</th>
                         <td class="formValue">
-                        	<input id="fJobNumber" name="fJobNumber" type="text" class="form-control required digits number" placeholder="请输入工号"/>     
+                        	<input id="jobNumber" name="jobNumber" type="text" class="form-control required digits number" placeholder="请输入工号"/>
                         </td>
                     </tr>
                     <tr>
@@ -201,27 +177,27 @@
                             备注
                         </th>
                         <td class="formValue" colspan="3">
-                            <textarea id="fDescription" name="fDescription" class="form-control" style="height: 60px;"></textarea>
+                            <textarea id="description" name="description" class="form-control" style="height: 60px;"></textarea>
                         </td>
                     </tr>
                     <tr>
                         <th class="formTitle">创建人员</th>
                         <td class="formValue">
-                            <input id="fCreatoruserid" name="fCreatoruserid" type="text" class="form-control" />
+                            <input id="creatoruserid" name="creatoruserid" type="text" class="form-control" />
                         </td>
                         <th class="formTitle">创建时间</th>
                         <td class="formValue">
-                            <input id="fCreatortime" name="fCreatortime" type="text" class="form-control" />
+                            <input id="creatortime" name="creatortime" type="text" class="form-control" />
                         </td>
                     </tr>
                     <tr>
                         <th class="formTitle">修改人员</th>
                         <td class="formValue">
-                            <input id="fLastmodifyuserid" name="fLastmodifyuserid" type="text" class="form-control" />
+                            <input id="lastmodifyuserid" name="lastmodifyuserid" type="text" class="form-control" />
                         </td>
                         <th class="formTitle">修改时间</th>
                         <td class="formValue">
-                            <input id="fLastmodifytime" name="fLastmodifytime" type="text" class="form-control" />
+                            <input id="lastmodifytime" name="lastmodifytime" type="text" class="form-control" />
                         </td>
                     </tr>
                 </table>

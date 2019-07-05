@@ -24,17 +24,17 @@
                 url: $.sysStaticData().urlExt+"/role/queryRoleByPage",
                 height: $(window).height() - 96,
                 colModel: [
-                    { label: "主键", name: "fId", hidden: true, key: true },                   
-                    { label: '排序编号', name: 'fSortcode', width: 200, align: 'center' },
-                    { label: '角色名称', name: 'fFullname', width: 200, align: 'left' },                  
+                    { label: "主键", name: "id", hidden: true, key: true },
+                    { label: '排序编号', name: 'sortcode', width: 200, align: 'center' },
+                    { label: '角色名称', name: 'fullname', width: 200, align: 'left' },
                     {
-                        label: "有效", name: "fEnabledmark", width: 60, align: "center",
+                        label: "有效", name: "enabledmark", width: 60, align: "center",
                         formatter: function (cellvalue) {
                             return cellvalue == 1 ? "<i class=\"fa fa-toggle-on\"></i>" : "<i class=\"fa fa-toggle-off\"></i>";
                         }
                     },
                     {
-                        label: '创建时间', name: 'fCreatortime', width: 130, align: 'left',
+                        label: '创建时间', name: 'creatortime', width: 130, align: 'left',
                         formatter: function (cellvalue) {
                         	if(cellvalue==null)
                         	{
@@ -65,7 +65,7 @@
             });
         }
         function btn_edit() {
-            var keyValue = $("#gridList").jqGridRowValue().fId;
+            var keyValue = $("#gridList").jqGridRowValue().id;
             $.modalOpen({
                 id: "Form",
                 title: "修改角色",
@@ -78,14 +78,14 @@
         function btn_delete() {
             $.deleteForm({
                 url: $.sysStaticData().urlExt +"/role/deleteRole",
-                param: { keyValue: $("#gridList").jqGridRowValue().fId },
+                param: { keyValue: $("#gridList").jqGridRowValue().id },
                 success: function () {
                     $.currentWindow().$("#gridList").trigger("reloadGrid");
                 }
             })
         }
         function btn_details() {
-            var keyValue = $("#gridList").jqGridRowValue().fId;
+            var keyValue = $("#gridList").jqGridRowValue().id;
             $.modalOpen({
                 id: "Details",
                 title: "查看角色",

@@ -31,13 +31,13 @@ public class SysModuleController {
 	/**
 	 * 关键字查询菜单信息
 	 * @param request
-	 * @param fFullname
+	 * @param fullname
 	 * @param nodeid
 	 * @return
 	 */
 	@RequestMapping("findList")
 	@ResponseBody
-	public Object searchsysModule(HttpServletRequest request, String fFullname, String nodeid) {
+	public Object searchsysModule(HttpServletRequest request, String fullname, String nodeid) {
 		Map<String, Object> data = new HashMap<String, Object>();
 		if (null != nodeid && "" != nodeid) {// 查询某菜单父节点子数据
 			List<SysModules> sysModules = sysModuleService.findListParentid(nodeid);
@@ -52,10 +52,10 @@ public class SysModuleController {
 			}
 			data.put("rows", sysModules);
 		} else {
-			List<SysModules> arealist = sysModuleService.findListS(fFullname);
+			List<SysModules> arealist = sysModuleService.findListS(fullname);
 			for (SysModules sysModules : arealist) {
 				sysModules.ModulesList();
-				if (null == fFullname || "" == fFullname) {
+				if (null == fullname || "" == fullname) {
 					//sysModules.setIsLeaf(false);
 				}else {
 					//sysModules.setIsLeaf(true);

@@ -24,9 +24,9 @@
                 url: $.sysStaticData().urlExt +"/sysUser/queryUserByPage",
                 height: $(window).height() - 128,
                 colModel: [
-                    { label: '主键', name: 'fId', hidden: true },
-                    { label: '账户', name: 'fAccount', width: 130, align: 'center' },
-                    { label: '工号', name: 'fJobNumber', width: 100, align: 'center',
+                    { label: '主键', name: 'id', hidden: true },
+                    { label: '账户', name: 'account', width: 130, align: 'center' },
+                    { label: '工号', name: 'jobNumber', width: 100, align: 'center',
                     	formatter: function (cellvalue, options, rowObject) {
                             if (cellvalue==null) {
                                 return '';
@@ -35,9 +35,9 @@
                             }
                         }
                     },
-                    { label: '姓名', name: 'fRealname', width: 100, align: 'left' },
+                    { label: '姓名', name: 'realname', width: 100, align: 'left' },
                     {
-                        label: '性别', name: 'fGender', width: 60, align: 'center',
+                        label: '性别', name: 'gender', width: 60, align: 'center',
                         formatter: function (cellvalue, options, rowObject) {
                             if (cellvalue) {
                                 return '男';
@@ -46,21 +46,21 @@
                             }
                         }
                     },
-                    { label: '手机', name: 'fMobilephone', width: 100, align: 'left' },
+                    { label: '手机', name: 'mobilephone', width: 100, align: 'left' },
                     {
-                        label: '组织', name: 'fOrganizeid', width: 150, align: 'left',
+                        label: '组织', name: 'organizeid', width: 150, align: 'left',
                         formatter: function (cellvalue, options, rowObject) {
                             return top.clients.organize[cellvalue] == null ? "" : top.clients.organize[cellvalue].fullname;
                         }
                     },
                     {
-                        label: '岗位', name: 'fDutyid', width: 100, align: 'left',
+                        label: '岗位', name: 'dutyid', width: 100, align: 'left',
                         formatter: function (cellvalue, options, rowObject) {
                             return top.clients.duty[cellvalue] == null ? "" : top.clients.duty[cellvalue].fullname;
                         }
                     },
                     {
-                        label: '创建时间', name: 'fCreatortime', width: 120, align: 'left',
+                        label: '创建时间', name: 'creatortime', width: 120, align: 'left',
                         formatter: function (cellvalue) {
                         	if(cellvalue==null)
                         	{
@@ -72,7 +72,7 @@
                         }
                     },
                     {
-                        label: "允许登录", name: "fEnabledmark", width: 60, align: "center",
+                        label: "允许登录", name: "enabledmark", width: 60, align: "center",
                         formatter: function (cellvalue, options, rowObject) {
                             if (cellvalue == 1) {
                                 return '<span class=\"label label-success\">正常</span>';
@@ -85,7 +85,7 @@
                     }
                 ],
                 pager: "#gridPager",
-                sortname: 'fCreatortime',
+                sortname: 'creatortime',
                 viewrecords: true
             });
             $("#btn_search").click(function () {
@@ -107,7 +107,7 @@
             });
         }
         function btn_edit() {
-            var keyValue = $("#gridList").jqGridRowValue().fId;
+            var keyValue = $("#gridList").jqGridRowValue().id;
             $.modalOpen({
                 id: "Form",
                 title: "修改用户",
@@ -122,14 +122,14 @@
         function btn_delete() {
             $.deleteForm({
                 url: $.sysStaticData().urlExt +"/sysUser/deleteSysUser",
-                param: { keyValue: $("#gridList").jqGridRowValue().fId },
+                param: { keyValue: $("#gridList").jqGridRowValue().id },
                 success: function () {
                     $.currentWindow().$("#gridList").trigger("reloadGrid");
                 }
             })
         }
         function btn_details() {
-            var keyValue = $("#gridList").jqGridRowValue().fId;
+            var keyValue = $("#gridList").jqGridRowValue().id;
             $.modalOpen({
                 id: "Details",
                 title: "查看用户",
@@ -140,13 +140,13 @@
             });
         }
         function btn_revisepassword() {
-            var keyValue = $("#gridList").jqGridRowValue().fId;
-            var Account = $("#gridList").jqGridRowValue().fAccount;
-            var RealName = $("#gridList").jqGridRowValue().fRealname;
+            var keyValue = $("#gridList").jqGridRowValue().id;
+            var account = $("#gridList").jqGridRowValue().account;
+            var realname = $("#gridList").jqGridRowValue().realname;
             $.modalOpen({
                 id: "RevisePassword",
                 title: '重置密码',
-                url: $.sysStaticData().urlExt+'/SystemManage/User/RevisePassword.html?keyValue=' + keyValue + "&account=" + escape(Account) + '&realName=' + escape(RealName),
+                url: $.sysStaticData().urlExt+'/SystemManage/User/RevisePassword.html?keyValue=' + keyValue + "&account=" + escape(account) + '&realName=' + escape(realname),
                 width: "450px",
                 height: "260px",
                 callBack: function (iframeId) {
@@ -155,7 +155,7 @@
             });
         }
         function btn_disabled() {
-            var keyValue = $("#gridList").jqGridRowValue().fId;
+            var keyValue = $("#gridList").jqGridRowValue().id;
             $.modalConfirm("注：您确定要【禁用】该项账户吗？", function (r) {
                 if (r) {
                     $.submitForm({
@@ -169,7 +169,7 @@
             });
         }
         function btn_enabled() {
-            var keyValue = $("#gridList").jqGridRowValue().fId;
+            var keyValue = $("#gridList").jqGridRowValue().id;
             $.modalConfirm("注：您确定要【启用】该项账户吗？", function (r) {
                 if (r) {
                     $.submitForm({

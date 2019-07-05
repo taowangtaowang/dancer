@@ -23,15 +23,15 @@
             $gridList.dataGrid({
                 treeGrid: true,
                 treeGridModel: "adjacency",
-                ExpandColumn: "fUrladdress",
+                ExpandColumn: "urladdress",
                 url: $.sysStaticData().urlExt +"/sysModule/findList",
                 height: $(window).height() - 96,
                 colModel: [
-                    { label: "主键", name: "fId", hidden: true, key: true },
-                    { label: '名称', name: 'fFullname', width: 200, align: 'left' },
-                    { label: '连接', name: 'fUrladdress', width: 260, align: 'left' },
+                    { label: "主键", name: "id", hidden: true, key: true },
+                    { label: '名称', name: 'fullname', width: 200, align: 'left' },
+                    { label: '连接', name: 'urladdress', width: 260, align: 'left' },
                     {
-                        label: '目标', name: 'fTarget', width: 80, align: 'center',
+                        label: '目标', name: 'target', width: 80, align: 'center',
                         formatter: function (cellvalue) {
                             if (cellvalue == "expand") {
                                 return "无页面";
@@ -45,35 +45,35 @@
                         }
                     },
                     {
-                        label: "菜单", name: "fIsmenu", width: 60, align: "center",
+                        label: "菜单", name: "ismenu", width: 60, align: "center",
                         formatter: function (cellvalue) {
                             return cellvalue == true ? "<i class=\"fa fa-toggle-on\"></i>" : "<i class=\"fa fa-toggle-off\"></i>";
                         }
                     },
                     {
-                        label: "展开", name: "fIsexpand", width: 60, align: "center",
+                        label: "展开", name: "isexpand", width: 60, align: "center",
                         formatter: function (cellvalue) {
                             return cellvalue == true ? "<i class=\"fa fa-toggle-on\"></i>" : "<i class=\"fa fa-toggle-off\"></i>";
                         }
                     },
                     {
-                        label: "公共", name: "fIspublic", width: 60, align: "center",
+                        label: "公共", name: "ispublic", width: 60, align: "center",
                         formatter: function (cellvalue) {
                             return cellvalue == true ? "<i class=\"fa fa-toggle-on\"></i>" : "<i class=\"fa fa-toggle-off\"></i>";
                         }
                     },
                     {
-                        label: "有效", name: "fEnabledmark", width: 60, align: "center",
+                        label: "有效", name: "enabledmark", width: 60, align: "center",
                         formatter: function (cellvalue) {
                             return cellvalue == 1 ? "<i class=\"fa fa-toggle-on\"></i>" : "<i class=\"fa fa-toggle-off\"></i>";
                         }
                     },
-                    { label: '介绍', name: 'fDescription', width: 300, align: 'left' }
+                    { label: '介绍', name: 'description', width: 300, align: 'left' }
                 ]
             });
             $("#btn_search").click(function () {
                 $gridList.jqGrid('setGridParam', {
-                    postData: { fFullname: $("#txt_keyword").val() },
+                    postData: { fullname: $("#txt_keyword").val() },
                 }).trigger('reloadGrid');
             });
         }
@@ -90,7 +90,7 @@
             });
         }
         function btn_edit() {
-            var keyValue = $("#gridList").jqGridRowValue().fId;
+            var keyValue = $("#gridList").jqGridRowValue().id;
             if(!keyValue)
             {
 				$.modalAlert("请选择需要修改的菜单！");
@@ -108,7 +108,7 @@
             });
         }
         function btn_delete() {
-        	var keyValue = $("#gridList").jqGridRowValue().fId;
+        	var keyValue = $("#gridList").jqGridRowValue().id;
             if(!keyValue)
             {
 				$.modalAlert("请选择删除的菜单！");
@@ -116,7 +116,7 @@
             }
             $.deleteAllForm({
                 url: $.sysStaticData().urlExt + "/sysModule/deleModule",
-                param: { fId: $("#gridList").jqGridRowValue().fId },
+                param: { id: $("#gridList").jqGridRowValue().id },
                 success: function () {
                     $.currentWindow().$("#gridList").resetSelection();
                     $.currentWindow().$("#gridList").trigger("reloadGrid");
@@ -124,7 +124,7 @@
             })
         }
         function btn_details() {
-            var keyValue = $("#gridList").jqGridRowValue().fId;
+            var keyValue = $("#gridList").jqGridRowValue().id;
             if(!keyValue)
             {
 				$.modalAlert("请选择需要查看的菜单！");
@@ -140,7 +140,7 @@
             });
         }
         function btn_modulebutton() {
-            var keyValue = $("#gridList").jqGridRowValue().fId;
+            var keyValue = $("#gridList").jqGridRowValue().id;
             if(!keyValue)
             {
 				$.modalAlert("操作的对象不是页面，请选择需要管理按钮的页面！");

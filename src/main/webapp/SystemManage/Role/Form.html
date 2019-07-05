@@ -50,8 +50,8 @@
             $("#fType").bindSelect({
                 url: $.sysStaticData().urlExt +"/sysItemsDetail/queryMainRole",
                 param: { enCode: "RoleType" },
-                id: "fItemcode",
-                text:"fItemname"
+                id: "itemcode",
+                text:"itemname"
             });
             $('#wizard').wizard().on('change', function (e, data) {
                 var $finish = $("#btn_finish");
@@ -117,40 +117,34 @@
                                 <tr>
                                     <th style="display:none;" class="formTitle mydisplaynone">归属组织</th>
                                     <td style="display:none;" class="formValue mydisplaynone">
-                                        <select id="fOrganizeid" name="fOrganizeid" class="form-control required"></select>
+                                        <select id="organizeid" name="organizeid" class="form-control required"></select>
                                     </td>
                                     <th class="formTitle">角色名称</th>
                                     <td class="formValue">
-                                        <input id="fFullname" name="fFullname" type="text" class="form-control required" placeholder="请输入角色名称" />
+                                        <input id="fullname" name="fullname" type="text" class="form-control required" placeholder="请输入角色名称" />
                                     </td>
                                 </tr>
                                 
                                 <tr style="display:none;">
                                     <th class="formTitle">角色编号</th>
                                     <td class="formValue">
-                                        <input id="fEncode" name="fEncode" value="1" type="text" class="form-control required" placeholder="请输入角色编号" />
+                                        <input id="encode" name="encode" value="1" type="text" class="form-control required" placeholder="请输入角色编号" />
                                     </td>
                                     <th class="formTitle mydisplaynone">角色类型</th>
                                     <td class="formValue mydisplaynone">
-                                        <select id="fType" name="fType" class="form-control required"></select>
+                                        <select id="type" name="type" class="form-control required"></select>
                                     </td>
                                 </tr>
                                
                                 <tr>
                                     <th class="formTitle">显示顺序</th>
                                     <td class="formValue">
-                                        <input id="fSortcode" name="fSortcode" type="text" class="form-control required digits" placeholder="请输入显示顺序" />
+                                        <input id="sortcode" name="sortcode" type="text" class="form-control required digits" placeholder="请输入显示顺序" />
                                     </td>
                                     <th class="formTitle" style="height: 35px;">选项</th>
                                     <td class="formValue" style="padding-top: 1px;">
-<!--                                         <div class="ckbox">
-                                            <input id="fAllowedit" name="fAllowedit" type="checkbox"><label for="fAllowedit">允许编辑</label>
-                                        </div>
                                         <div class="ckbox">
-                                            <input id="fAllowdelete" name="fAllowdelete" type="checkbox"><label for="fAllowdelete">允许删除</label>
-                                        </div> -->
-                                        <div class="ckbox">
-                                            <input id="fEnabledmark" name="fEnabledmark" type="checkbox" checked="checked"><label for="fEnabledmark">有效</label>
+                                            <input id="enabledmark" name="enabledmark" type="checkbox" checked="checked"><label for="enabledmark">有效</label>
                                         </div>
                                     </td>
                                 </tr>
@@ -160,7 +154,7 @@
                                         备注
                                     </th>
                                     <td class="formValue" colspan="3">
-                                        <textarea id="fDescription" name="fDescription" class="form-control" style="height: 60px;"></textarea>
+                                        <textarea id="description" name="description" class="form-control" style="height: 60px;"></textarea>
                                     </td>
                                 </tr>
                             </table>

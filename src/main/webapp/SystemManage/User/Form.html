@@ -36,12 +36,6 @@
     					pIdKey:"pId"
     				}
     			},
-    			//async: {
-                //    enable: true,
-                //    url:$.sysStaticData().urlExt +"/sysOrganize/queryAllDataZtree",
-                //    autoParam: ["fId", "name=n", "level=lv"],
-                //    dataFilter: filter
-                //},
     			callback: {
     				onClick: onClick
     			}
@@ -58,16 +52,17 @@
                     async: false,
                     success: function (data) {
                         $("#form1").formSerialize(data);
-                        $("#fAccount").attr('disabled', 'disabled');
+                        $("#account").attr('disabled', 'disabled');
                         if(data.fBirthday==null){
-                        	$("#fBirthday").val("");
+                        	$("#birthday").val("");
                         }
-                        $("#fUserpassword").val("******").attr('disabled', 'disabled');
+                        $("#userpassword").val("******").attr('disabled', 'disabled');
                     }
                 });
             }
             //加载zTree树Data
             $.ajax({
+                //单位接口已删除
                 url: $.sysStaticData().urlExt +"/sysOrganize/queryAllDataZtree",
                 dataType: "json",
                 async: false,
@@ -81,47 +76,25 @@
             $("#fGender").bindSelect()
             $("#fIsadministrator").bindSelect()
             $("#fEnabledmark").bindSelect()
-           /*  var defaultsRole =
-                {
-                    id: "id",
-                    text: "fullname",
-                    search: false,
-                    url: "",
-                    param: [],
-                    change: null,
-                    data: top.clients.role
-                };
-            $("#fRoleid").bindSelectByData(defaultsRole); */
         	$("#fRoleid").bindSelectByPostRowsJueGang({
       		  url: $.sysStaticData().urlExt+"/role/queryRoleByPage?rows=1000&page=1&sidx=&sord=",
-      			id: "fId",
-                text:"fFullname"
+      			id: "id",
+                text:"fullname"
       	});
-            
-           /*  var defaultsDuty =
-                {
-                    id: "id",
-                    text: "fullname",
-                    search: false,
-                    url: "",
-                    param: [],
-                    change: null,
-                    data: top.clients.duty
-                };
-            $("#fDutyid").bindSelectByData(defaultsDuty); */
+
             $("#fDutyid").bindSelectByPostRowsJueGang({
         		  url: $.sysStaticData().urlExt+"/role/queryAllDuty?rows=1000&page=1&sidx=&sord=",
-        			id: "fId",
-                  text:"fFullname"
+        			id: "id",
+                  text:"fullname"
         	});
         }
         function submitForm() {
             if (!$('#form1').formValid()) {
                 return false;
             }
-            alert("-111-"+$('#fBirthday').val()+"-111");
+            alert("-111-"+$('#birthday').val()+"-111");
             var postData = $("#form1").formSerialize();
-            postData["fUserpassword"] = $.md5($.trim($("#fUserpassword").val()));
+            postData["userpassword"] = $.md5($.trim($("#userpassword").val()));
             $.submitForm({
                 url: $.sysStaticData().urlExt +"/sysUser/updateSysUser?keyValue=" + keyValue,
                 param: postData,
@@ -144,12 +117,12 @@
     			if (val.length > 0 ) val = val.substring(0, val.length-1);
     			if (name.length > 0 ) name = name.substring(0, name.length-1);
     			
-    			$("#fOrganizeid").val(val);
-    			$("#fOrganizename").val(name);
+    			$("#organizeid").val(val);
+    			$("#organizename").val(name);
     		}
     		function showMenu() {
-    			var cityObj = $("#fOrganizeid");
-    			var cityOffset = $("#fOrganizeid").offset();
+    			var cityObj = $("#organizeid");
+    			var cityOffset = $("#organizeid").offset();
     			$("#menuContent").css({left:cityOffset.left + "px", top:cityOffset.top + cityObj.outerHeight() + "px"}).slideDown("fast");
     			$("body").bind("mousedown", onBodyDown);
     		}
@@ -183,18 +156,18 @@
                     <tr>
                         <th class="formTitle">账户</th>
                         <td class="formValue">
-                            <input id="fAccount" name="fAccount" type="text" class="form-control required" placeholder="请输入账户" />
+                            <input id="account" name="account" type="text" class="form-control required" placeholder="请输入账户" />
                         </td>
                         <th class="formTitle">密码</th>
                         <td class="formValue">
-                            <input id="fUserpassword" name="fUserpassword" type="password" class="form-control required" placeholder="请输入密码" />
+                            <input id="userpassword" name="userpassword" type="password" class="form-control required" placeholder="请输入密码" />
                         </td>
                     </tr>
                     <tr>
                         <th class="formTitle">单位</th>
                         <td class="formValue" colspan="3">
-                        	<input id="fOrganizename" name="fOrganizename" class="form-control required" type="text" readonly value="" style="width:90%;float:left" placeholder="请选择"/>
-                        	<input id="fOrganizeid" name="fOrganizeid" class="form-control" type="hidden"  value=""/>
+                        	<input id="organizename" name="organizename" class="form-control required" type="text" readonly value="" style="width:90%;float:left" placeholder="请选择"/>
+                        	<input id="organizeid" name="organizeid" class="form-control" type="hidden"  value=""/>
                         	<a id="menuBtn" href="javascript:;" onclick="showMenu(); return false;" style="line-height:30px;padding-left:10px;">选择</a>
                         	<div id="menuContent" class="menuContent" style="display:none; position: absolute;">
 								<ul id="treeOrgan" class="ztree" style="margin-top:0; width:160px;"></ul>
@@ -204,13 +177,13 @@
                     <tr>
                         <th class="formTitle">角色</th>
                         <td class="formValue">
-                            <select id="fRoleid" name="fRoleid" class="form-control required">
+                            <select id="roleid" name="roleid" class="form-control required">
                                 <option value="">==请选择==</option>
                             </select>
                         </td>
                         <th class="formTitle">岗位</th>
                         <td class="formValue">
-                            <select id="fDutyid" name="fDutyid" class="form-control required">
+                            <select id="dutyid" name="dutyid" class="form-control required">
                                 <option value="">==请选择==</option>
                             </select>
                         </td>
@@ -218,11 +191,11 @@
                     <tr>
                         <th class="formTitle">姓名</th>
                         <td class="formValue">
-                            <input id="fRealname" name="fRealname" type="text" class="form-control required" placeholder="请输入姓名" />
+                            <input id="realname" name="realname" type="text" class="form-control required" placeholder="请输入姓名" />
                         </td>
                         <th class="formTitle">性别</th>
                         <td class="formValue">
-                            <select id="fGender" name="fGender" class="form-control required">
+                            <select id="gender" name="gender" class="form-control required">
                                 <option value="true">男</option>
                                 <option value="false">女</option>
                             </select>
@@ -231,34 +204,34 @@
                     <tr>
                         <th class="formTitle">手机</th>
                         <td class="formValue">
-                            <input id="fMobilephone" name="fMobilephone" type="text" class="form-control" />
+                            <input id="mobilephone" name="mobilephone" type="text" class="form-control" />
                         </td>
                         <th class="formTitle">生日</th>
                         <td class="formValue">
-                            <input id="fBirthday" name="fBirthday" type="text" class="form-control input-wdatepicker" onfocus="WdatePicker()" value="1990-01-01" />
+                            <input id="birthday" name="birthday" type="text" class="form-control input-wdatepicker" onfocus="WdatePicker()" value="1990-01-01" />
                         </td>
                     </tr>
                     <tr>
                         <th class="formTitle">微信</th>
                         <td class="formValue">
-                            <input id="fWechat" name="fWechat" type="text" class="form-control" />
+                            <input id="wechat" name="wechat" type="text" class="form-control" />
                         </td>
                         <th class="formTitle">邮箱</th>
                         <td class="formValue">
-                            <input id="fEmail" name="fEmail" type="text" class="form-control" />
+                            <input id="email" name="email" type="text" class="form-control" />
                         </td>
                     </tr>
                     <tr>
                         <th class="formTitle">类型</th>
                         <td class="formValue">
-                            <select id="fIsadministrator" name="fIsadministrator" class="form-control">
+                            <select id="isadministrator" name="isadministrator" class="form-control">
                                 <option value="false">普通用户</option>
                                 <option value="true">系统管理员</option>
                             </select>
                         </td>
                         <th class="formTitle">允许登录</th>
                         <td class="formValue">
-                            <select id="fEnabledmark" name="fEnabledmark" class="form-control">
+                            <select id="enabledmark" name="enabledmark" class="form-control">
                                 <option value="true">是</option>
                                 <option value="false">否</option>
                             </select>
@@ -267,7 +240,7 @@
                     <tr>
                         <th class="formTitle">工号</th>
                         <td class="formValue">
-                        	<input id="fJobNumber" name="fJobNumber" type="text" class="form-control required digits number" placeholder="请输入工号"/>     
+                        	<input id="jobNumber" name="jobNumber" type="text" class="form-control required digits number" placeholder="请输入工号"/>
                         </td>
                     </tr>
                     <tr>
@@ -275,7 +248,7 @@
                             备注
                         </th>
                         <td class="formValue" colspan="3">
-                            <textarea id="fDescription" name="fDescription" class="form-control" style="height: 60px;"></textarea>
+                            <textarea id="description" name="description" class="form-control" style="height: 60px;"></textarea>
                         </td>
                     </tr>
                 </table>

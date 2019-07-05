@@ -25,7 +25,7 @@
             initControl();
             $.ajax({
                 url: $.sysStaticData().urlExt +"/sysModule/findOne",
-                data: { fId: keyValue },
+                data: { id: keyValue },
                 dataType: "json",
                 async: false,
                 success: function (data) {

@@ -14,17 +14,17 @@
     <script src="Content/js/framework-clientdata.js?v=1.0.0.1"></script>
     <script>
     $(function () {
-    	console.log(top.clients.user.fId);
+    	console.log(top.clients.user.id);
     	$.ajax({
     		type:"post",
     		url:"/dancer/sysUser/queryOneBySysUserId",
-    		data:{keyValue:top.clients.user.fId},
+    		data:{keyValue:top.clients.user.id},
     		success:function(data){
-    			if(data!=null&&data.fHeadicon!=""&&data.fHeadicon!=undefined&&data.fHeadicon!=null){
-    				 $("#topheadimg").attr("data_src",top.clients.user.fHeadicon);
-    		    	  $("#topheadimg").attr("src",$.sysStaticDataUrl().urlExtUrl+top.clients.user.fHeadicon);
-    		    	  $("#myheadimg").attr("data_src",top.clients.user.fHeadicon);
-    		       	  $("#myheadimg").attr("src",$.sysStaticDataUrl().urlExtUrl+top.clients.user.fHeadicon);
+    			if(data!=null&&data.headicon!=""&&data.headicon!=undefined&&data.headicon!=null){
+    				 $("#topheadimg").attr("data_src",top.clients.user.headicon);
+    		    	  $("#topheadimg").attr("src",$.sysStaticDataUrl().urlExtUrl+top.clients.user.headicon);
+    		    	  $("#myheadimg").attr("data_src",top.clients.user.headicon);
+    		       	  $("#myheadimg").attr("src",$.sysStaticDataUrl().urlExtUrl+top.clients.user.headicon);
     			}
     		}
     	})

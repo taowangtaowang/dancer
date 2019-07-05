@@ -160,9 +160,9 @@ function GetLoadNav() {
     var _html = "";
     $.each(data, function (i) {
         var row = data[i];
-        if (row.fParentid == "0") {
+        if (row.parentid == "0") {
             _html += '<li>';
-            _html += '<a data-id="' + row.fId + '" href="#" class="dropdown-toggle"><i class="' + row.fIcon + '"></i><span>' + row.fFullname + '</span><i class="fa fa-angle-right drop-icon"></i></a>';
+            _html += '<a data-id="' + row.id + '" href="#" class="dropdown-toggle"><i class="' + row.icon + '"></i><span>' + row.fullname + '</span><i class="fa fa-angle-right drop-icon"></i></a>';
             var childNodes = row.ChildNodes;
             if(!!childNodes){
 	            if (childNodes.length > 0) {
@@ -170,7 +170,7 @@ function GetLoadNav() {
 	                $.each(childNodes, function (i) {
 	                    var subrow = childNodes[i];
 	                    _html += '<li>';
-	                    _html += '<a class="menuItem" data-id="' + subrow.fId + '" href="' + subrow.fUrladdress + '" data-index="' + subrow.fSortcode + '">' + subrow.fFullname + '</a>';
+	                    _html += '<a class="menuItem" data-id="' + subrow.id + '" href="' + subrow.urladdress + '" data-index="' + subrow.sortcode + '">' + subrow.fullname + '</a>';
 	                    _html += '</li>';
 	                });
 	                _html += '</ul>';

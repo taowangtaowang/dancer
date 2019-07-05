@@ -19,8 +19,6 @@ public interface SysRoleMapper {
 
 	Integer deleteRole(Map<String, Object> parmap);
 
-	SysRole queryAllDuty(Map<String, Object> parameter);
-
 	SysRole queryOneByRoleId(String roleId);
 	
 }

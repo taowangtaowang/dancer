@@ -54,14 +54,14 @@
   </resultMap>
   
   <sql id="Base_Column_List" >
-      F_Id, F_ParentId, F_Layers, 
-      F_EnCode, F_FullName, F_Icon, 
-      F_UrlAddress, F_Target, F_IsMenu, 
-      F_IsExpand, F_IsPublic, F_AllowEdit, 
-      F_AllowDelete, F_SortCode, F_DeleteMark, 
-      F_EnabledMark, F_Description, F_CreatorTime, 
-      F_CreatorUserId, F_LastModifyTime, F_LastModifyUserId, 
-      F_DeleteTime, F_DeleteUserId
+      id, parentId, layers,
+      enCode, fullName, icon,
+      urlAddress, target, isMenu,
+      isExpand, isPublic, allowEdit,
+      allowDelete, sortCode, deleteMark,
+      enabledMark, description, creatorTime,
+      creatorUserId, lastModifyTime, lastModifyUserId,
+      deleteTime, deleteUserId
   </sql>
   
   
@@ -75,17 +75,16 @@
   <select id="SelectByfParentid" parameterType="java.lang.String"
 		resultMap="BaseResultMap">
     select  *
-    from  sys_module  where F_ParentId=#{fParentid,jdbcType=VARCHAR} and F_DeleteMark !=1
+    from  sys_module  where parentid=#{parentid,jdbcType=VARCHAR} and deleteMark !=1
   </select>
   
   <select id="findListParentid" resultMap="modulesMap" parameterType="java.lang.String">
-    select * from sys_module where F_ParentId=#{fParentid,jdbcType=VARCHAR} and F_DeleteMark != 1 ORDER BY F_SortCode ASC
+    select * from sys_module where parentId=#{parentId,jdbcType=VARCHAR} and deleteMark != 1 ORDER BY sortCode ASC
   </select>
   
-    <select id="findListFullName" resultMap="modulesMap" parameterType="java.lang.String" >
-    
+  <select id="findListFullName" resultMap="modulesMap" parameterType="java.lang.String" >
       select  <include refid="Base_Column_List" />
-      from sys_module where F_DeleteMark != 1 and F_ParentId='0' ORDER BY F_SortCode ASC
+      from sys_module where deleteMark != 1 and parentId='0' ORDER BY sortCode ASC
   </select>
   
   
@@ -94,13 +93,13 @@
     <include refid="Base_Column_List" />
     from sys_module
     <where>
-    	F_ParentId Is not null and F_DeleteMark =0
-    	<if test=" F_EnabledMark!=null and F_EnabledMark != '' " >
-	      	and F_EnabledMark = 1
+    	parentId Is not null and deleteMark =0
+    	<if test=" enabledMark!=null and enabledMark != '' " >
+	      	and enabledMark = 1
 	    </if>
 	    <if test="isAdmin != 1" >
-	      	and F_Id in (
-				select F_ItemId from sys_roleauthorize where F_ObjectId =  #{userRoleId,jdbcType=VARCHAR} and F_ItemType=1
+	      	and id in (
+				select itemId from sys_roleauthorize where objectId =  #{userRoleId,jdbcType=VARCHAR} and itemType=1
 			)
 	    </if>
     </where>

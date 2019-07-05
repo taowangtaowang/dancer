@@ -25,10 +25,6 @@ public class LoginServiceImpl implements LoginService {
 	@Autowired
 	private SysUserMapper sysUserMapper;
 	@Autowired
-	private SysItemsMapper sysItemsMapper;
-	@Autowired
-	private SysItemsDetailMapper sysItemsDetailMapper;
-	@Autowired
 	private SysOrganizeMapper sysOrganizeMapper;
 	@Autowired
 	private SysRoleMapper sysRoleMapper;
@@ -55,26 +51,8 @@ public class LoginServiceImpl implements LoginService {
 	public Map<String, Object> queryInitData(SysUser sysUser) {
 		// dataItems 系统选项信息
 		Map<String, Object> res = new HashMap<String, Object>();
-		List<SysItems> sysItemlist = sysItemsMapper.queryAllData();
-		res.put("sysItem", sysItemlist);
-		List<SysItemsdetail> sysItemsDetaillist = sysItemsDetailMapper.queryAllData();
-		
-		Map<String, Object> sysItemMaplist = new HashMap<String, Object>();
-		//List<Map<Object,Object>> sysItemMaplist = new ArrayList<Map<Object,Object>>();
-		for (SysItems sysItems : sysItemlist) {
-			Map<Object,Object> detailmap = new  HashMap<Object,Object>();
-			for (SysItemsdetail sysItemsdetail : sysItemsDetaillist) {
-				if(sysItems.getId().equals(sysItemsdetail.getItemid())){//77070117-3F1A-41BA-BF81-B8B85BF10D5E
-					detailmap.put(sysItemsdetail.getItemcode(),sysItemsdetail.getItemname());
-				}
-			}
-			
-			Map<Object,Object> map = new  HashMap<Object,Object>();
-			map.put(sysItems.getEncode(), detailmap);
-			//sysItemMaplist.add(map);
-			sysItemMaplist.put(sysItems.getEncode(), detailmap);
-		}
-		res.put("dataItems", sysItemMaplist);
+		res.put("sysItem", null);
+		res.put("dataItems", null);
 		// organize 组织信息
 		/*Map<String,Object> map = new HashMap<String,Object>();
 		map.put("nodeid","0");*/
@@ -93,7 +71,7 @@ public class LoginServiceImpl implements LoginService {
 		res.put("organize", sysOrganMaplist);
 		// role 角色信息 如果是
 		Map<String, Object> parameter = new HashMap<String, Object>();
-		parameter.put("F_Category", String.valueOf(1));
+		parameter.put("category", String.valueOf(1));
 		List<SysRole> sysRolelist = sysRoleMapper.queryAllDataByCategory(parameter);// F_Category=1
 		//List<Map<Object,Object>> sysRoleMaplist = new ArrayList<Map<Object,Object>>();
 		Map<String, Object> sysRoleMaplist = new HashMap<String, Object>();
@@ -109,7 +87,7 @@ public class LoginServiceImpl implements LoginService {
 		res.put("role", sysRoleMaplist);
 		// duty 岗位信息
 		Map<String, Object> sysDutyMaplist = new HashMap<String, Object>();
-		parameter.put("F_Category", String.valueOf(2));
+		parameter.put("category", String.valueOf(2));
 		List<SysRole> sysdutylist = sysRoleMapper.queryAllDataByCategory(parameter);// F_Category=2
 		for (SysRole sysRole : sysdutylist) {
 			Map<Object,Object> sysRoleMap = new  HashMap<Object,Object>();
@@ -134,7 +112,7 @@ public class LoginServiceImpl implements LoginService {
 		String isAdminStr =( isAdmin?"0":"1");//1 代表admin用户
 		parameter.put("isAdmin", isAdminStr);
 		parameter.put("userRoleId", userRoleId);
-		parameter.put("F_EnabledMark", 1);//该菜单是否有效
+		parameter.put("enabledMark", 1);//该菜单是否有效
 		//如果是admin 查询所有数据  如何是别的角色  查询  拥有的权限
 		List<SysModule> authorizeMenulist  = new ArrayList<SysModule>();//拥有的所有权限
 		List<Map<String, Object>> menulist= new ArrayList<Map<String, Object>>();//最后组装好的菜单res

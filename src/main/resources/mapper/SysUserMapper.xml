@@ -61,11 +61,11 @@
     <include refid="Base_Column_List" />
     from sys_user 
     <where>	
-    	 F_Account != 'admin' and F_DeleteMark = 0
+    	deleteMark = 0
     	<if test="keyword != null and keyword !='' ">
-				and (F_Account like ('%'+#{keyword}+'%')
-				or F_RealName like ('%'+#{keyword}+'%')
-				or F_MobilePhone like ('%'+#{keyword}+'%') ) 
+				and (account like ('%'+#{keyword}+'%')
+				or realName like ('%'+#{keyword}+'%')
+				or mobilePhone like ('%'+#{keyword}+'%') )
 		</if>
     </where>
     <if test=" sidx!=null and sidx!='' ">
@@ -95,7 +95,7 @@
     select 
     <include refid="Base_Column_List" />
     from sys_user
-    where F_Id = #{keyValue,jdbcType=VARCHAR}
+    where id = #{keyValue,jdbcType=VARCHAR}
   </select>
   
   <select id="querySysUserByOrganId" resultMap="BaseResultMap" parameterType="com.wt.overflow.bean.SysUser" >
@@ -387,13 +387,4 @@
         F_DeleteMark=0 
   </select>
 
-  <select id="selectWindowsUserList" resultMap="BaseResultMap">
-    select u.F_Id, u.F_Account, u.F_RealName from Sys_User u
-    left join rn_organbusinesstype t on u.F_OrganizeId = t.OrganId
-    where t.BusinessTypeId = #{businessTypeId} and t.DeleteMark = 0 and t.EnabledMark =1
-    and u.F_DeleteMark = 0 and u.F_EnabledMark =1 and
-    not exists(select 1 from rn_businesswindows w where w.DeleteMark = 0 and w.EnabledMark = 1
-    and w.CurrentLoginUser != '' and u.F_Id like '%'+w.CurrentLoginUser+'%')
-    order by u.F_SortCode asc
-  </select>
 </mapper>

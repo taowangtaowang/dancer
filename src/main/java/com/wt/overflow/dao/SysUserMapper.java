@@ -31,14 +31,5 @@ public interface SysUserMapper extends Mapper<SysUser> {
 
 	Integer updateSysUserHeadIcon(Map<String, Object> parameter);
 
-	/**
-	 * @Description 查询未绑定窗口的用户
-	 * @author wumin
-	 * @date 2018/5/2 14:31
-	 * @param businessTypeId 业务类型ID
-	 * @return java.util.List<com.dome.bean.sys.SysUser>
-	 */
-	List<SysUser> selectWindowsUserList(@Param("businessTypeId") String businessTypeId);
-
 	List<SysUser> querySysUserByOrganId(SysUser sysUser);
 }

@@ -50,8 +50,8 @@
             $("#fType").bindSelect({
                 url: $.sysStaticData().urlExt +"/sysItemsDetail/queryMainRole",
                 param: { enCode: "RoleType" },
-                id: "fItemcode",
-                text: "fItemname"
+                id: "itemcode",
+                text: "itemname"
             });
             $('#wizard').wizard().on('change', function (e, data) {
                 var $next = $("#btn_next");
@@ -91,39 +91,33 @@
                         <tr>
                             <th style="display:none;" class="formTitle">归属组织</th>
                             <td style="display:none;" class="formValue">
-                                <select id="fOrganizeid" name="fOrganizeid" class="form-control required"></select>
+                                <select id="organizeid" name="organizeid" class="form-control required"></select>
                             </td>
                             <th class="formTitle">角色名称</th>
                             <td class="formValue">
-                                <input id="fFullname" name="fFullname" type="text" class="form-control required" />
+                                <input id="fullname" name="fullname" type="text" class="form-control required" />
                             </td>
                         </tr>
                         <tr style="display:none;">
                             <th class="formTitle">角色编号</th>
                             <td  class="formValue">
-                                <input id="fEncode" name="fEncode" type="text" value="1" class="form-control required" />
+                                <input id="encode" name="encode" type="text" value="1" class="form-control required" />
                             </td>
                             <th class="formTitle">角色类型</th>
                             <td class="formValue">
-                                <select id="fType" name="fType" class="form-control required"></select>
+                                <select id="type" name="type" class="form-control required"></select>
                             </td>
                         </tr>
 
                         <tr>
                         	<th class="formTitle">显示顺序</th>
                             <td class="formValue">
-                                <input id="fSortcode" name="fSortcode" type="text" class="form-control required" />
+                                <input id="sortcode" name="sortcode" type="text" class="form-control required" />
                             </td>
                             <th class="formTitle" style="height: 35px;">选项</th>
                             <td class="formValue" style="padding-top: 1px;">
-<!--                                 <div class="ckbox">
-                                    <input id="fAllowedit" name="fAllowedit" type="checkbox"><label for="F_AllowEdit">允许编辑</label>
-                                </div>
                                 <div class="ckbox">
-                                    <input id="fAllowdelete" name="fAllowdelete" type="checkbox"><label for="F_AllowDelete">允许删除</label>
-                                </div> -->
-                                <div class="ckbox">
-                                    <input id="fEnabledmark" name="fEnabledmark" type="checkbox" checked="checked"><label for="F_EnabledMark">有效</label>
+                                    <input id="enabledmark" name="enabledmark" type="checkbox" checked="checked"><label for="enabledmark">有效</label>
                                 </div>
                             </td>
                         </tr>
@@ -132,35 +126,36 @@
                                 备注
                             </th>
                             <td class="formValue" colspan="3">
-                                <textarea id="fDescription" name="fDescription" class="form-control" style="height: 60px;"></textarea>
+                                <textarea id="description" name="description" class="form-control" style="height: 60px;"></textarea>
                             </td>
                         </tr>
                         <tr>
                             <th class="formTitle">创建人员</th>
                             <td class="formValue">
-                                <input id="fCreatoruserId" name="fCreatoruserId" type="text" class="form-control" />
+                                <input id="creatoruserId" name="creatoruserId" type="text" class="form-control" />
                             </td>
                             <th class="formTitle">创建时间</th>
                             <td class="formValue">
-                                <input id="fCreatortime" name="fCreatortime" type="text" class="form-control" />
+                                <input id="creatortime" name="creatortime" type="text" class="form-control" />
                             </td>
                         </tr>
                         
                         <tr>
                             <th class="formTitle">修改人员</th>
                             <td class="formValue">
-                                <input id="fLastModifyuserId" name="fLastModifyuserId" type="text" class="form-control" />
+                                <input id="lastModifyuserId" name="lastModifyuserId" type="text" class="form-control" />
                             </td>
 							<th class="formTitle">修改时间</th>
                             <td class="formValue">
-                                <input id="fLastmodifytime" name="fLastmodifytime" type="text" class="form-control" />
+                                <input id="lastmodifytime" name="lastmodifytime" type="text" class="form-control" />
                             </td>
                         </tr>
                        
                     </table>
                 </div>
                 <div class="step-pane" id="step-2">
-                    <div id="permissionTree" style="padding-bottom:"></div>
+                    <!--<div id="permissionTree" style="padding-bottom:"></div>-->
+                    <div id="permissionTree"></div>
                 </div>
             </div>
             <div class="form-button" id="wizard-actions">

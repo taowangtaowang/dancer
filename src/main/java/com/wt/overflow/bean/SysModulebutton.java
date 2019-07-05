@@ -2,7 +2,7 @@ package com.wt.overflow.bean;
 
 import java.util.Date;
 
-public class SysModuleButton {
+public class SysModulebutton {
     private String id;
 
     private String moduleid;

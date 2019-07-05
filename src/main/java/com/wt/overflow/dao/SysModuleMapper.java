@@ -26,13 +26,11 @@ public interface SysModuleMapper {
     
 	boolean updateByPrimaryKeySelective(SysModule sysModule);
 	
-	List<SysModules> findListParentid(@Param(value = "fParentid") String Parentid);
+	List<SysModules> findListParentid(@Param(value = "parentId") String parentId);
 	
-	SysModule SelectByfParentid(@Param(value = "fParentid") String fParentid);
+	SysModule SelectByfParentid(@Param(value = "parentid") String parentid);
 	
-	List<SysModules> findListFullName(@Param(value = "fFullname") String fFullname);
-	
-	List<SysOnes> findList();
-	
+	List<SysModules> findListFullName(@Param(value = "fullname") String fullname);
+
 	
 }

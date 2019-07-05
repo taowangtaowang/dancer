@@ -33,7 +33,7 @@
 		parameterType="java.util.Map">
 		select
 		<include refid="Base_Column_List" />
-		from sys_role where F_Category = #{F_Category,jdbcType=INTEGER} and F_DeleteMark = 0
+		from sys_role where category = #{category,jdbcType=INTEGER} and deleteMark = 0
 	</select>
 
 
@@ -44,9 +44,9 @@
 		<include refid="Base_Column_List" />
 		from sys_role
 		<where>
-			F_Category=#{roleType} and F_DeleteMark = 0
+			category=#{roleType} and deleteMark = 0
 			<if test="keyword != null and keyword !='' ">
-				and (F_FullName like ('%'+#{keyword}+'%') or F_EnCode like
+				and (fullName like ('%'+#{keyword}+'%') or enCode like
 				('%'+#{keyword}+'%') )
 			</if>
 		</where>
@@ -56,7 +56,7 @@
 		parameterType="java.util.Map">
 		select
 		<include refid="Base_Column_List" />
-		from sys_role where F_Id = #{roleId,jdbcType=INTEGER}
+		from sys_role where id = #{roleId,jdbcType=INTEGER}
 	</select>
 
 	<insert id="addRole" parameterType="java.util.Map"
@@ -248,14 +248,6 @@
 		update sys_role set F_DeleteMark  = 1,F_DeleteUserId =#{F_DeleteUserId,jdbcType=VARCHAR} ,F_DeleteTime =#{F_DeleteTime,jdbcType=TIMESTAMP} 
 		where F_Id=#{roleId,jdbcType=VARCHAR}
   	</update>
-  	
-	
-	<!-- 批量修改，根据idCard修改 paymentEndDate -->
-    <!-- <update id="batchUpdateByIdCard" parameterType="java.util.List">
-        <foreach collection="list" item="item" index="index" open="" close="" separator=";"> 
-        	update family_register set payment_end_date = #{item.paymentEndDate} where id_card = #{item.idCard}
-        </foreach>
-    </update> -->
-  	
+
   	
 </mapper>

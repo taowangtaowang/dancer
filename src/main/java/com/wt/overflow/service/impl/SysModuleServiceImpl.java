@@ -69,26 +69,21 @@ public class SysModuleServiceImpl implements SysModuleService {
 	}
 
 	
-	public List<SysModules> findListParentid(String Parentid) {
-		return sysModuleMapper.findListParentid(Parentid);
+	public List<SysModules> findListParentid(String parentId) {
+		return sysModuleMapper.findListParentid(parentId);
 	}
 
 	
-	public SysModule SelectByfParentid(String fParentid) {
-		return sysModuleMapper.SelectByfParentid(fParentid);
+	public SysModule SelectByfParentid(String parentid) {
+		return sysModuleMapper.SelectByfParentid(parentid);
 	}
 
-	
-	public List<SysOnes> findList() {
-		return sysModuleMapper.findList();
-	}
 
-	
-	public List<SysModules> findListS(String fFullname) {
-		if (null != fFullname && "" != fFullname) {
-			fFullname = "%" + fFullname + "%";
+	public List<SysModules> findListS(String fullname) {
+		if (null != fullname && "" != fullname) {
+			fullname = "%" + fullname + "%";
 		}
-		return sysModuleMapper.findListFullName(fFullname);
+		return sysModuleMapper.findListFullName(fullname);
 	}
 
 	
