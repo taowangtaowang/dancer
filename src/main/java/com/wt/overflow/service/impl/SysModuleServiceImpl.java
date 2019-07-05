@@ -28,22 +28,6 @@ public class SysModuleServiceImpl implements SysModuleService {
 	@Autowired
 	private SysUserMapper sysUserMapper;
 
-	
-	public List<SysModule> queryAllSysModuleByIsAdmin(boolean isAdmin, String userRoleId) {
-		Map<String, Object> parameter = new HashMap<String, Object>();
-		String isAdminStr =( isAdmin?"0":"1");
-		parameter.put("isAdmin", isAdminStr);
-		parameter.put("userRoleId", userRoleId);
-		return sysModuleMapper.queryAllSysModuleByIsAdmin(parameter);
-	}
-
-	
-	public List<SysModules> findListPage(Map<String, Object> parameter) {
-		// TODO Auto-generated method stub
-		return sysModuleMapper.findListPage(parameter);
-	}
-
-	
 	public SysModule selectByPrimaryKey(String fId) {
 		SysModule sysModule = sysModuleMapper.selectByPrimaryKey(fId);
 		if(sysModule.getfLastmodifyuserid()!=null&&!(sysModule.getfLastmodifyuserid().equals(""))){
@@ -83,25 +67,21 @@ public class SysModuleServiceImpl implements SysModuleService {
 
 	
 	public boolean updateByPrimaryKeySelective(SysModule sysModule) {
-		// TODO Auto-generated method stub
 		return sysModuleMapper.updateByPrimaryKeySelective(sysModule);
 	}
 
 	
 	public List<SysModules> findListParentid(String Parentid) {
-		// TODO Auto-generated method stub
 		return sysModuleMapper.findListParentid(Parentid);
 	}
 
 	
 	public SysModule SelectByfParentid(String fParentid) {
-		// TODO Auto-generated method stub
 		return sysModuleMapper.SelectByfParentid(fParentid);
 	}
 
 	
 	public List<SysOnes> findList() {
-		// TODO Auto-generated method stub
 		return sysModuleMapper.findList();
 	}
 

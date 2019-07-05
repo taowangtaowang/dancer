@@ -34,7 +34,7 @@
   
   
   <insert id="addSysUserPassWord" parameterType="com.wt.overflow.bean.SysUserLogOn">
-    insert into Sys_UserLogOn
+    insert into sys_userlogon
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="fId != null">
         F_Id,
@@ -162,7 +162,7 @@
   </insert>
   
   <update id="updateSysUserPassWord" parameterType="com.wt.overflow.bean.SysUserLogOn">
-    update Sys_UserLogOn
+    update sys_userlogon
     <set>
       <if test="fUserid != null">
         F_UserId = #{fUserid,jdbcType=VARCHAR},

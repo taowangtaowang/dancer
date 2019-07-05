@@ -53,7 +53,7 @@
     a.F_CreatorTime, a.F_CreatorUserId, a.F_LastModifyTime, a.F_LastModifyUserId, a.F_DeleteTime, a.F_DeleteUserId,a.F_JobNumber,
     
     b.F_UserPassword,b.F_Question,b.F_AnswerQuestion,b.F_ChangePasswordDate
-    from sys_user a left join Sys_UserLogOn b on a.F_Id = b.F_UserId
+    from sys_user a left join sys_UserLogOn b on a.F_Id = b.F_UserId
     where F_Account = #{loginname,jdbcType=VARCHAR} and a.F_DeleteMark=0
   </select> 
   
@@ -395,10 +395,10 @@
 
   <select id="selectWindowsUserList" resultMap="BaseResultMap">
     select u.F_Id, u.F_Account, u.F_RealName from Sys_User u
-    left join Rn_OrganBusinessType t on u.F_OrganizeId = t.OrganId
+    left join rn_organbusinesstype t on u.F_OrganizeId = t.OrganId
     where t.BusinessTypeId = #{businessTypeId} and t.DeleteMark = 0 and t.EnabledMark =1
     and u.F_DeleteMark = 0 and u.F_EnabledMark =1 and
-    not exists(select 1 from Rn_BusinessWindows w where w.DeleteMark = 0 and w.EnabledMark = 1
+    not exists(select 1 from rn_businesswindows w where w.DeleteMark = 0 and w.EnabledMark = 1
     and w.CurrentLoginUser != '' and u.F_Id like '%'+w.CurrentLoginUser+'%')
     order by u.F_SortCode asc
   </select>

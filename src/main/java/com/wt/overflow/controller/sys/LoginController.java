@@ -66,7 +66,7 @@ public class LoginController {
 			List<SysUser> sysUserlist = loginService.queryByLoginName(loginname);
 			if (sysUserlist.isEmpty()) {
 				parameter.put("state", "error");
-				parameter.put("message", "当前账号不存在");
+				parameter.put("message","当前账号不存在");
 				return parameter;
 			}
 			if(!sysUserlist.get(0).getfEnabledmark()){
@@ -93,55 +93,6 @@ public class LoginController {
 		parameter.put("message", "账号或者密码输入有误");
 		return parameter;
 	}
-	
-	
-	/**
-	 * 物流验证用户名  密码
-	 * @param request
-	 * @param response
-	 * @return
-	 * @name wangt	
-	 * @Date 2018年6月27日 下午3:52:08
-	 */
-	@RequestMapping("wuliu")
-	@ResponseBody
-	public Map<String, Object> wuliu(HttpServletRequest request, HttpServletResponse response) {
-		Map<String, Object> parameter = new HashMap<String, Object>();
-		String loginname = request.getParameter("username");
-		String password = request.getParameter("password");
-		
-		if (Strings.isNotEmpty(loginname) && Strings.isNotEmpty(password)) {
-			List<SysUser> sysUserlist = loginService.queryByLoginName(loginname);
-			if (sysUserlist.isEmpty()) {
-				parameter.put("state", "error");
-				parameter.put("message", "当前账号不存在");
-				return parameter;
-			}
-			if(!sysUserlist.get(0).getfEnabledmark()){
-				parameter.put("state", "error");
-				parameter.put("message", "当前账号已被禁用");
-				return parameter;
-			}
-			for (SysUser sysUser : sysUserlist) {// 账号唯一 F_Account
-				if (MD5Util.MD5(password).equals(sysUser.getfUserPassword().toUpperCase())) {// 登录成功
-					// 写入用户登录日志。
-					//登录用户写进session
-					//request.getSession().setAttribute("loginUser",sysUser);
-					parameter.put("state", "success");
-					parameter.put("message", "该账号密码存在");
-					return parameter;
-				}
-			}
-			parameter.put("state", "error");
-			parameter.put("message", "账号或者密码错误");
-			return parameter;
-		}
-
-		parameter.put("state", "error");
-		parameter.put("message", "账号或者密码有误");
-		return parameter;
-	}
-
 
 	/**
 	 * 退出登录

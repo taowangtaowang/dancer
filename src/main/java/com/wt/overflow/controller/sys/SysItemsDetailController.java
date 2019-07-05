@@ -64,7 +64,7 @@ public class SysItemsDetailController {
 	 * 根据主键删除
 	 * @param request
 	 * @param response
-	 * @param keyword
+	 * @param keyValue
 	 * @return
 	 * @throws Exception
 	 * @name wangt	

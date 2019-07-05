@@ -269,14 +269,4 @@ public class SysItemsServiceImpl implements SysItemsService {
 		}
 		return resmap;
 	}
-
-	
-	public List<SysItems> queryCodeName() {
-		// TODO Auto-generated method stub
-		return sysItemsMapper.queryCodeName();
-	}
-
-
-	
-
 }

@@ -43,7 +43,7 @@
   <select id="queryAllAuthorizeButtonform" resultMap="BaseResultMap" parameterType="java.util.Map" >
     select 
     <include refid="Base_Column_List" />
-    from Sys_Modulebutton 
+    from sys_modulebutton
     <where>
     	F_DeleteMark =0
     	<if test=" F_EnabledMark!=null and F_EnabledMark != '' " >
@@ -51,7 +51,7 @@
 		</if>
     	<if test="isAdmin != 1" ><!-- 非admin用户 <if test="isAdmin" > -->
       		and F_Id in (
-				select F_ObjectId from Sys_RoleAuthorize where F_ObjectId =  #{userRoleId,jdbcType=VARCHAR} and F_ItemType=1
+				select F_ObjectId from sys_roleauthorize where F_ObjectId =  #{userRoleId,jdbcType=VARCHAR} and F_ItemType=1
 			)
     	</if>
     </where>
@@ -60,7 +60,7 @@
   <select id="queryAllData" resultMap="BaseResultMap" parameterType="java.util.Map" >
     select 
     <include refid="Base_Column_List" />
-    from Sys_Modulebutton
+    from sys_modulebutton
   </select> 
   
   

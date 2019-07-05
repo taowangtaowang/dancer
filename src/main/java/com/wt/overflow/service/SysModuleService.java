@@ -11,10 +11,6 @@ import java.util.Map;
 
 public interface SysModuleService {
 
-	List<SysModule> queryAllSysModuleByIsAdmin(boolean isAdmin, String userRoleId);
-    
-	List<SysModules> findListPage(Map<String, Object> parameter);
-	
 	SysModule selectByPrimaryKey(String fId);
 	
 	boolean insertSysModule(SysModule sysModule);

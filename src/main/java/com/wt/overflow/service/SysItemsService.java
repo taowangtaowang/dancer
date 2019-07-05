@@ -9,8 +9,6 @@ import java.util.Map;
 
 public interface SysItemsService {
 
-	List<SysItems> queryAllData();
-
 	List<Map<String, Object>> queryAllDataByZtree();
 
 	List<Map<String, Object>> queryAllDataByPage(Integer rows, Integer page, String sidx, String sord, String keyword, String itemId);
@@ -23,7 +21,5 @@ public interface SysItemsService {
                         Integer f_SortCode, boolean f_EnabledMark, String f_ParentId, String fDescription);
 
 	Map<String, Object> queryAllItemsList();
-	
-	List<SysItems> queryCodeName(); 
 
 }

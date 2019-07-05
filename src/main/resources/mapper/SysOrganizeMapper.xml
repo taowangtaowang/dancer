@@ -46,7 +46,7 @@
   <select id="queryAllData" resultMap="BaseResultMap" parameterType="java.util.Map" >
     select 
     <include refid="Base_Column_List" />
-    from Sys_Organize
+    from sys_organize
     <where>	
     	F_DeleteMark  = 0 
     	<if test="nodeid != null and nodeid !='' ">
@@ -61,18 +61,18 @@
   <select id="queryOneByOrganizeId" resultMap="BaseResultMap" parameterType="java.util.Map" >
        select
        <include refid="Base_Column_List" />
-       from Sys_Organize where F_DeleteMark  = 0 and F_Id = #{organizeId,jdbcType=VARCHAR}
+       from sys_organize where F_DeleteMark  = 0 and F_Id = #{organizeId,jdbcType=VARCHAR}
   </select>
   
   
   <select id="queryAllByPId" resultMap="BaseResultMap" parameterType="java.util.Map" >
        select
        <include refid="Base_Column_List" />
-       from Sys_Organize where F_DeleteMark  = 0 and  F_ParentId = #{fId,jdbcType=VARCHAR}
+       from sys_organize where F_DeleteMark  = 0 and  F_ParentId = #{fId,jdbcType=VARCHAR}
   </select>
   
   <insert id="addOrganize" parameterType="com.wt.overflow.bean.SysOrganize">
-    insert into Sys_Organize
+    insert into sys_organize
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="fId != null">
          F_Id,
@@ -242,7 +242,7 @@
   </insert> 
   
   <update id="updateOrganize" parameterType="com.wt.overflow.bean.SysOrganize">
-     update Sys_Organize set
+     update sys_organize set
      F_ParentId = #{fParentid,jdbcType=VARCHAR},
      F_Layers = #{fLayers,jdbcType=INTEGER},
      F_EnCode = #{fEncode,jdbcType=VARCHAR},
@@ -268,16 +268,16 @@
   </update>
   
   <update id="deleteOrganize">
-     update Sys_Organize set F_DeleteMark  = 1,F_DeleteUserId =#{F_DeleteUserId,jdbcType=VARCHAR} ,F_DeleteTime =#{F_DeleteTime,jdbcType=TIMESTAMP} 
+     update sys_organize set F_DeleteMark  = 1,F_DeleteUserId =#{F_DeleteUserId,jdbcType=VARCHAR} ,F_DeleteTime =#{F_DeleteTime,jdbcType=TIMESTAMP}
      where F_Id = #{roleId} 
   </update>
   
   <update id="updateOrganizeDes">
-     update Sys_Organize set F_Description  = #{fDescription,jdbcType=VARCHAR},F_LastModifyTime =#{fLastmodifytime,jdbcType=VARCHAR} ,F_LastModifyUserId =#{fLastmodifyuserid,jdbcType=TIMESTAMP} 
+     update sys_organize set F_Description  = #{fDescription,jdbcType=VARCHAR},F_LastModifyTime =#{fLastmodifytime,jdbcType=VARCHAR} ,F_LastModifyUserId =#{fLastmodifyuserid,jdbcType=TIMESTAMP}
      where F_Id = #{fId} 
   </update>
   
   <select id="selectAllParentOrganize" resultMap="BaseResultMap">
-     select F_Id, F_FullName, F_EnabledMark from Sys_Organize where F_ParentId = '0'
+     select F_Id, F_FullName, F_EnabledMark from sys_organize where F_ParentId = '0'
   </select>
 </mapper>

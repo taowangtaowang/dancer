@@ -32,20 +32,6 @@ public class SysRoleServiceImpl implements SysRoleService {
 	private SysUserMapper sysUserMapper;
 
 	/**
-	 * 所属角色相关 1 角色 2 岗位
-	 * @param F_Category
-	 * @return
-	 * @name wangt	
-	 * @Date 2018年4月8日 下午3:49:23
-	 */
-	
-	public List<SysRole> queryAllDataByCategory(int F_Category) {
-		Map<String, Object> parameter = new HashMap<String, Object>();
-		parameter.put("F_Category", String.valueOf(F_Category));
-		return sysRoleMapper.queryAllDataByCategory(parameter);
-	}
-
-	/**
 	 * 分页查询
 
 

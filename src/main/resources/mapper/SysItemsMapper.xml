@@ -41,19 +41,19 @@
   <select id="queryByEnCode" resultMap="BaseResultMap" parameterType="com.wt.overflow.bean.SysItems" >
     select 
     <include refid="Base_Column_List" />
-    from Sys_Items where F_DeleteMark = 0  and  F_EnCode like ('%'+#{fEncode}+'%')  
+    from sys_items where F_DeleteMark = 0  and  F_EnCode like ('%'+#{fEncode}+'%')
   </select> 
   
   <select id="queryAllData" resultMap="BaseResultMap" parameterType="java.util.Map" >
     select 
     <include refid="Base_Column_List" />
-    from Sys_Items where F_DeleteMark = 0 order by F_ParentId
+    from sys_items where F_DeleteMark = 0 order by F_ParentId
   </select> 
   
   <select id="queryOneById" resultMap="BaseResultMap" parameterType="java.util.Map" >
     select 
     <include refid="Base_Column_List" />
-    from Sys_Items where F_DeleteMark = 0 and  F_Id= #{keyword,jdbcType=VARCHAR} 
+    from sys_items where F_DeleteMark = 0 and  F_Id= #{keyword,jdbcType=VARCHAR}
   </select> 
   
   
@@ -64,8 +64,8 @@
 			dt.F_ItemCode,
 			dt.F_ItemName
 		FROM
-			[dbo].[Sys_Items] it
-		INNER JOIN [Sys_ItemsDetail] dt ON it.F_Id = dt.F_ItemId
+			sys_items it
+		INNER JOIN sys_itemsdetail dt ON it.F_Id = dt.F_ItemId
 		WHERE
 			it.F_EnCode = 'Investigationtype'
   </select> 
@@ -75,14 +75,14 @@
   
   
   <update id="deleteItemsByFId" parameterType="java.util.Map">
-		update Sys_Items set F_DeleteMark  = 1,F_DeleteUserId =#{F_DeleteUserId,jdbcType=VARCHAR} ,F_DeleteTime =#{F_DeleteTime,jdbcType=TIMESTAMP} 
+		update sys_items set F_DeleteMark  = 1,F_DeleteUserId =#{F_DeleteUserId,jdbcType=VARCHAR} ,F_DeleteTime =#{F_DeleteTime,jdbcType=TIMESTAMP}
 		where F_Id=#{itemsId,jdbcType=VARCHAR}
   </update>
   
   <select id="queryAllByPId" resultMap="BaseResultMap" parameterType="java.util.Map" >
     select 
  	<include refid="Base_Column_List" />
-    from Sys_Items 
+    from sys_items
     <where>
     	F_DeleteMark = 0 
     	<if test="fId != null and fId !='' ">
@@ -93,7 +93,7 @@
   
   
   <insert id="addSysItems" parameterType="com.wt.overflow.bean.SysItems" >
-    insert into Sys_Items
+    insert into sys_items
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="fId != null" >
         F_Id,
@@ -173,7 +173,7 @@
   </insert>
   
   <update id="updateItems" parameterType="com.wt.overflow.bean.SysItems" >
-    update Sys_Items
+    update sys_items
     <set >
       <if test="fParentid != null" >
         F_ParentId = #{fParentid,jdbcType=VARCHAR},

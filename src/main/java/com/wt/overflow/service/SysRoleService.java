@@ -9,8 +9,6 @@ import java.util.Map;
 
 public interface SysRoleService {
 
-	List<SysRole> queryAllDataByCategory(int F_Category);
-
 	Map<String, Object> queryRoleByPage(Integer rows, Integer page, String sidx, String sord, String keyword);
 
 	Integer deleteRole(HttpServletRequest request, String roleId);

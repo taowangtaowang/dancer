@@ -28,7 +28,6 @@ public class SysOrganizeController {
 	 * 新建用户需要选择单位的ztree结构
 	 * @param request
 	 * @param response
-	 * @return
 	 * @throws Exception
 	 * @name wangt	
 	 * @Date 2018年4月17日 下午7:22:24
@@ -146,7 +145,7 @@ public class SysOrganizeController {
 	@RequestMapping("selectAllParentOrganize")
 	@ResponseBody
 	public Object selectAllParentOrganize(HttpServletRequest request, HttpServletResponse response) {
-		
 		return sysOrganizeService.selectAllParentOrganize();
 	}
+
 }

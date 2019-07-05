@@ -45,7 +45,7 @@
 		parameterType="java.util.Map">
 		select
 		<include refid="Base_Column_List" />
-		from Sys_Role where F_Category = #{F_Category,jdbcType=INTEGER} and F_DeleteMark = 0
+		from sys_role where F_Category = #{F_Category,jdbcType=INTEGER} and F_DeleteMark = 0
 	</select>
 
 
@@ -54,7 +54,7 @@
 		parameterType="java.util.Map">
 		select
 		<include refid="Base_Column_List" />
-		from Sys_Role
+		from sys_role
 		<where>
 			F_Category=#{roleType} and F_DeleteMark = 0
 			<if test="keyword != null and keyword !='' ">
@@ -68,7 +68,7 @@
 		parameterType="java.util.Map">
 		select
 		<include refid="Base_Column_List" />
-		from Sys_Role where F_Id = #{roleId,jdbcType=INTEGER}
+		from sys_role where F_Id = #{roleId,jdbcType=INTEGER}
 	</select>
 
 	<insert id="addRole" parameterType="java.util.Map"

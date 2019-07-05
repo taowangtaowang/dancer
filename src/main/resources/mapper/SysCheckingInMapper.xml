@@ -19,7 +19,7 @@
   <select id="queryAllData" resultMap="BaseResultMap" parameterType="java.util.Map" >
     select 
     <include refid="Base_Column_List" />
-    from Sys_Checking_in 
+    from sys_checking_in
     <where>	
     	(OUT_TIME &gt;= #{startTime}   and OUT_TIME &lt;= #{endTime} 
     	<!-- <if test="clickType == 1 "> and a.payment_end_date &gt;= #{costEchartsDate} 
@@ -34,16 +34,5 @@
     </where>
   </select>
   
-  
-  <!-- <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from Sys_Checking_in
-    where ID = #{ID,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from Sys_Checking_in
-    where ID = #{ID,jdbcType=VARCHAR}
-  </delete> -->
-  
+
 </mapper>

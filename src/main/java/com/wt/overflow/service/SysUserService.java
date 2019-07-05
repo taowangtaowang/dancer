@@ -20,8 +20,6 @@ public interface SysUserService {
 	Integer updateSysUserEnabled(HttpServletRequest request, String keyValue);
 
 	Integer updateSysUserReset(HttpServletRequest request, SysUser sysUser, String keyValue);
-	
-	List<SysUser> selectAllExitSysUsers();
 
 	Integer updateSysUserHeadIcon(HttpServletRequest request, String headIcon, String fId);
 
