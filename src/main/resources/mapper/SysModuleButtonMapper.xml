@@ -1,43 +1,38 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.wt.overflow.dao.SysModuleButtonMapper" >
-  <resultMap id="BaseResultMap" type="com.wt.overflow.bean.SysModuleButton" >
-    <result column="F_Id" property="fId" jdbcType="VARCHAR" />
-    <result column="F_ModuleId" property="fModuleid" jdbcType="VARCHAR" />
-    <result column="F_ParentId" property="fParentid" jdbcType="VARCHAR" />
-    <result column="F_Layers" property="fLayers" jdbcType="INTEGER" />
-    <result column="F_EnCode" property="fEncode" jdbcType="VARCHAR" />
-    <result column="F_FullName" property="fFullname" jdbcType="VARCHAR" />
-    <result column="F_Icon" property="fIcon" jdbcType="VARCHAR" />
-    <result column="F_Location" property="fLocation" jdbcType="INTEGER" />
-    <result column="F_JsEvent" property="fJsevent" jdbcType="VARCHAR" />
-    <result column="F_UrlAddress" property="fUrladdress" jdbcType="VARCHAR" />
-    <result column="F_Split" property="fSplit" jdbcType="BIT" />
-    <result column="F_IsPublic" property="fIspublic" jdbcType="BIT" />
-    <result column="F_AllowEdit" property="fAllowedit" jdbcType="BIT" />
-    <result column="F_AllowDelete" property="fAllowdelete" jdbcType="BIT" />
-    <result column="F_SortCode" property="fSortcode" jdbcType="INTEGER" />
-    <result column="F_DeleteMark" property="fDeletemark" jdbcType="BIT" />
-    <result column="F_EnabledMark" property="fEnabledmark" jdbcType="BIT" />
-    <result column="F_Description" property="fDescription" jdbcType="VARCHAR" />
-    <result column="F_CreatorTime" property="fCreatortime" jdbcType="TIMESTAMP" />
-    <result column="F_CreatorUserId" property="fCreatoruserid" jdbcType="VARCHAR" />
-    <result column="F_LastModifyTime" property="fLastmodifytime" jdbcType="TIMESTAMP" />
-    <result column="F_LastModifyUserId" property="fLastmodifyuserid" jdbcType="VARCHAR" />
-    <result column="F_DeleteTime" property="fDeletetime" jdbcType="TIMESTAMP" />
-    <result column="F_DeleteUserId" property="fDeleteuserid" jdbcType="VARCHAR" />
+  <resultMap id="BaseResultMap" type="com.wt.overflow.bean.SysModulebutton" >
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="moduleId" jdbcType="VARCHAR" property="moduleid" />
+    <result column="parentId" jdbcType="VARCHAR" property="parentid" />
+    <result column="layers" jdbcType="INTEGER" property="layers" />
+    <result column="enCode" jdbcType="VARCHAR" property="encode" />
+    <result column="fullName" jdbcType="VARCHAR" property="fullname" />
+    <result column="icon" jdbcType="VARCHAR" property="icon" />
+    <result column="location" jdbcType="INTEGER" property="location" />
+    <result column="jsEvent" jdbcType="VARCHAR" property="jsevent" />
+    <result column="urlAddress" jdbcType="VARCHAR" property="urladdress" />
+    <result column="split" jdbcType="INTEGER" property="split" />
+    <result column="isPublic" jdbcType="INTEGER" property="ispublic" />
+    <result column="allowEdit" jdbcType="INTEGER" property="allowedit" />
+    <result column="allowDelete" jdbcType="INTEGER" property="allowdelete" />
+    <result column="sortCode" jdbcType="INTEGER" property="sortcode" />
+    <result column="deleteMark" jdbcType="INTEGER" property="deletemark" />
+    <result column="enabledMark" jdbcType="INTEGER" property="enabledmark" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="creatorTime" jdbcType="TIMESTAMP" property="creatortime" />
+    <result column="creatorUserId" jdbcType="VARCHAR" property="creatoruserid" />
+    <result column="lastModifyTime" jdbcType="TIMESTAMP" property="lastmodifytime" />
+    <result column="lastModifyUserId" jdbcType="VARCHAR" property="lastmodifyuserid" />
+    <result column="deleteTime" jdbcType="TIMESTAMP" property="deletetime" />
+    <result column="deleteUserId" jdbcType="VARCHAR" property="deleteuserid" />
   </resultMap>
   
   
   <sql id="Base_Column_List" >
-      F_Id, F_ModuleId, F_ParentId, 
-      F_Layers, F_EnCode, F_FullName, 
-      F_Icon, F_Location, F_JsEvent, 
-      F_UrlAddress, F_Split, F_IsPublic, 
-      F_AllowEdit, F_AllowDelete, F_SortCode, 
-      F_DeleteMark, F_EnabledMark, F_Description, 
-      F_CreatorTime, F_CreatorUserId, F_LastModifyTime, 
-      F_LastModifyUserId, F_DeleteTime, F_DeleteUserId
+      id, moduleId, parentId, layers, enCode, fullName, icon, location, jsEvent, urlAddress,
+    split, isPublic, allowEdit, allowDelete, sortCode, deleteMark, enabledMark, description,
+    creatorTime, creatorUserId, lastModifyTime, lastModifyUserId, deleteTime, deleteUserId
   </sql>
   
   <select id="queryAllAuthorizeButtonform" resultMap="BaseResultMap" parameterType="java.util.Map" >

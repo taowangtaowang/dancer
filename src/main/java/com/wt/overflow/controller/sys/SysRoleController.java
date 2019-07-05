@@ -98,7 +98,7 @@ public class SysRoleController {
 	@RequestMapping("queryOneByRoleId")
 	@ResponseBody
 	public SysRole queryOneByRoleId(HttpServletRequest request, HttpServletResponse response,
-                                    @RequestParam(value="keyValue", defaultValue="") String keyValue) throws Exception {
+									@RequestParam(value="keyValue", defaultValue="") String keyValue) throws Exception {
 		return sysRoleService.queryOneByRoleId(keyValue);
 	}
 	

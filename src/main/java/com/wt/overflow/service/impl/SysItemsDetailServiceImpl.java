@@ -40,55 +40,55 @@ public class SysItemsDetailServiceImpl implements SysItemsDetailService {
 
 	public SysItemsdetail queryOneByFId(String keyword) {
 		SysItemsdetail SysItemsdetail = sysItemsDetailMapper.queryOneByFId(keyword);
-		if(SysItemsdetail.getfLastmodifyuserid()!=null&&!(SysItemsdetail.getfLastmodifyuserid().equals(""))){
-			SysUser sysUser =sysUserMapper.queryOneBySysUserId(SysItemsdetail.getfLastmodifyuserid());
+		if(SysItemsdetail.getLastmodifyuserid()!=null&&!(SysItemsdetail.getLastmodifyuserid().equals(""))){
+			SysUser sysUser =sysUserMapper.queryOneBySysUserId(SysItemsdetail.getLastmodifyuserid());
 			if(sysUser!=null){
-				SysItemsdetail.setfLastmodifyuserid(sysUser.getfRealname());
+				SysItemsdetail.setLastmodifyuserid(sysUser.getRealname());
 			}else{
-				SysItemsdetail.setfLastmodifyuserid("无");
+				SysItemsdetail.setLastmodifyuserid("无");
 			}
-		}else{SysItemsdetail.setfLastmodifyuserid("无");}
-		if(SysItemsdetail.getfCreatoruserid()!=null&&!(SysItemsdetail.getfCreatoruserid().equals(""))){
-			SysUser sysUser =sysUserMapper.queryOneBySysUserId(SysItemsdetail.getfCreatoruserid());
+		}else{SysItemsdetail.setLastmodifyuserid("无");}
+		if(SysItemsdetail.getCreatoruserid()!=null&&!(SysItemsdetail.getCreatoruserid().equals(""))){
+			SysUser sysUser =sysUserMapper.queryOneBySysUserId(SysItemsdetail.getCreatoruserid());
 			if(sysUser!=null){
-				SysItemsdetail.setfCreatoruserid(sysUser.getfRealname());
+				SysItemsdetail.setCreatoruserid(sysUser.getRealname());
 			}else{
-				SysItemsdetail.setfCreatoruserid("无");
+				SysItemsdetail.setCreatoruserid("无");
 			}
-		}else{SysItemsdetail.setfCreatoruserid("无");}
+		}else{SysItemsdetail.setCreatoruserid("无");}
 		return SysItemsdetail;
 	}
 
 	public Integer deleteItemsDetailByFId(String keyValue, HttpServletRequest request) {
 		Map<String, Object> parameter = new HashMap<String, Object>();
 		parameter.put("itemsId", keyValue);
-		parameter.put("F_DeleteUserId", ((SysUser)request.getSession().getAttribute("loginUser")).getfId());
+		parameter.put("F_DeleteUserId", ((SysUser)request.getSession().getAttribute("loginUser")).getId());
 		parameter.put("F_DeleteTime", new Date());
 		return sysItemsDetailMapper.deleteItemsDetailByFId(parameter);
 	}
 
 	
-	public Integer updateItemsDetail(HttpServletRequest request, String keyValue, String f_ItemName,
-			String f_ItemCode, Integer f_SortCode, boolean f_IsDefault, boolean f_EnabledMark, String f_Description,
+	public int updateItemsDetail(HttpServletRequest request, String keyValue, String f_ItemName,
+			String f_ItemCode, int f_SortCode, int f_IsDefault, int f_EnabledMark, String f_Description,
 			String f_ItemId) {
 		Integer res = 0;
 		if(keyValue==null ||keyValue.equals("")){//新增
 			SysItemsdetail  sysItemsdetail = new SysItemsdetail();
-			sysItemsdetail.setfId(UUIDUtil.getUUID());
-			sysItemsdetail.setfItemid(f_ItemId);sysItemsdetail.setfItemcode(f_ItemCode);
-			sysItemsdetail.setfItemname(f_ItemName);sysItemsdetail.setfSortcode(f_SortCode);
-			sysItemsdetail.setfIsdefault(f_IsDefault);sysItemsdetail.setfEnabledmark(f_EnabledMark);
-			sysItemsdetail.setfDescription(f_Description);sysItemsdetail.setfDeletemark(false);
-			sysItemsdetail.setfCreatortime(new Date());sysItemsdetail.setfCreatoruserid(((SysUser)request.getSession().getAttribute("loginUser")).getfId());
+			sysItemsdetail.setId(UUIDUtil.getUUID());
+			sysItemsdetail.setItemid(f_ItemId);sysItemsdetail.setItemcode(f_ItemCode);
+			sysItemsdetail.setItemname(f_ItemName);sysItemsdetail.setSortcode(f_SortCode);
+			sysItemsdetail.setIsdefault(f_IsDefault);sysItemsdetail.setEnabledmark(f_EnabledMark);
+			sysItemsdetail.setDescription(f_Description);sysItemsdetail.setDeletemark(0);
+			sysItemsdetail.setCreatortime(new Date());sysItemsdetail.setCreatoruserid(((SysUser)request.getSession().getAttribute("loginUser")).getId());
 			res =sysItemsDetailMapper.addSysItemsDetail(sysItemsdetail);
 		}else{//修改
 			SysItemsdetail  sysItemsdetail = new SysItemsdetail();
-			sysItemsdetail.setfItemid(f_ItemId);sysItemsdetail.setfItemcode(f_ItemCode);
-			sysItemsdetail.setfItemname(f_ItemName);sysItemsdetail.setfSortcode(f_SortCode);
-			sysItemsdetail.setfIsdefault(f_IsDefault);sysItemsdetail.setfEnabledmark(f_EnabledMark);
-			sysItemsdetail.setfDescription(f_Description);sysItemsdetail.setfDeletemark(false);
-			sysItemsdetail.setfId(keyValue);
-			sysItemsdetail.setfLastmodifytime(new Date());;sysItemsdetail.setfLastmodifyuserid(((SysUser)request.getSession().getAttribute("loginUser")).getfId());
+			sysItemsdetail.setItemid(f_ItemId);sysItemsdetail.setItemcode(f_ItemCode);
+			sysItemsdetail.setItemname(f_ItemName);sysItemsdetail.setSortcode(f_SortCode);
+			sysItemsdetail.setIsdefault(f_IsDefault);sysItemsdetail.setEnabledmark(f_EnabledMark);
+			sysItemsdetail.setDescription(f_Description);sysItemsdetail.setDeletemark(0);
+			sysItemsdetail.setId(keyValue);
+			sysItemsdetail.setLastmodifytime(new Date());;sysItemsdetail.setLastmodifyuserid(((SysUser)request.getSession().getAttribute("loginUser")).getId());
 			res =sysItemsDetailMapper.updateItemsDetail(sysItemsdetail);
 		}
 		

@@ -86,19 +86,19 @@ public class SysUserServiceImpl implements SysUserService {
 	public Integer updateSysUser(HttpServletRequest request, SysUser sysUser, String f_UserPassword, String keyValue) {
 		Integer res = 0 ;
 		if(keyValue==null||keyValue.equals("")){//新增
-			sysUser.setfId(UUIDUtil.getUUID());
-			sysUser.setfCreatortime(new Date());
-			sysUser.setfCreatoruserid(((SysUser)request.getSession().getAttribute("loginUser")).getfId());
+			sysUser.setId(UUIDUtil.getUUID());
+			sysUser.setCreatortime(new Date());
+			sysUser.setCreatoruserid(((SysUser)request.getSession().getAttribute("loginUser")).getId());
 			Map<String, Object> resmap= new HashMap<String, Object>();
-			resmap.put("loginname", sysUser.getfAccount());
+			resmap.put("loginname", sysUser.getAccount());
 			if(!sysUserMapper.queryByLoginName(resmap).isEmpty()){//账户名不重复
 				return -1;
 			}
 			sysUserMapper.addSysUser(sysUser);
 			SysUserLogOn sysUserLogOn = new SysUserLogOn();
-			sysUserLogOn.setfUserpassword(MD5Util.getMD5(f_UserPassword));//加密存储
-			sysUserLogOn.setfUserid(sysUser.getfId());
-			sysUserLogOn.setfId(UUIDUtil.getUUID());
+			sysUserLogOn.setUserpassword(MD5Util.getMD5(f_UserPassword));//加密存储
+			sysUserLogOn.setUserid(sysUser.getId());
+			sysUserLogOn.setId(UUIDUtil.getUUID());
 			res = sysUserLogOnMapper.addSysUserPassWord(sysUserLogOn);//新增密码
 		}else{//修改
 			/*Map<String, Object> resmap= new HashMap<String, Object>();
@@ -108,14 +108,14 @@ public class SysUserServiceImpl implements SysUserService {
 			}*/
 			
 			
-			sysUser.setfId(keyValue);
-			sysUser.setfLastmodifytime(new Date());
-			sysUser.setfLastmodifyuserid(((SysUser)request.getSession().getAttribute("loginUser")).getfId());
+			sysUser.setId(keyValue);
+			sysUser.setLastmodifytime(new Date());
+			sysUser.setLastmodifyuserid(((SysUser)request.getSession().getAttribute("loginUser")).getId());
 			sysUserMapper.updateSysUser(sysUser);
 			
 			SysUserLogOn sysUserLogOn = new SysUserLogOn();
-			sysUserLogOn.setfUserpassword(MD5Util.getMD5(f_UserPassword));//加密存储
-			sysUserLogOn.setfUserid(sysUser.getfId());
+			sysUserLogOn.setUserpassword(MD5Util.getMD5(f_UserPassword));//加密存储
+			sysUserLogOn.setUserid(sysUser.getId());
 			res = sysUserLogOnMapper.updateSysUserPassWord(sysUserLogOn);//修改密码
 		}
 		return res;
@@ -125,7 +125,7 @@ public class SysUserServiceImpl implements SysUserService {
 	public Integer deleteSysUser(HttpServletRequest request, String keyValue) {
 		Map<String, Object> parameter = new HashMap<String, Object>();
 		parameter.put("fId", keyValue);
-		parameter.put("F_DeleteUserId", ((SysUser)request.getSession().getAttribute("loginUser")).getfId());
+		parameter.put("F_DeleteUserId", ((SysUser)request.getSession().getAttribute("loginUser")).getId());
 		parameter.put("F_DeleteTime", new Date());
 		return sysUserMapper.deleteSysUser(parameter);
 	}
@@ -133,25 +133,25 @@ public class SysUserServiceImpl implements SysUserService {
 	
 	public SysUser queryOneBySysUserId(String keyValue) {
 		SysUser sysUser = sysUserMapper.queryOneBySysUserId(keyValue);
-		if(sysUser.getfLastmodifyuserid()!=null&&!(sysUser.getfLastmodifyuserid().equals(""))){
-			SysUser sysUser1 =sysUserMapper.queryOneBySysUserId(sysUser.getfLastmodifyuserid());
+		if(sysUser.getLastmodifyuserid()!=null&&!(sysUser.getLastmodifyuserid().equals(""))){
+			SysUser sysUser1 =sysUserMapper.queryOneBySysUserId(sysUser.getLastmodifyuserid());
 			if(sysUser1!=null){
-				sysUser.setfLastmodifyuserid(sysUser.getfRealname());
+				sysUser.setLastmodifyuserid(sysUser.getRealname());
 			}else{
-				sysUser.setfLastmodifyuserid("无");
+				sysUser.setLastmodifyuserid("无");
 			}
-		}else{sysUser.setfLastmodifyuserid("无");}
-		if(sysUser.getfCreatoruserid()!=null&&!(sysUser.getfCreatoruserid().equals(""))){
-			SysUser sysUser1 =sysUserMapper.queryOneBySysUserId(sysUser.getfCreatoruserid());
+		}else{sysUser.setLastmodifyuserid("无");}
+		if(sysUser.getCreatoruserid()!=null&&!(sysUser.getCreatoruserid().equals(""))){
+			SysUser sysUser1 =sysUserMapper.queryOneBySysUserId(sysUser.getCreatoruserid());
 			if(sysUser1!=null){
-				sysUser.setfCreatoruserid(sysUser.getfRealname());
+				sysUser.setCreatoruserid(sysUser.getRealname());
 			}else{
-				sysUser.setfCreatoruserid("无");
+				sysUser.setCreatoruserid("无");
 			}
-		}else{sysUser.setfCreatoruserid("无");}
-		SysOrganize sysOrganize = sysOrganizeMapper.queryOneByOrganizeId(sysUser.getfOrganizeid());
+		}else{sysUser.setCreatoruserid("无");}
+		SysOrganize sysOrganize = sysOrganizeMapper.queryOneByOrganizeId(sysUser.getOrganizeid());
 		if(sysOrganize!=null){//fOrganizename
-			sysUser.setfOrganizename(sysOrganize.getfFullname());
+			sysUser.setOrganizeid(sysOrganize.getFullname());
 		}
 		return sysUser ;
 	}
@@ -160,10 +160,10 @@ public class SysUserServiceImpl implements SysUserService {
 	public Integer updateSysUserEnabled(HttpServletRequest request, String keyValue) {
 		Map<String, Object> parameter = new HashMap<String, Object>();
 		parameter.put("fId", keyValue);
-		parameter.put("F_LastModifyUserId", ((SysUser)request.getSession().getAttribute("loginUser")).getfId());
+		parameter.put("F_LastModifyUserId", ((SysUser)request.getSession().getAttribute("loginUser")).getId());
 		parameter.put("F_LastModifyTime", new Date());
 		SysUser sysUser = sysUserMapper.queryOneBySysUserId(keyValue);
-		if(sysUser.getfEnabledmark()==true){
+		if(sysUser.getEnabledmark()==1){
 			parameter.put("F_EnabledMark", 0);
 		}else{
 			parameter.put("F_EnabledMark", 1);
@@ -183,15 +183,15 @@ public class SysUserServiceImpl implements SysUserService {
 	public Integer updateSysUserReset(HttpServletRequest request, SysUser sysUser, String keyValue) {
 		Map<String, Object> parameter = new HashMap<String, Object>();
 		parameter.put("fId", keyValue);
-		parameter.put("F_LastModifyUserId", ((SysUser)request.getSession().getAttribute("loginUser")).getfId());
+		parameter.put("F_LastModifyUserId", ((SysUser)request.getSession().getAttribute("loginUser")).getId());
 		parameter.put("F_LastModifyTime", new Date());
-		parameter.put("F_Account", sysUser.getfAccount());//登录账号
-		parameter.put("F_RealName", sysUser.getfRealname());//用户姓名
+		parameter.put("F_Account", sysUser.getAccount());//登录账号
+		parameter.put("F_RealName", sysUser.getRealname());//用户姓名
 		sysUserMapper.updateSysUserReset(parameter);
 		
 		SysUserLogOn sysUserLogOn = new SysUserLogOn();
-		sysUserLogOn.setfUserpassword(MD5Util.getMD5("123456"));//加密存储 密码重置为123456
-		sysUserLogOn.setfUserid(keyValue);
+		sysUserLogOn.setUserpassword(MD5Util.getMD5("123456"));//加密存储 密码重置为123456
+		sysUserLogOn.setUserid(keyValue);
 		return sysUserLogOnMapper.updateSysUserPassWord(sysUserLogOn);//修改密码
 	}
 	

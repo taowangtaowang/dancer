@@ -2,33 +2,33 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wt.overflow.dao.SysUserLogOnMapper">
   <resultMap id="BaseResultMap" type="com.wt.overflow.bean.SysUserLogOn">
-    <id column="F_Id" jdbcType="VARCHAR" property="fId" />
-    <result column="F_UserId" jdbcType="VARCHAR" property="fUserid" />
-    <result column="F_UserPassword" jdbcType="VARCHAR" property="fUserpassword" />
-    <result column="F_UserSecretkey" jdbcType="VARCHAR" property="fUsersecretkey" />
-    <result column="F_AllowStartTime" jdbcType="TIMESTAMP" property="fAllowstarttime" />
-    <result column="F_AllowEndTime" jdbcType="TIMESTAMP" property="fAllowendtime" />
-    <result column="F_LockStartDate" jdbcType="TIMESTAMP" property="fLockstartdate" />
-    <result column="F_LockEndDate" jdbcType="TIMESTAMP" property="fLockenddate" />
-    <result column="F_FirstVisitTime" jdbcType="TIMESTAMP" property="fFirstvisittime" />
-    <result column="F_PreviousVisitTime" jdbcType="TIMESTAMP" property="fPreviousvisittime" />
-    <result column="F_LastVisitTime" jdbcType="TIMESTAMP" property="fLastvisittime" />
-    <result column="F_ChangePasswordDate" jdbcType="TIMESTAMP" property="fChangepassworddate" />
-    <result column="F_MultiUserLogin" jdbcType="BIT" property="fMultiuserlogin" />
-    <result column="F_LogOnCount" jdbcType="INTEGER" property="fLogoncount" />
-    <result column="F_UserOnLine" jdbcType="BIT" property="fUseronline" />
-    <result column="F_Question" jdbcType="VARCHAR" property="fQuestion" />
-    <result column="F_AnswerQuestion" jdbcType="VARCHAR" property="fAnswerquestion" />
-    <result column="F_CheckIPAddress" jdbcType="BIT" property="fCheckipaddress" />
-    <result column="F_Language" jdbcType="VARCHAR" property="fLanguage" />
-    <result column="F_Theme" jdbcType="VARCHAR" property="fTheme" />
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="userId" jdbcType="VARCHAR" property="userid" />
+    <result column="userPassword" jdbcType="VARCHAR" property="userpassword" />
+    <result column="userSecretkey" jdbcType="VARCHAR" property="usersecretkey" />
+    <result column="allowStartTime" jdbcType="TIMESTAMP" property="allowstarttime" />
+    <result column="allowEndTime" jdbcType="TIMESTAMP" property="allowendtime" />
+    <result column="lockStartDate" jdbcType="TIMESTAMP" property="lockstartdate" />
+    <result column="lockEndDate" jdbcType="TIMESTAMP" property="lockenddate" />
+    <result column="firstVisitTime" jdbcType="TIMESTAMP" property="firstvisittime" />
+    <result column="previousVisitTime" jdbcType="TIMESTAMP" property="previousvisittime" />
+    <result column="lastVisitTime" jdbcType="TIMESTAMP" property="lastvisittime" />
+    <result column="changePasswordDate" jdbcType="TIMESTAMP" property="changepassworddate" />
+    <result column="multiUserLogin" jdbcType="INTEGER" property="multiuserlogin" />
+    <result column="logOnCount" jdbcType="INTEGER" property="logoncount" />
+    <result column="userOnLine" jdbcType="INTEGER" property="useronline" />
+    <result column="question" jdbcType="VARCHAR" property="question" />
+    <result column="answerQuestion" jdbcType="VARCHAR" property="answerquestion" />
+    <result column="checkIPAddress" jdbcType="INTEGER" property="checkipaddress" />
+    <result column="language" jdbcType="VARCHAR" property="language" />
+    <result column="theme" jdbcType="VARCHAR" property="theme" />
   </resultMap>
   
   <sql id="Base_Column_List" >
-    F_Id, F_UserId, F_UserPassword, F_UserSecretkey, F_AllowStartTime, F_AllowEndTime, 
-    F_LockStartDate, F_LockEndDate, F_FirstVisitTime, F_PreviousVisitTime, F_LastVisitTime, 
-    F_ChangePasswordDate, F_MultiUserLogin, F_LogOnCount, F_UserOnLine, F_Question, F_AnswerQuestion, 
-    F_CheckIPAddress, F_Language, F_Theme
+    id, userId, userPassword, userSecretkey, allowStartTime, allowEndTime, lockStartDate,
+    lockEndDate, firstVisitTime, previousVisitTime, lastVisitTime, changePasswordDate,
+    multiUserLogin, logOnCount, userOnLine, question, answerQuestion, checkIPAddress,
+    language, theme
   </sql>
   
   

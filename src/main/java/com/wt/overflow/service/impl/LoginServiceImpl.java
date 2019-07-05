@@ -6,6 +6,7 @@ import com.wt.overflow.service.LoginService;
 import com.wt.overflow.util.ObjectUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,17 +32,19 @@ public class LoginServiceImpl implements LoginService {
 	private SysOrganizeMapper sysOrganizeMapper;
 	@Autowired
 	private SysRoleMapper sysRoleMapper;
-	
-	
 	@Autowired
 	private SysModuleMapper sysModuleMapper;
 	@Autowired
 	private SysModuleButtonMapper sysModuleButtonMapper;
 	@Override
 	public List<SysUser> queryByLoginName(String loginname) {
+		Example example = new Example(SysUser.class);
+		Example.Criteria criteria = example.createCriteria();
+		criteria.andEqualTo("account",loginname);
 		Map<String, Object> parameter = new HashMap<String, Object>();
 		parameter.put("loginname", loginname);
 		return sysUserMapper.queryByLoginName(parameter);
+		//return sysUserMapper.selectByExample(example);
 	}
 
 	
@@ -61,15 +64,15 @@ public class LoginServiceImpl implements LoginService {
 		for (SysItems sysItems : sysItemlist) {
 			Map<Object,Object> detailmap = new  HashMap<Object,Object>();
 			for (SysItemsdetail sysItemsdetail : sysItemsDetaillist) {
-				if(sysItems.getfId().equals(sysItemsdetail.getfItemid())){//77070117-3F1A-41BA-BF81-B8B85BF10D5E
-					detailmap.put(sysItemsdetail.getfItemcode(),sysItemsdetail.getfItemname());
+				if(sysItems.getId().equals(sysItemsdetail.getItemid())){//77070117-3F1A-41BA-BF81-B8B85BF10D5E
+					detailmap.put(sysItemsdetail.getItemcode(),sysItemsdetail.getItemname());
 				}
 			}
 			
 			Map<Object,Object> map = new  HashMap<Object,Object>();
-			map.put(sysItems.getfEncode(), detailmap);
+			map.put(sysItems.getEncode(), detailmap);
 			//sysItemMaplist.add(map);
-			sysItemMaplist.put(sysItems.getfEncode(), detailmap);
+			sysItemMaplist.put(sysItems.getEncode(), detailmap);
 		}
 		res.put("dataItems", sysItemMaplist);
 		// organize 组织信息
@@ -81,10 +84,10 @@ public class LoginServiceImpl implements LoginService {
 		for (SysOrganize sysOrganize : sysOrganizelist) {
 			Map<Object,Object> sysOrganMap = new  HashMap<Object,Object>();
 			Map<Object,Object> detailmap = new  HashMap<Object,Object>();
-			detailmap.put("encode", sysOrganize.getfEncode());
-			detailmap.put("fullname", sysOrganize.getfFullname());
-			sysOrganMap.put(sysOrganize.getfId(), detailmap);
-			sysOrganMaplist.put(sysOrganize.getfId(), detailmap);
+			detailmap.put("encode", sysOrganize.getEncode());
+			detailmap.put("fullname", sysOrganize.getFullname());
+			sysOrganMap.put(sysOrganize.getId(), detailmap);
+			sysOrganMaplist.put(sysOrganize.getId(), detailmap);
 		}
 		
 		res.put("organize", sysOrganMaplist);
@@ -98,10 +101,10 @@ public class LoginServiceImpl implements LoginService {
 			Map<Object,Object> sysRoleMap = new  HashMap<Object,Object>();
 			Map<Object,Object> detailmap = new  HashMap<Object,Object>();
 			
-			detailmap.put("encode", sysRole.getfEncode());
-			detailmap.put("fullname", sysRole.getfFullname());
-			sysRoleMap.put(sysRole.getfId(), detailmap);
-			sysRoleMaplist.put(sysRole.getfId(), detailmap);
+			detailmap.put("encode", sysRole.getEncode());
+			detailmap.put("fullname", sysRole.getFullname());
+			sysRoleMap.put(sysRole.getId(), detailmap);
+			sysRoleMaplist.put(sysRole.getId(), detailmap);
 		}
 		res.put("role", sysRoleMaplist);
 		// duty 岗位信息
@@ -112,10 +115,10 @@ public class LoginServiceImpl implements LoginService {
 			Map<Object,Object> sysRoleMap = new  HashMap<Object,Object>();
 			Map<Object,Object> detailmap = new  HashMap<Object,Object>();
 			
-			detailmap.put("encode", sysRole.getfEncode());
-			detailmap.put("fullname", sysRole.getfFullname());
-			sysRoleMap.put(sysRole.getfId(), detailmap);
-			sysDutyMaplist.put(sysRole.getfId(), detailmap);
+			detailmap.put("encode", sysRole.getEncode());
+			detailmap.put("fullname", sysRole.getFullname());
+			sysRoleMap.put(sysRole.getId(), detailmap);
+			sysDutyMaplist.put(sysRole.getId(), detailmap);
 		}
 		res.put("duty", sysDutyMaplist);
 		// user 登录用户信息
@@ -123,11 +126,11 @@ public class LoginServiceImpl implements LoginService {
 		// authorizeMenu 拥有权限菜单
 		boolean isAdmin = false;
 		for (SysRole role : sysRolelist) {
-			if (role.getfId().equals((sysUser.getfRoleid() == null ? "" : sysUser.getfRoleid()))) {
+			if (role.getId().equals((sysUser.getRoleid() == null ? "" : sysUser.getRoleid()))) {
 				isAdmin = true;
 			}
 		}
-		String userRoleId = sysUser.getfRoleid() == null ? "" : sysUser.getfRoleid();
+		String userRoleId = sysUser.getRoleid() == null ? "" : sysUser.getRoleid();
 		String isAdminStr =( isAdmin?"0":"1");//1 代表admin用户
 		parameter.put("isAdmin", isAdminStr);
 		parameter.put("userRoleId", userRoleId);
@@ -138,12 +141,12 @@ public class LoginServiceImpl implements LoginService {
 		authorizeMenulist = sysModuleMapper.queryAllSysModuleByIsAdmin(parameter);//菜单权限
 
 		for (SysModule sysModule : authorizeMenulist) {
-			if(sysModule.getfParentid().equals("0")){//1级菜单
+			if(sysModule.getParentid().equals("0")){//1级菜单
 				Map<String, Object> levermap1 = new HashMap<String, Object>();
 				List<Map<String, Object>> levermap2list= new ArrayList<Map<String, Object>>();
 					levermap1 = ObjectUtil.convertBean(sysModule);//1级菜单map
 					for (SysModule sysModule2 : authorizeMenulist) {//admin权限拥有的所有菜单 12 级
-						if(sysModule2.getfParentid().equals(sysModule.getfId())){//子父关系
+						if(sysModule2.getParentid().equals(sysModule.getId())){//子父关系
 							levermap2list.add(ObjectUtil.convertBean(sysModule2));
 						}
 					}
@@ -154,19 +157,19 @@ public class LoginServiceImpl implements LoginService {
 		res.put("authorizeMenu", menulist);
 		// authorizeButton 拥有权限按钮
 		
-		List<SysModuleButton> authorizeButtonlist = sysModuleButtonMapper.queryAllAuthorizeButtonform(parameter);//按钮权限
+		List<SysModulebutton> authorizeButtonlist = sysModuleButtonMapper.queryAllAuthorizeButtonform(parameter);//按钮权限
 		Map<String, Object> lowMenuMap = new HashMap<String, Object>();
 		for (SysModule sysModule : authorizeMenulist) {//拥有的菜单权限
-			if(!sysModule.getfParentid().equals("0")){//最低等级菜单
+			if(!sysModule.getParentid().equals("0")){//最低等级菜单
 				List<Map<String, Object>> buttonlist= new ArrayList<Map<String, Object>>();
-				for (SysModuleButton sysModuleButton : authorizeButtonlist) {
-					if(sysModuleButton.getfModuleid()!=null&&sysModule.getfId()!=null){
-						if(sysModuleButton.getfModuleid() .equals(sysModule.getfId())){
+				for (SysModulebutton sysModuleButton : authorizeButtonlist) {
+					if(sysModuleButton.getModuleid()!=null&&sysModule.getId()!=null){
+						if(sysModuleButton.getModuleid() .equals(sysModule.getId())){
 							buttonlist.add(ObjectUtil.convertBean(sysModuleButton));
 						}
 					}
 				}
-				lowMenuMap.put(sysModule.getfId(), buttonlist);
+				lowMenuMap.put(sysModule.getId(), buttonlist);
 			}
 		}
 		

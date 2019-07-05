@@ -17,8 +17,8 @@ public interface SysItemsDetailService {
 
 	Integer deleteItemsDetailByFId(String keyValue, HttpServletRequest request);
 
-	Integer updateItemsDetail(HttpServletRequest request, String keyValue, String f_ItemName,
-                              String f_ItemCode, Integer f_SortCode, boolean f_IsDefault, boolean f_EnabledMark, String f_Description,
+	int updateItemsDetail(HttpServletRequest request, String keyValue, String f_ItemName,
+                              String f_ItemCode, int f_SortCode, int f_IsDefault, int f_EnabledMark, String f_Description,
                               String f_ItemId);
 
 	List<Map<String, Object>> getSelectJson(String enCode);

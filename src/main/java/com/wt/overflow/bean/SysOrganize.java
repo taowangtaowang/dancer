@@ -3,273 +3,273 @@ package com.wt.overflow.bean;
 import java.util.Date;
 
 public class SysOrganize {
-    private String fId;
+    private String id;
 
-    private String fParentid;
+    private String parentid;
 
-    private Integer fLayers;
+    private int layers;
 
-    private String fEncode;
+    private String encode;
 
-    private String fFullname;
+    private String fullname;
 
-    private String fShortname;
+    private String shortname;
 
-    private String fCategoryid;
+    private String categoryid;
 
-    private String fManagerid;
+    private String managerid;
 
-    private String fTelephone;
+    private String telephone;
 
-    private String fMobilephone;
+    private String mobilephone;
 
-    private String fWechat;
+    private String wechat;
 
-    private String fFax;
+    private String fax;
 
-    private String fEmail;
+    private String email;
 
-    private String fAreaid;
+    private String areaid;
 
-    private String fAddress;
+    private String address;
 
-    private Boolean fAllowedit;
+    private int allowedit;
 
-    private Boolean fAllowdelete;
+    private int allowdelete;
 
-    private Integer fSortcode;
+    private int sortcode;
 
-    private Boolean fDeletemark;
+    private int deletemark;
 
-    private Boolean fEnabledmark;
+    private int enabledmark;
 
-    private String fDescription;
+    private String description;
 
-    private Date fCreatortime;
+    private Date creatortime;
 
-    private String fCreatoruserid;
+    private String creatoruserid;
 
-    private Date fLastmodifytime;
+    private Date lastmodifytime;
 
-    private String fLastmodifyuserid;
+    private String lastmodifyuserid;
 
-    private Date fDeletetime;
+    private Date deletetime;
 
-    private String fDeleteuserid;
+    private String deleteuserid;
 
-    public String getfId() {
-        return fId;
+    public String getId() {
+        return id;
     }
 
-    public void setfId(String fId) {
-        this.fId = fId == null ? null : fId.trim();
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getfParentid() {
-        return fParentid;
+    public String getParentid() {
+        return parentid;
     }
 
-    public void setfParentid(String fParentid) {
-        this.fParentid = fParentid == null ? null : fParentid.trim();
+    public void setParentid(String parentid) {
+        this.parentid = parentid;
     }
 
-    public Integer getfLayers() {
-        return fLayers;
+    public int getLayers() {
+        return layers;
     }
 
-    public void setfLayers(Integer fLayers) {
-        this.fLayers = fLayers;
+    public void setLayers(int layers) {
+        this.layers = layers;
     }
 
-    public String getfEncode() {
-        return fEncode;
+    public String getEncode() {
+        return encode;
     }
 
-    public void setfEncode(String fEncode) {
-        this.fEncode = fEncode == null ? null : fEncode.trim();
+    public void setEncode(String encode) {
+        this.encode = encode;
     }
 
-    public String getfFullname() {
-        return fFullname;
+    public String getFullname() {
+        return fullname;
     }
 
-    public void setfFullname(String fFullname) {
-        this.fFullname = fFullname == null ? null : fFullname.trim();
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
-    public String getfShortname() {
-        return fShortname;
+    public String getShortname() {
+        return shortname;
     }
 
-    public void setfShortname(String fShortname) {
-        this.fShortname = fShortname == null ? null : fShortname.trim();
+    public void setShortname(String shortname) {
+        this.shortname = shortname;
     }
 
-    public String getfCategoryid() {
-        return fCategoryid;
+    public String getCategoryid() {
+        return categoryid;
     }
 
-    public void setfCategoryid(String fCategoryid) {
-        this.fCategoryid = fCategoryid == null ? null : fCategoryid.trim();
+    public void setCategoryid(String categoryid) {
+        this.categoryid = categoryid;
     }
 
-    public String getfManagerid() {
-        return fManagerid;
+    public String getManagerid() {
+        return managerid;
     }
 
-    public void setfManagerid(String fManagerid) {
-        this.fManagerid = fManagerid == null ? null : fManagerid.trim();
+    public void setManagerid(String managerid) {
+        this.managerid = managerid;
     }
 
-    public String getfTelephone() {
-        return fTelephone;
+    public String getTelephone() {
+        return telephone;
     }
 
-    public void setfTelephone(String fTelephone) {
-        this.fTelephone = fTelephone == null ? null : fTelephone.trim();
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
     }
 
-    public String getfMobilephone() {
-        return fMobilephone;
+    public String getMobilephone() {
+        return mobilephone;
     }
 
-    public void setfMobilephone(String fMobilephone) {
-        this.fMobilephone = fMobilephone == null ? null : fMobilephone.trim();
+    public void setMobilephone(String mobilephone) {
+        this.mobilephone = mobilephone;
     }
 
-    public String getfWechat() {
-        return fWechat;
+    public String getWechat() {
+        return wechat;
     }
 
-    public void setfWechat(String fWechat) {
-        this.fWechat = fWechat == null ? null : fWechat.trim();
+    public void setWechat(String wechat) {
+        this.wechat = wechat;
     }
 
-    public String getfFax() {
-        return fFax;
+    public String getFax() {
+        return fax;
     }
 
-    public void setfFax(String fFax) {
-        this.fFax = fFax == null ? null : fFax.trim();
+    public void setFax(String fax) {
+        this.fax = fax;
     }
 
-    public String getfEmail() {
-        return fEmail;
+    public String getEmail() {
+        return email;
     }
 
-    public void setfEmail(String fEmail) {
-        this.fEmail = fEmail == null ? null : fEmail.trim();
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getfAreaid() {
-        return fAreaid;
+    public String getAreaid() {
+        return areaid;
     }
 
-    public void setfAreaid(String fAreaid) {
-        this.fAreaid = fAreaid == null ? null : fAreaid.trim();
+    public void setAreaid(String areaid) {
+        this.areaid = areaid;
     }
 
-    public String getfAddress() {
-        return fAddress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setfAddress(String fAddress) {
-        this.fAddress = fAddress == null ? null : fAddress.trim();
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public Boolean getfAllowedit() {
-        return fAllowedit;
+    public int getAllowedit() {
+        return allowedit;
     }
 
-    public void setfAllowedit(Boolean fAllowedit) {
-        this.fAllowedit = fAllowedit;
+    public void setAllowedit(int allowedit) {
+        this.allowedit = allowedit;
     }
 
-    public Boolean getfAllowdelete() {
-        return fAllowdelete;
+    public int getAllowdelete() {
+        return allowdelete;
     }
 
-    public void setfAllowdelete(Boolean fAllowdelete) {
-        this.fAllowdelete = fAllowdelete;
+    public void setAllowdelete(int allowdelete) {
+        this.allowdelete = allowdelete;
     }
 
-    public Integer getfSortcode() {
-        return fSortcode;
+    public int getSortcode() {
+        return sortcode;
     }
 
-    public void setfSortcode(Integer fSortcode) {
-        this.fSortcode = fSortcode;
+    public void setSortcode(int sortcode) {
+        this.sortcode = sortcode;
     }
 
-    public Boolean getfDeletemark() {
-        return fDeletemark;
+    public int getDeletemark() {
+        return deletemark;
     }
 
-    public void setfDeletemark(Boolean fDeletemark) {
-        this.fDeletemark = fDeletemark;
+    public void setDeletemark(int deletemark) {
+        this.deletemark = deletemark;
     }
 
-    public Boolean getfEnabledmark() {
-        return fEnabledmark;
+    public int getEnabledmark() {
+        return enabledmark;
     }
 
-    public void setfEnabledmark(Boolean fEnabledmark) {
-        this.fEnabledmark = fEnabledmark;
+    public void setEnabledmark(int enabledmark) {
+        this.enabledmark = enabledmark;
     }
 
-    public String getfDescription() {
-        return fDescription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setfDescription(String fDescription) {
-        this.fDescription = fDescription == null ? null : fDescription.trim();
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public Date getfCreatortime() {
-        return fCreatortime;
+    public Date getCreatortime() {
+        return creatortime;
     }
 
-    public void setfCreatortime(Date fCreatortime) {
-        this.fCreatortime = fCreatortime;
+    public void setCreatortime(Date creatortime) {
+        this.creatortime = creatortime;
     }
 
-    public String getfCreatoruserid() {
-        return fCreatoruserid;
+    public String getCreatoruserid() {
+        return creatoruserid;
     }
 
-    public void setfCreatoruserid(String fCreatoruserid) {
-        this.fCreatoruserid = fCreatoruserid == null ? null : fCreatoruserid.trim();
+    public void setCreatoruserid(String creatoruserid) {
+        this.creatoruserid = creatoruserid;
     }
 
-    public Date getfLastmodifytime() {
-        return fLastmodifytime;
+    public Date getLastmodifytime() {
+        return lastmodifytime;
     }
 
-    public void setfLastmodifytime(Date fLastmodifytime) {
-        this.fLastmodifytime = fLastmodifytime;
+    public void setLastmodifytime(Date lastmodifytime) {
+        this.lastmodifytime = lastmodifytime;
     }
 
-    public String getfLastmodifyuserid() {
-        return fLastmodifyuserid;
+    public String getLastmodifyuserid() {
+        return lastmodifyuserid;
     }
 
-    public void setfLastmodifyuserid(String fLastmodifyuserid) {
-        this.fLastmodifyuserid = fLastmodifyuserid == null ? null : fLastmodifyuserid.trim();
+    public void setLastmodifyuserid(String lastmodifyuserid) {
+        this.lastmodifyuserid = lastmodifyuserid;
     }
 
-    public Date getfDeletetime() {
-        return fDeletetime;
+    public Date getDeletetime() {
+        return deletetime;
     }
 
-    public void setfDeletetime(Date fDeletetime) {
-        this.fDeletetime = fDeletetime;
+    public void setDeletetime(Date deletetime) {
+        this.deletetime = deletetime;
     }
 
-    public String getfDeleteuserid() {
-        return fDeleteuserid;
+    public String getDeleteuserid() {
+        return deleteuserid;
     }
 
-    public void setfDeleteuserid(String fDeleteuserid) {
-        this.fDeleteuserid = fDeleteuserid == null ? null : fDeleteuserid.trim();
+    public void setDeleteuserid(String deleteuserid) {
+        this.deleteuserid = deleteuserid;
     }
 }

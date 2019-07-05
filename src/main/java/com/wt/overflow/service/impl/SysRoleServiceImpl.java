@@ -75,7 +75,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 	public Integer deleteRole(HttpServletRequest request, String roleId) {
 		Map<String, Object> parameter = new HashMap<String, Object>();
 		parameter.put("roleId", roleId);
-		parameter.put("F_DeleteUserId", ((SysUser)request.getSession().getAttribute("loginUser")).getfId());
+		parameter.put("F_DeleteUserId", ((SysUser)request.getSession().getAttribute("loginUser")).getId());
 		parameter.put("F_DeleteTime", new Date());
 		return sysRoleMapper.deleteRole(parameter);
 	}
@@ -115,22 +115,22 @@ public class SysRoleServiceImpl implements SysRoleService {
 	
 	public SysRole queryOneByRoleId(String roleId) {
 		SysRole sysRole = sysRoleMapper.queryOneByRoleId(roleId);
-		if(sysRole.getfLastmodifyuserid()!=null&&!(sysRole.getfLastmodifyuserid().equals(""))){
-			SysUser sysUser =sysUserMapper.queryOneBySysUserId(sysRole.getfLastmodifyuserid());
+		if(sysRole.getLastmodifyuserid()!=null&&!(sysRole.getLastmodifyuserid().equals(""))){
+			SysUser sysUser =sysUserMapper.queryOneBySysUserId(sysRole.getLastmodifyuserid());
 			if(sysUser!=null){
-				sysRole.setfLastmodifyuserid(sysUser.getfRealname());
+				sysRole.setLastmodifyuserid(sysUser.getRealname());
 			}else{
-				sysRole.setfLastmodifyuserid("无");
+				sysRole.setLastmodifyuserid("无");
 			}
-		}else{sysRole.setfLastmodifyuserid("无");}
-		if(sysRole.getfCreatoruserid()!=null&&!(sysRole.getfCreatoruserid().equals(""))){
-			SysUser sysUser =sysUserMapper.queryOneBySysUserId(sysRole.getfCreatoruserid());
+		}else{sysRole.setLastmodifyuserid("无");}
+		if(sysRole.getCreatoruserid()!=null&&!(sysRole.getCreatoruserid().equals(""))){
+			SysUser sysUser =sysUserMapper.queryOneBySysUserId(sysRole.getCreatoruserid());
 			if(sysUser!=null){
-				sysRole.setfCreatoruserid(sysUser.getfRealname());
+				sysRole.setCreatoruserid(sysUser.getRealname());
 			}else{
-				sysRole.setfCreatoruserid("无");
+				sysRole.setCreatoruserid("无");
 			}
-		}else{sysRole.setfCreatoruserid("无");}
+		}else{sysRole.setCreatoruserid("无");}
 		return sysRole;
 	}
 
@@ -146,19 +146,19 @@ public class SysRoleServiceImpl implements SysRoleService {
 	public Map<String, Object> updateDuty(HttpServletRequest request,SysRole sysRole, String keyword) {
 		Map<String, Object> resmap = new HashMap<String, Object>();
 		if(keyword.equals("")){//新政
-			sysRole.setfId(UUIDUtil.getUUID());
-			sysRole.setfCategory(2);
-			sysRole.setfCreatortime(new Date());
-			sysRole.setfCreatoruserid(((SysUser)request.getSession().getAttribute("loginUser")).getfId());
+			sysRole.setId(UUIDUtil.getUUID());
+			sysRole.setCategory(2);
+			sysRole.setCreatortime(new Date());
+			sysRole.setCreatoruserid(((SysUser)request.getSession().getAttribute("loginUser")).getId());
 			Map<String, Object> parmap = new HashMap<String, Object>();
 			parmap.put("sysRole", sysRole);
-			sysRole.setfDeletemark(false);
+			sysRole.setDeletemark(0);
 			sysRoleMapper.addRole(parmap);//新增角色 	返回主键
 		}else{
-			sysRole.setfId(keyword);
-			sysRole.setfCategory(2);
-			sysRole.setfLastmodifytime(new Date());
-			sysRole.setfLastmodifyuserid(((SysUser)request.getSession().getAttribute("loginUser")).getfId());
+			sysRole.setId(keyword);
+			sysRole.setCategory(2);
+			sysRole.setLastmodifytime(new Date());
+			sysRole.setLastmodifyuserid(((SysUser)request.getSession().getAttribute("loginUser")).getId());
 			Map<String, Object> parmap = new HashMap<String, Object>();
 			parmap.put("sysRole", sysRole);
 			sysRoleMapper.updateRoleByRoleId(parmap);//新增角色 	返回主键

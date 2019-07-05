@@ -2,21 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.wt.overflow.dao.SysRoleauthorizeMapper" >
   <resultMap id="BaseResultMap" type="com.wt.overflow.bean.SysRoleauthorize" >
-    <result column="F_Id" property="fId" jdbcType="VARCHAR" />
-    <result column="F_ItemType" property="fItemtype" jdbcType="INTEGER" />
-    <result column="F_ItemId" property="fItemid" jdbcType="VARCHAR" />
-    <result column="F_ObjectType" property="fObjecttype" jdbcType="INTEGER" />
-    <result column="F_ObjectId" property="fObjectid" jdbcType="VARCHAR" />
-    <result column="F_SortCode" property="fSortcode" jdbcType="INTEGER" />
-    <result column="F_CreatorTime" property="fCreatortime" jdbcType="TIMESTAMP" />
-    <result column="F_CreatorUserId" property="fCreatoruserid" jdbcType="VARCHAR" />
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="itemType" jdbcType="INTEGER" property="itemtype" />
+    <result column="itemId" jdbcType="VARCHAR" property="itemid" />
+    <result column="objectType" jdbcType="INTEGER" property="objecttype" />
+    <result column="objectId" jdbcType="VARCHAR" property="objectid" />
+    <result column="sortCode" jdbcType="INTEGER" property="sortcode" />
+    <result column="creatorTime" jdbcType="TIMESTAMP" property="creatortime" />
+    <result column="creatorUserId" jdbcType="VARCHAR" property="creatoruserid" />
+    <result column="deleteMark" jdbcType="INTEGER" property="deletemark" />
   </resultMap>
   
   <!-- sys_roleauthorize -->
   <sql id="Base_Column_List" >
-      F_Id, F_ItemType, F_ItemId, 
-      F_ObjectType, F_ObjectId, F_SortCode, 
-      F_CreatorTime, F_CreatorUserId
+      id, itemType, itemId, objectType, objectId, sortCode, creatorTime, creatorUserId,
+    deleteMark
   </sql>
   
  <select id="queryMenuByRoleId" resultMap="BaseResultMap" parameterType="java.util.Map" >

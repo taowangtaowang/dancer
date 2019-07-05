@@ -10,9 +10,10 @@ public interface SysRoleAuthorizeMenuService {
 
 	List<Map<String, Object>> queryAllData(String roleId) throws IllegalAccessException, InstantiationException, InvocationTargetException, IntrospectionException;
 
-	Map<String, Object> updateSysRoleAuthorizeMenu(HttpServletRequest request, String keyValue, String f_OrganizeId, String f_FullName,
-                                                   String f_EnCode, String f_Type, Integer f_SortCode, Boolean f_AllowEdit, Boolean f_AllowDelete,
-                                                   Boolean f_EnabledMark, String f_Description, String permissionIds);
+	Map<String, Object> updateSysRoleAuthorizeMenu(
+			HttpServletRequest request, String keyValue, String f_OrganizeId, String f_FullName,
+			String f_EnCode, String f_Type, Integer f_SortCode, int f_AllowEdit, int f_AllowDelete,
+			int f_EnabledMark, String f_Description, String permissionIds);
 	
 
 }

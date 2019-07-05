@@ -1,346 +1,311 @@
 package com.wt.overflow.bean;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
 
+@Table(name = "sys_user")
 public class SysUser {
-	private String fId;
-
-	private String fAccount;
-
-	private String fRealname;
-
-	private String fNickname;
-
-	private String fHeadicon;
-
-	private Boolean fGender;
-
-	private Date fBirthday;
-
-	private String fMobilephone;
-
-	private String fEmail;
-
-	private String fWechat;
-
-	private String fManagerid;
-
-	private Integer fSecuritylevel;
-
-	private String fSignature;
-
-	private String fOrganizeid;
-
-	private String fDepartmentid;
-
-	private String fRoleid;
-
-	private String fDutyid;
-
-	private Boolean fIsadministrator;
-
-	private Integer fSortcode;
-
-	private Boolean fDeletemark;
-
-	private Boolean fEnabledmark;
-
-	private String fDescription;
-
-	private Date fCreatortime;
-
-	private String fCreatoruserid;
-
-	private Date fLastmodifytime;
-
-	private String fLastmodifyuserid;
-
-	private Date fDeletetime;
-
-	private String fDeleteuserid;
-
-	private String fUserPassword;//用户附表信息
-	
-	private String fQuestion;//找回密码问题
-	
-	private String fAnswerQuestion;//找回密码答案
-	
-	private String fChangePasswordDate;//上次修改密码时间
-	
-	private String fOrganizename;
-	
-	private String fJobNumber;
-	
-	public String getfJobNumber() {
-		return fJobNumber;
-	}
-
-	public void setfJobNumber(String fJobNumber) {
-		this.fJobNumber = fJobNumber;
-	}
-
-	public String getfOrganizename() {
-		return fOrganizename;
-	}
-
-	public void setfOrganizename(String fOrganizename) {
-		this.fOrganizename = fOrganizename;
-	}
-
-	public String getfId() {
-		return fId;
-	}
-
-	public void setfId(String fId) {
-		this.fId = fId == null ? null : fId.trim();
-	}
-
-	public String getfAccount() {
-		return fAccount;
-	}
-
-	public void setfAccount(String fAccount) {
-		this.fAccount = fAccount == null ? null : fAccount.trim();
-	}
-
-	public String getfRealname() {
-		return fRealname;
-	}
-
-	public void setfRealname(String fRealname) {
-		this.fRealname = fRealname == null ? null : fRealname.trim();
-	}
-
-	public String getfNickname() {
-		return fNickname;
-	}
-
-	public void setfNickname(String fNickname) {
-		this.fNickname = fNickname == null ? null : fNickname.trim();
-	}
-
-	public String getfHeadicon() {
-		return fHeadicon;
-	}
-
-	public void setfHeadicon(String fHeadicon) {
-		this.fHeadicon = fHeadicon == null ? null : fHeadicon.trim();
-	}
-
-	public Boolean getfGender() {
-		return fGender;
-	}
-
-	public void setfGender(Boolean fGender) {
-		this.fGender = fGender;
-	}
-
-	public Date getfBirthday() {
-		return fBirthday;
-	}
-
-	public void setfBirthday(Date fBirthday) {
-		this.fBirthday = fBirthday;
-	}
-
-	public String getfMobilephone() {
-		return fMobilephone;
-	}
-
-	public void setfMobilephone(String fMobilephone) {
-		this.fMobilephone = fMobilephone == null ? null : fMobilephone.trim();
-	}
-
-	public String getfEmail() {
-		return fEmail;
-	}
-
-	public void setfEmail(String fEmail) {
-		this.fEmail = fEmail == null ? null : fEmail.trim();
-	}
-
-	public String getfWechat() {
-		return fWechat;
-	}
-
-	public void setfWechat(String fWechat) {
-		this.fWechat = fWechat == null ? null : fWechat.trim();
-	}
-
-	public String getfManagerid() {
-		return fManagerid;
-	}
-
-	public void setfManagerid(String fManagerid) {
-		this.fManagerid = fManagerid == null ? null : fManagerid.trim();
-	}
-
-	public Integer getfSecuritylevel() {
-		return fSecuritylevel;
-	}
-
-	public void setfSecuritylevel(Integer fSecuritylevel) {
-		this.fSecuritylevel = fSecuritylevel;
-	}
-
-	public String getfSignature() {
-		return fSignature;
-	}
-
-	public void setfSignature(String fSignature) {
-		this.fSignature = fSignature == null ? null : fSignature.trim();
-	}
-
-	public String getfOrganizeid() {
-		return fOrganizeid;
-	}
-
-	public void setfOrganizeid(String fOrganizeid) {
-		this.fOrganizeid = fOrganizeid == null ? null : fOrganizeid.trim();
-	}
-
-	public String getfDepartmentid() {
-		return fDepartmentid;
-	}
-
-	public void setfDepartmentid(String fDepartmentid) {
-		this.fDepartmentid = fDepartmentid == null ? null : fDepartmentid.trim();
-	}
-
-	public String getfRoleid() {
-		return fRoleid;
-	}
-
-	public void setfRoleid(String fRoleid) {
-		this.fRoleid = fRoleid == null ? null : fRoleid.trim();
-	}
-
-	public String getfDutyid() {
-		return fDutyid;
-	}
-
-	public void setfDutyid(String fDutyid) {
-		this.fDutyid = fDutyid == null ? null : fDutyid.trim();
-	}
-
-	public Boolean getfIsadministrator() {
-		return fIsadministrator;
-	}
-
-	public void setfIsadministrator(Boolean fIsadministrator) {
-		this.fIsadministrator = fIsadministrator;
-	}
-
-	public Integer getfSortcode() {
-		return fSortcode;
-	}
-
-	public void setfSortcode(Integer fSortcode) {
-		this.fSortcode = fSortcode;
-	}
-
-	public Boolean getfDeletemark() {
-		return fDeletemark;
-	}
-
-	public void setfDeletemark(Boolean fDeletemark) {
-		this.fDeletemark = fDeletemark;
-	}
-
-	public Boolean getfEnabledmark() {
-		return fEnabledmark;
-	}
-
-	public void setfEnabledmark(Boolean fEnabledmark) {
-		this.fEnabledmark = fEnabledmark;
-	}
-
-	public String getfDescription() {
-		return fDescription;
-	}
-
-	public void setfDescription(String fDescription) {
-		this.fDescription = fDescription == null ? null : fDescription.trim();
-	}
-
-	public Date getfCreatortime() {
-		return fCreatortime;
-	}
-
-	public void setfCreatortime(Date fCreatortime) {
-		this.fCreatortime = fCreatortime;
-	}
-
-	public String getfCreatoruserid() {
-		return fCreatoruserid;
-	}
-
-	public void setfCreatoruserid(String fCreatoruserid) {
-		this.fCreatoruserid = fCreatoruserid == null ? null : fCreatoruserid.trim();
-	}
-
-	public Date getfLastmodifytime() {
-		return fLastmodifytime;
-	}
-
-	public void setfLastmodifytime(Date fLastmodifytime) {
-		this.fLastmodifytime = fLastmodifytime;
-	}
-
-	public String getfLastmodifyuserid() {
-		return fLastmodifyuserid;
-	}
-
-	public void setfLastmodifyuserid(String fLastmodifyuserid) {
-		this.fLastmodifyuserid = fLastmodifyuserid == null ? null : fLastmodifyuserid.trim();
-	}
-
-	public Date getfDeletetime() {
-		return fDeletetime;
-	}
-
-	public void setfDeletetime(Date fDeletetime) {
-		this.fDeletetime = fDeletetime;
-	}
-
-	public String getfDeleteuserid() {
-		return fDeleteuserid;
-	}
-
-	public void setfDeleteuserid(String fDeleteuserid) {
-		this.fDeleteuserid = fDeleteuserid == null ? null : fDeleteuserid.trim();
-	}
-
-	public String getfUserPassword() {
-		return fUserPassword;
-	}
-
-	public void setfUserPassword(String fUserPassword) {
-		this.fUserPassword = fUserPassword;
-	}
-
-	public String getfQuestion() {
-		return fQuestion;
-	}
-
-	public void setfQuestion(String fQuestion) {
-		this.fQuestion = fQuestion;
-	}
-
-	public String getfAnswerQuestion() {
-		return fAnswerQuestion;
-	}
-
-	public void setfAnswerQuestion(String fAnswerQuestion) {
-		this.fAnswerQuestion = fAnswerQuestion;
-	}
-
-	public String getfChangePasswordDate() {
-		return fChangePasswordDate;
-	}
-
-	public void setfChangePasswordDate(String fChangePasswordDate) {
-		this.fChangePasswordDate = fChangePasswordDate;
-	}
-	
+    @Id
+    @Column(name = "id")
+    private String id;
+    @Column(name = "account")
+    private String account;
+    @Column(name = "realName")
+    private String realname;
+    @Column(name = "nickName")
+    private String nickname;
+    @Column(name = "headIcon")
+    private String headicon;
+    @Column(name = "gender")
+    private int gender;
+    @Column(name = "birthday")
+    private Date birthday;
+    @Column(name = "mobilePhone")
+    private String mobilephone;
+    @Column(name = "email")
+    private String email;
+    @Column(name = "weChat")
+    private String wechat;
+    @Column(name = "managerId")
+    private String managerid;
+    @Column(name = "securityLevel")
+    private int securitylevel;
+    @Column(name = "signature")
+    private String signature;
+    @Column(name = "organizeId")
+    private String organizeid;
+    @Column(name = "departmentId")
+    private String departmentid;
+    @Column(name = "roleId")
+    private String roleid;
+    @Column(name = "dutyId")
+    private String dutyid;
+    @Column(name = "jobNumber")
+    private String jobnumber;
+    @Column(name = "isAdministrator")
+    private int isadministrator;
+    @Column(name = "sortCode")
+    private int sortcode;
+    @Column(name = "deleteMark")
+    private int deletemark;
+    @Column(name = "enabledMark")
+    private int enabledmark;
+    @Column(name = "description")
+    private String description;
+    @Column(name = "creatorTime")
+    private Date creatortime;
+    @Column(name = "creatorUserId")
+    private String creatoruserid;
+    @Column(name = "lastModifyTime")
+    private Date lastmodifytime;
+    @Column(name = "lastModifyUserId")
+    private String lastmodifyuserid;
+    @Column(name = "deleteTime")
+    private Date deletetime;
+    @Column(name = "deleteUserId")
+    private String deleteuserid;
+    @Column(name = "userPassword")
+    private String userPassword;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public String getRealname() {
+        return realname;
+    }
+
+    public void setRealname(String realname) {
+        this.realname = realname;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getHeadicon() {
+        return headicon;
+    }
+
+    public void setHeadicon(String headicon) {
+        this.headicon = headicon;
+    }
+
+    public int getGender() {
+        return gender;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getMobilephone() {
+        return mobilephone;
+    }
+
+    public void setMobilephone(String mobilephone) {
+        this.mobilephone = mobilephone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getWechat() {
+        return wechat;
+    }
+
+    public void setWechat(String wechat) {
+        this.wechat = wechat;
+    }
+
+    public String getManagerid() {
+        return managerid;
+    }
+
+    public void setManagerid(String managerid) {
+        this.managerid = managerid;
+    }
+
+    public int getSecuritylevel() {
+        return securitylevel;
+    }
+
+    public void setSecuritylevel(int securitylevel) {
+        this.securitylevel = securitylevel;
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
+
+    public String getOrganizeid() {
+        return organizeid;
+    }
+
+    public void setOrganizeid(String organizeid) {
+        this.organizeid = organizeid;
+    }
+
+    public String getDepartmentid() {
+        return departmentid;
+    }
+
+    public void setDepartmentid(String departmentid) {
+        this.departmentid = departmentid;
+    }
+
+    public String getRoleid() {
+        return roleid;
+    }
+
+    public void setRoleid(String roleid) {
+        this.roleid = roleid;
+    }
+
+    public String getDutyid() {
+        return dutyid;
+    }
+
+    public void setDutyid(String dutyid) {
+        this.dutyid = dutyid;
+    }
+
+    public String getJobnumber() {
+        return jobnumber;
+    }
+
+    public void setJobnumber(String jobnumber) {
+        this.jobnumber = jobnumber;
+    }
+
+    public int getIsadministrator() {
+        return isadministrator;
+    }
+
+    public void setIsadministrator(int isadministrator) {
+        this.isadministrator = isadministrator;
+    }
+
+    public int getSortcode() {
+        return sortcode;
+    }
+
+    public void setSortcode(int sortcode) {
+        this.sortcode = sortcode;
+    }
+
+    public int getDeletemark() {
+        return deletemark;
+    }
+
+    public void setDeletemark(int deletemark) {
+        this.deletemark = deletemark;
+    }
+
+    public int getEnabledmark() {
+        return enabledmark;
+    }
+
+    public void setEnabledmark(int enabledmark) {
+        this.enabledmark = enabledmark;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Date getCreatortime() {
+        return creatortime;
+    }
+
+    public void setCreatortime(Date creatortime) {
+        this.creatortime = creatortime;
+    }
+
+    public String getCreatoruserid() {
+        return creatoruserid;
+    }
+
+    public void setCreatoruserid(String creatoruserid) {
+        this.creatoruserid = creatoruserid;
+    }
+
+    public Date getLastmodifytime() {
+        return lastmodifytime;
+    }
+
+    public void setLastmodifytime(Date lastmodifytime) {
+        this.lastmodifytime = lastmodifytime;
+    }
+
+    public String getLastmodifyuserid() {
+        return lastmodifyuserid;
+    }
+
+    public void setLastmodifyuserid(String lastmodifyuserid) {
+        this.lastmodifyuserid = lastmodifyuserid;
+    }
+
+    public Date getDeletetime() {
+        return deletetime;
+    }
+
+    public void setDeletetime(Date deletetime) {
+        this.deletetime = deletetime;
+    }
+
+    public String getDeleteuserid() {
+        return deleteuserid;
+    }
+
+    public void setDeleteuserid(String deleteuserid) {
+        this.deleteuserid = deleteuserid;
+    }
+
+    public String getUserPassword() {
+        return userPassword;
+    }
+
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
+    }
 }

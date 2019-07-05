@@ -66,23 +66,23 @@ public class SysOrganizeServiceImpl implements SysOrganizeService {
 					map.put("level", Integer.parseInt(n_level)+1);
 				}
 				
-				map.put("parent", sysOrganize.getfParentid());
+				map.put("parent", sysOrganize.getParentid());
 				map.put("expanded", false);
-				map.put("fEncode", sysOrganize.getfEncode());
-				map.put("fSortcode", sysOrganize.getfSortcode());
+				map.put("fEncode", sysOrganize.getEncode());
+				map.put("fSortcode", sysOrganize.getSortcode());
 				map.put("loaded", false);
-				map.put("fEnabledmark", sysOrganize.getfEnabledmark());
-				map.put("fDescription", sysOrganize.getfDescription());
+				map.put("fEnabledmark", sysOrganize.getEnabledmark());
+				map.put("fDescription", sysOrganize.getDescription());
 				Map<String, Object> parmap = new HashMap<String, Object>();
-				parmap.put("fId", sysOrganize.getfId());
+				parmap.put("fId", sysOrganize.getId());
 				if(sysOrganizeMapper.queryAllByPId(parmap).isEmpty()){
 					map.put("isLeaf", true);
 				}else{
 					map.put("isLeaf", false);
 				}
-				map.put("fId", sysOrganize.getfId());
-				map.put("fFullname", sysOrganize.getfFullname());
-				map.put("parentId", sysOrganize.getfParentid());
+				map.put("fId", sysOrganize.getId());
+				map.put("fFullname", sysOrganize.getFullname());
+				map.put("parentId", sysOrganize.getParentid());
 				resmaplist.add(map );
 			}
 			resmap.put("rows", resmaplist);
@@ -122,16 +122,16 @@ public class SysOrganizeServiceImpl implements SysOrganizeService {
 		Integer isSuccess = 0;
 		
 		if(keyword.equals("")){//新增
-			organize.setfId(UUIDUtil.getUUID());
-			organize.setfCreatortime(new Date());
-			organize.setfCreatoruserid(((SysUser)request.getSession().getAttribute("loginUser")).getfId());
+			organize.setId(UUIDUtil.getUUID());
+			organize.setCreatortime(new Date());
+			organize.setCreatoruserid(((SysUser)request.getSession().getAttribute("loginUser")).getId());
 			Map<String, Object> parmap = new HashMap<String, Object>();
 			parmap.put("organize", organize);
 			isSuccess = sysOrganizeMapper.addOrganize(organize);
 		}else{//修改
-			organize.setfId(keyword);
-			organize.setfLastmodifytime(new Date());
-			organize.setfLastmodifyuserid(((SysUser)request.getSession().getAttribute("loginUser")).getfId());
+			organize.setId(keyword);
+			organize.setLastmodifytime(new Date());
+			organize.setLastmodifyuserid(((SysUser)request.getSession().getAttribute("loginUser")).getId());
 			Map<String, Object> parmap = new HashMap<String, Object>();
 			parmap.put("organize", organize);
 			isSuccess = sysOrganizeMapper.updateOrganize(organize);
@@ -143,7 +143,7 @@ public class SysOrganizeServiceImpl implements SysOrganizeService {
 	public Integer deleteOrganize(HttpServletRequest request, String keyValue) {
 		Map<String, Object> parameter = new HashMap<String, Object>();
 		parameter.put("roleId", keyValue);
-		parameter.put("F_DeleteUserId", ((SysUser)request.getSession().getAttribute("loginUser")).getfId());
+		parameter.put("F_DeleteUserId", ((SysUser)request.getSession().getAttribute("loginUser")).getId());
 		parameter.put("F_DeleteTime", new Date());
 		return sysOrganizeMapper.deleteOrganize(parameter);
 	}
@@ -152,9 +152,9 @@ public class SysOrganizeServiceImpl implements SysOrganizeService {
 	
 	public Integer updateOrganizeDes(HttpServletRequest request, String f_Description,String f_Id) {
 		SysOrganize organize = new SysOrganize();
-		organize.setfId(f_Id);organize.setfDescription(f_Description);
-		organize.setfLastmodifytime(new Date());
-		organize.setfLastmodifyuserid(((SysUser)request.getSession().getAttribute("loginUser")).getfId());
+		organize.setId(f_Id);organize.setDescription(f_Description);
+		organize.setLastmodifytime(new Date());
+		organize.setLastmodifyuserid(((SysUser)request.getSession().getAttribute("loginUser")).getId());
 		return sysOrganizeMapper.updateOrganizeDes(organize);
 	}
 
@@ -164,7 +164,7 @@ public class SysOrganizeServiceImpl implements SysOrganizeService {
 		StringBuffer sb = new StringBuffer();
 		sb.append("[");
 		for (SysOrganize sysOrganize : list) {// 单位
-			sb.append("{fId:'" + sysOrganize.getfId() + "',pId:'"+ sysOrganize.getfParentid()+ "',name:'" + sysOrganize.getfFullname()+ "',fOrganizename:'"+sysOrganize.getfFullname()+"'},");
+			sb.append("{fId:'" + sysOrganize.getId() + "',pId:'"+ sysOrganize.getParentid()+ "',name:'" + sysOrganize.getFullname()+ "',fOrganizename:'"+sysOrganize.getFullname()+"'},");
 		}
 		sb.deleteCharAt(sb.length() - 1);
 		sb.append("]");

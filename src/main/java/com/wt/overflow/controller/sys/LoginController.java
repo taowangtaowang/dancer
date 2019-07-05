@@ -69,13 +69,13 @@ public class LoginController {
 				parameter.put("message","当前账号不存在");
 				return parameter;
 			}
-			if(!sysUserlist.get(0).getfEnabledmark()){
+			if(sysUserlist.get(0).getEnabledmark()==0){
 				parameter.put("state", "error");
 				parameter.put("message", "当前账号已被禁用");
 				return parameter;
 			}
 			for (SysUser sysUser : sysUserlist) {// 账号唯一 F_Account
-				if (MD5Util.MD5(password).equals(sysUser.getfUserPassword().toUpperCase())) {// 登录成功
+				if (MD5Util.MD5(password).equals(sysUser.getUserPassword().toUpperCase())) {// 登录成功
 					// 写入用户登录日志。
 					//登录用户写进session
 					request.getSession().setAttribute("loginUser",sysUser);

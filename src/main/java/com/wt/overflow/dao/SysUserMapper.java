@@ -3,12 +3,13 @@ package com.wt.overflow.dao;
 import com.wt.overflow.bean.SysUser;
 import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.annotation.MapperScan;
+import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
 import java.util.Map;
 
 @MapperScan
-public interface SysUserMapper {
+public interface SysUserMapper extends Mapper<SysUser> {
 
 	List<SysUser> queryByLoginName(Map<String, Object> parameter);
 

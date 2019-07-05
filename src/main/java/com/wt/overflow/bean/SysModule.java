@@ -3,235 +3,233 @@ package com.wt.overflow.bean;
 import java.util.Date;
 
 public class SysModule {
-    private String fId;
+    private String id;
 
-    private String fParentid;
+    private String parentid;
 
-    private Integer fLayers;
+    private int layers;
 
-    private String fEncode;
+    private String encode;
 
-    private String fFullname;
+    private String fullname;
 
-    private String fIcon;
+    private String icon;
 
-    private String fUrladdress;
+    private String urladdress;
 
-    private String fTarget;
+    private String target;
 
-    private Boolean fIsmenu;
+    private int ismenu;
 
-    private Boolean fIsexpand;
+    private int isexpand;
 
-    private Boolean fIspublic;
+    private int ispublic;
 
-    private Boolean fAllowedit;
+    private int allowedit;
 
-    private Boolean fAllowdelete;
+    private int allowdelete;
 
-    private Integer fSortcode;
+    private int sortcode;
 
-    private Byte fDeletemark;
+    private int deletemark;
 
-    private Boolean fEnabledmark;
+    private int enabledmark;
 
-    private String fDescription;
+    private String description;
 
-    private Date fCreatortime;
+    private Date creatortime;
 
-    private String fCreatoruserid;
+    private String creatoruserid;
 
-    private Date fLastmodifytime;
+    private Date lastmodifytime;
 
-    private String fLastmodifyuserid;
+    private String lastmodifyuserid;
 
-    private Date fDeletetime;
+    private Date deletetime;
 
-    private String fDeleteuserid;
+    private String deleteuserid;
 
-    public String getfId() {
-        return fId;
+    public String getId() {
+        return id;
     }
 
-    public void setfId(String fId) {
-        this.fId = fId == null ? null : fId.trim();
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getfParentid() {
-        return fParentid;
+    public String getParentid() {
+        return parentid;
     }
 
-    public void setfParentid(String fParentid) {
-        this.fParentid = fParentid == null ? null : fParentid.trim();
+    public void setParentid(String parentid) {
+        this.parentid = parentid;
     }
 
-    public Integer getfLayers() {
-        return fLayers;
+    public int getLayers() {
+        return layers;
     }
 
-    public void setfLayers(Integer fLayers) {
-        this.fLayers = fLayers;
+    public void setLayers(int layers) {
+        this.layers = layers;
     }
 
-    public String getfEncode() {
-        return fEncode;
+    public String getEncode() {
+        return encode;
     }
 
-    public void setfEncode(String fEncode) {
-        this.fEncode = fEncode == null ? null : fEncode.trim();
+    public void setEncode(String encode) {
+        this.encode = encode;
     }
 
-    public String getfFullname() {
-        return fFullname;
+    public String getFullname() {
+        return fullname;
     }
 
-    public void setfFullname(String fFullname) {
-        this.fFullname = fFullname == null ? null : fFullname.trim();
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
-    public String getfIcon() {
-        return fIcon;
+    public String getIcon() {
+        return icon;
     }
 
-    public void setfIcon(String fIcon) {
-        this.fIcon = fIcon == null ? null : fIcon.trim();
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
-    public String getfUrladdress() {
-        return fUrladdress;
+    public String getUrladdress() {
+        return urladdress;
     }
 
-    public void setfUrladdress(String fUrladdress) {
-        this.fUrladdress = fUrladdress == null ? null : fUrladdress.trim();
+    public void setUrladdress(String urladdress) {
+        this.urladdress = urladdress;
     }
 
-    public String getfTarget() {
-        return fTarget;
+    public String getTarget() {
+        return target;
     }
 
-    public void setfTarget(String fTarget) {
-        this.fTarget = fTarget == null ? null : fTarget.trim();
+    public void setTarget(String target) {
+        this.target = target;
     }
 
-    public Boolean getfIsmenu() {
-        return fIsmenu;
+    public int getIsmenu() {
+        return ismenu;
     }
 
-    public void setfIsmenu(Boolean fIsmenu) {
-        this.fIsmenu = fIsmenu;
+    public void setIsmenu(int ismenu) {
+        this.ismenu = ismenu;
     }
 
-    public Boolean getfIsexpand() {
-        return fIsexpand;
+    public int getIsexpand() {
+        return isexpand;
     }
 
-    public void setfIsexpand(Boolean fIsexpand) {
-        this.fIsexpand = fIsexpand;
+    public void setIsexpand(int isexpand) {
+        this.isexpand = isexpand;
     }
 
-    public Boolean getfIspublic() {
-        return fIspublic;
+    public int getIspublic() {
+        return ispublic;
     }
 
-    public void setfIspublic(Boolean fIspublic) {
-        this.fIspublic = fIspublic;
+    public void setIspublic(int ispublic) {
+        this.ispublic = ispublic;
     }
 
-    public Boolean getfAllowedit() {
-        return fAllowedit;
+    public int getAllowedit() {
+        return allowedit;
     }
 
-    public void setfAllowedit(Boolean fAllowedit) {
-        this.fAllowedit = fAllowedit;
+    public void setAllowedit(int allowedit) {
+        this.allowedit = allowedit;
     }
 
-    public Boolean getfAllowdelete() {
-        return fAllowdelete;
+    public int getAllowdelete() {
+        return allowdelete;
     }
 
-    public void setfAllowdelete(Boolean fAllowdelete) {
-        this.fAllowdelete = fAllowdelete;
+    public void setAllowdelete(int allowdelete) {
+        this.allowdelete = allowdelete;
     }
 
-    public Integer getfSortcode() {
-        return fSortcode;
+    public int getSortcode() {
+        return sortcode;
     }
 
-    public void setfSortcode(Integer fSortcode) {
-        this.fSortcode = fSortcode;
+    public void setSortcode(int sortcode) {
+        this.sortcode = sortcode;
     }
 
-  
-
-    public Byte getfDeletemark() {
-		return fDeletemark;
-	}
-
-	public void setfDeletemark(Byte fDeletemark) {
-		this.fDeletemark = fDeletemark;
-	}
-
-	public Boolean getfEnabledmark() {
-        return fEnabledmark;
+    public int getDeletemark() {
+        return deletemark;
     }
 
-    public void setfEnabledmark(Boolean fEnabledmark) {
-        this.fEnabledmark = fEnabledmark;
+    public void setDeletemark(int deletemark) {
+        this.deletemark = deletemark;
     }
 
-    public String getfDescription() {
-        return fDescription;
+    public int getEnabledmark() {
+        return enabledmark;
     }
 
-    public void setfDescription(String fDescription) {
-        this.fDescription = fDescription == null ? null : fDescription.trim();
+    public void setEnabledmark(int enabledmark) {
+        this.enabledmark = enabledmark;
     }
 
-    public Date getfCreatortime() {
-        return fCreatortime;
+    public String getDescription() {
+        return description;
     }
 
-    public void setfCreatortime(Date fCreatortime) {
-        this.fCreatortime = fCreatortime;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getfCreatoruserid() {
-        return fCreatoruserid;
+    public Date getCreatortime() {
+        return creatortime;
     }
 
-    public void setfCreatoruserid(String fCreatoruserid) {
-        this.fCreatoruserid = fCreatoruserid == null ? null : fCreatoruserid.trim();
+    public void setCreatortime(Date creatortime) {
+        this.creatortime = creatortime;
     }
 
-    public Date getfLastmodifytime() {
-        return fLastmodifytime;
+    public String getCreatoruserid() {
+        return creatoruserid;
     }
 
-    public void setfLastmodifytime(Date fLastmodifytime) {
-        this.fLastmodifytime = fLastmodifytime;
+    public void setCreatoruserid(String creatoruserid) {
+        this.creatoruserid = creatoruserid;
     }
 
-    public String getfLastmodifyuserid() {
-        return fLastmodifyuserid;
+    public Date getLastmodifytime() {
+        return lastmodifytime;
     }
 
-    public void setfLastmodifyuserid(String fLastmodifyuserid) {
-        this.fLastmodifyuserid = fLastmodifyuserid == null ? null : fLastmodifyuserid.trim();
+    public void setLastmodifytime(Date lastmodifytime) {
+        this.lastmodifytime = lastmodifytime;
     }
 
-    public Date getfDeletetime() {
-        return fDeletetime;
+    public String getLastmodifyuserid() {
+        return lastmodifyuserid;
     }
 
-    public void setfDeletetime(Date fDeletetime) {
-        this.fDeletetime = fDeletetime;
+    public void setLastmodifyuserid(String lastmodifyuserid) {
+        this.lastmodifyuserid = lastmodifyuserid;
     }
 
-    public String getfDeleteuserid() {
-        return fDeleteuserid;
+    public Date getDeletetime() {
+        return deletetime;
     }
 
-    public void setfDeleteuserid(String fDeleteuserid) {
-        this.fDeleteuserid = fDeleteuserid == null ? null : fDeleteuserid.trim();
+    public void setDeletetime(Date deletetime) {
+        this.deletetime = deletetime;
+    }
+
+    public String getDeleteuserid() {
+        return deleteuserid;
+    }
+
+    public void setDeleteuserid(String deleteuserid) {
+        this.deleteuserid = deleteuserid;
     }
 }

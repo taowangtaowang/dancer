@@ -17,8 +17,8 @@ public interface SysItemsService {
 
 	SysItems queryOneByFId(String keyword);
 
-	Integer updateItems(HttpServletRequest request, String keyValue, String f_FullName, String f_EnCode,
-                        Integer f_SortCode, boolean f_EnabledMark, String f_ParentId, String fDescription);
+	int updateItems(HttpServletRequest request, String keyValue, String f_FullName, String f_EnCode,
+                        int f_SortCode, int f_EnabledMark, String f_ParentId, String fDescription);
 
 	Map<String, Object> queryAllItemsList();
 

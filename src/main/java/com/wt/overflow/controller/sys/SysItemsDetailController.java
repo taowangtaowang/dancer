@@ -110,14 +110,14 @@ public class SysItemsDetailController {
 			@RequestParam(value="keyValue", defaultValue="") String keyValue,
 			@RequestParam(value="fItemname", defaultValue="") String F_ItemName,
 			@RequestParam(value="fItemcode", defaultValue="") String F_ItemCode,
-			@RequestParam(value="fSortcode", defaultValue="0") Integer F_SortCode,
-			@RequestParam(value="fIsdefault", defaultValue="1") Integer F_IsDefault,
-			@RequestParam(value="fEnabledmark", defaultValue="1") Integer F_EnabledMark,
+			@RequestParam(value="fSortcode", defaultValue="0") int F_SortCode,
+			@RequestParam(value="fIsdefault", defaultValue="1") int F_IsDefault,
+			@RequestParam(value="fEnabledmark", defaultValue="1") int F_EnabledMark,
 			@RequestParam(value="fDescription", defaultValue="") String F_Description,
 			@RequestParam(value="fItemid", defaultValue="") String F_ItemId) throws Exception {
 		Map<String, Object> parameter = new HashMap<String, Object>();
 		Integer status = sysItemsDetailService.updateItemsDetail(request,keyValue,F_ItemName,F_ItemCode,F_SortCode,
-				(F_IsDefault==1?true:false),(F_EnabledMark==1?true:false),F_Description,F_ItemId);
+				F_IsDefault,F_EnabledMark,F_Description,F_ItemId);
 		if(status>0){
 			parameter.put("state", "success");
 			parameter.put("message", "操作成功");

@@ -41,17 +41,17 @@ public class SysItemsServiceImpl implements SysItemsService {
 		List<SysItems> sysItemslist = sysItemsMapper.queryAllData();//主表所有数据
 		if(!sysItemslist.isEmpty()){	
 			for (SysItems sysItems : sysItemslist) {
-				if(sysItems.getfParentid().equals("0")){//顶级节点
+				if(sysItems.getParentid().equals("0")){//顶级节点
 					Map<String, Object> resmap = new HashMap<String, Object>();
-					resmap.put("id", sysItems.getfId());
-					resmap.put("text", sysItems.getfFullname());
-					resmap.put("value", sysItems.getfEncode());
-					resmap.put("parentnodes", sysItems.getfParentid());
+					resmap.put("id", sysItems.getId());
+					resmap.put("text", sysItems.getFullname());
+					resmap.put("value", sysItems.getEncode());
+					resmap.put("parentnodes", sysItems.getParentid());
 					resmap.put("showcheck", true);
 					resmap.put("isexpand", true);
 					resmap.put("complete", true);
 					Map<String, Object> parmap = new HashMap<String, Object>();
-					parmap.put("fId", sysItems.getfId());
+					parmap.put("fId", sysItems.getId());
 					List<SysItems> resChildslist = sysItemsMapper.queryAllByPId(parmap);
 					resmap.put("hasChildren", resChildslist.isEmpty()?false:true);
 					
@@ -59,10 +59,10 @@ public class SysItemsServiceImpl implements SysItemsService {
 					if(!resChildslist.isEmpty()){
 						for (SysItems childItmes : resChildslist) {
 							Map<String, Object> childmap = new HashMap<String, Object>();
-							childmap.put("id", childItmes.getfId());
-							childmap.put("text", childItmes.getfFullname());
-							childmap.put("value", childItmes.getfEncode());
-							childmap.put("parentnodes", childItmes.getfParentid());
+							childmap.put("id", childItmes.getId());
+							childmap.put("text", childItmes.getFullname());
+							childmap.put("value", childItmes.getEncode());
+							childmap.put("parentnodes", childItmes.getParentid());
 							childmap.put("showcheck", true);
 							childmap.put("isexpand", true);
 							childmap.put("complete", true);
@@ -84,10 +84,7 @@ public class SysItemsServiceImpl implements SysItemsService {
 
 	/**
 	 * 字典数据分页查询
-	 * @param request
-	 * @param response
 	 * @param rows
-	 * @param page
 	 * @param sidx
 	 * @param sord
 	 * @param keyword	关键字查询（筛选F_FullName或F_EnCode字段）
@@ -134,7 +131,7 @@ public class SysItemsServiceImpl implements SysItemsService {
 	public Integer deleteItemsByFId(String keyword,HttpServletRequest request) {
 		Map<String, Object> parameter = new HashMap<String, Object>();
 		parameter.put("itemsId", keyword);
-		parameter.put("F_DeleteUserId", ((SysUser)request.getSession().getAttribute("loginUser")).getfId());
+		parameter.put("F_DeleteUserId", ((SysUser)request.getSession().getAttribute("loginUser")).getId());
 		parameter.put("F_DeleteTime", new Date());
 		return sysItemsMapper.deleteItemsByFId(parameter);
 	}
@@ -143,29 +140,29 @@ public class SysItemsServiceImpl implements SysItemsService {
 	public SysItems queryOneByFId(String keyword) {
 		// TODO Auto-generated method stub
 		SysItems sysItems = sysItemsMapper.queryOneById(keyword);
-		if(sysItems.getfLastmodifyuserid()!=null&&!(sysItems.getfLastmodifyuserid().equals(""))){
-			SysUser sysUser =sysUserMapper.queryOneBySysUserId(sysItems.getfLastmodifyuserid());
+		if(sysItems.getLastmodifyuserid()!=null&&!(sysItems.getLastmodifyuserid().equals(""))){
+			SysUser sysUser =sysUserMapper.queryOneBySysUserId(sysItems.getLastmodifyuserid());
 			if(sysUser!=null){
-				sysItems.setfLastmodifyuserid(sysUser.getfRealname());
+				sysItems.setLastmodifyuserid(sysUser.getRealname());
 			}else{
-				sysItems.setfLastmodifyuserid("无");
+				sysItems.setLastmodifyuserid("无");
 			}
-		}else{sysItems.setfLastmodifyuserid("无");}
-		if(sysItems.getfCreatoruserid()!=null&&!(sysItems.getfCreatoruserid().equals(""))){
-			SysUser sysUser =sysUserMapper.queryOneBySysUserId(sysItems.getfCreatoruserid());
+		}else{sysItems.setLastmodifyuserid("无");}
+		if(sysItems.getCreatoruserid()!=null&&!(sysItems.getCreatoruserid().equals(""))){
+			SysUser sysUser =sysUserMapper.queryOneBySysUserId(sysItems.getCreatoruserid());
 			if(sysUser!=null){
-				sysItems.setfCreatoruserid(sysUser.getfRealname());
+				sysItems.setCreatoruserid(sysUser.getRealname());
 			}else{
-				sysItems.setfCreatoruserid("无");
+				sysItems.setCreatoruserid("无");
 			}
-		}else{sysItems.setfCreatoruserid("无");}
+		}else{sysItems.setCreatoruserid("无");}
 		
 		return sysItems;
 	}
 
 	
-	public Integer updateItems(HttpServletRequest request, String keyValue, String f_FullName,
-			String f_EnCode, Integer f_SortCode, boolean f_EnabledMark, String f_ParentId,String fDescription) {
+	public int updateItems(HttpServletRequest request, String keyValue, String f_FullName,
+			String f_EnCode, int f_SortCode, int f_EnabledMark, String f_ParentId,String fDescription) {
 		Integer res = 0;
 		if(keyValue==null ||keyValue.equals("")){//新增
 			if(f_EnCode==null||f_EnCode.equals("")){//编号必须唯一
@@ -173,25 +170,25 @@ public class SysItemsServiceImpl implements SysItemsService {
 			}
 			
 			SysItems sysItems = new SysItems();
-			sysItems.setfId(UUIDUtil.getUUID());sysItems.setfDescription(fDescription);
-			sysItems.setfParentid(f_ParentId);sysItems.setfFullname(f_FullName);
-			sysItems.setfEncode(f_EnCode);sysItems.setfSortcode(f_SortCode);
-			sysItems.setfDeletemark(false);sysItems.setfEnabledmark(f_EnabledMark);
+			sysItems.setId(UUIDUtil.getUUID());sysItems.setDescription(fDescription);
+			sysItems.setParentid(f_ParentId);sysItems.setFullname(f_FullName);
+			sysItems.setEncode(f_EnCode);sysItems.setSortcode(f_SortCode);
+			sysItems.setDeletemark(0);sysItems.setEnabledmark(f_EnabledMark);
 			
 			List<SysItems> enCodelist = sysItemsMapper.queryByEnCode(sysItems);
 			if(!enCodelist.isEmpty()){
 				return -99;
 			}
 			
-			sysItems.setfCreatortime(new Date());sysItems.setfCreatoruserid(((SysUser)request.getSession().getAttribute("loginUser")).getfId());
+			sysItems.setCreatortime(new Date());sysItems.setCreatoruserid(((SysUser)request.getSession().getAttribute("loginUser")).getId());
 			res =sysItemsMapper.addSysItems(sysItems);
 		}else{//修改
 			SysItems sysItems = new SysItems();
-			sysItems.setfParentid(f_ParentId);sysItems.setfFullname(f_FullName);
-			sysItems.setfEncode(f_EnCode);sysItems.setfSortcode(f_SortCode);
-			sysItems.setfDeletemark(false);sysItems.setfEnabledmark(f_EnabledMark);
-			sysItems.setfId(keyValue);
-			sysItems.setfLastmodifytime(new Date());;sysItems.setfLastmodifyuserid(((SysUser)request.getSession().getAttribute("loginUser")).getfId());
+			sysItems.setParentid(f_ParentId);sysItems.setFullname(f_FullName);
+			sysItems.setEncode(f_EnCode);sysItems.setSortcode(f_SortCode);
+			sysItems.setDeletemark(0);sysItems.setEnabledmark(f_EnabledMark);
+			sysItems.setId(keyValue);
+			sysItems.setLastmodifytime(new Date());;sysItems.setLastmodifyuserid(((SysUser)request.getSession().getAttribute("loginUser")).getId());
 			res =sysItemsMapper.updateItems(sysItems);
 		}
 		
@@ -210,10 +207,10 @@ public class SysItemsServiceImpl implements SysItemsService {
 		if(!reslist.isEmpty()){
 			//筛选有子节点d顶级数据
 			for (SysItems sysItems : reslist) {
-				if(sysItems.getfParentid().equals("0")){//顶级节点
+				if(sysItems.getParentid().equals("0")){//顶级节点
 					boolean is = false;
 					for (SysItems childs : reslist) {
-						if(childs.getfParentid().equals(sysItems.getfId())){//有子节点
+						if(childs.getParentid().equals(sysItems.getId())){//有子节点
 							is = true ;
 						}
 					}
@@ -228,7 +225,7 @@ public class SysItemsServiceImpl implements SysItemsService {
 			for (SysItems havechildsys : haveChildlist) {
 				newreslist.add(havechildsys);
 				for (SysItems sysItems : reslist) {
-					if(sysItems.getfParentid().equals(havechildsys.getfId())){
+					if(sysItems.getParentid().equals(havechildsys.getId())){
 						newreslist.add(sysItems);
 					}
 				}
@@ -239,28 +236,28 @@ public class SysItemsServiceImpl implements SysItemsService {
 			
 			for (SysItems sysItems : newreslist) {
 				Map<String, Object> map = new HashMap<String, Object>();
-				if(sysItems.getfParentid().toString().equals("0")){//第一级
+				if(sysItems.getParentid().toString().equals("0")){//第一级
 					map.put("level", "0");
 				}else{
 					map.put("level", "1");
 				}
-				map.put("parent", sysItems.getfParentid());
+				map.put("parent", sysItems.getParentid());
 				map.put("expanded", true);
-				map.put("fEncode", sysItems.getfEncode());
-				map.put("fSortcode", sysItems.getfSortcode());
+				map.put("fEncode", sysItems.getEncode());
+				map.put("fSortcode", sysItems.getSortcode());
 				map.put("loaded", true);
-				map.put("fEnabledmark", sysItems.getfEnabledmark());
-				map.put("fDescription", sysItems.getfDescription());
+				map.put("fEnabledmark", sysItems.getEnabledmark());
+				map.put("fDescription", sysItems.getDescription());
 				Map<String, Object> parmap = new HashMap<String, Object>();
-				parmap.put("fId", sysItems.getfId());
+				parmap.put("fId", sysItems.getId());
 				if(sysItemsMapper.queryAllByPId(parmap).isEmpty()){
 					map.put("isLeaf", true);
 				}else{
 					map.put("isLeaf", false);
 				}
-				map.put("fId", sysItems.getfId());
-				map.put("fFullname", sysItems.getfFullname());
-				map.put("parentId", sysItems.getfParentid());
+				map.put("fId", sysItems.getId());
+				map.put("fFullname", sysItems.getFullname());
+				map.put("parentId", sysItems.getParentid());
 				resmaplist.add(map );
 			}
 			

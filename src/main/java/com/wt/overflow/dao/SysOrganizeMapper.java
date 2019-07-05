@@ -17,7 +17,6 @@ public interface SysOrganizeMapper {
 	* @Description: 删除机构  
 	* @author wumin
 	* @date 2018-04-08 16:00 
-	* @param id
 	* @return
 	*/
 	public Integer deleteOrganize(Map<String, Object> parameter);

@@ -2,43 +2,31 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.wt.overflow.dao.SysRoleMapper">
 	<resultMap id="BaseResultMap" type="com.wt.overflow.bean.SysRole">
-		<result column="F_Id" property="fId" jdbcType="VARCHAR" />
-		<result column="F_OrganizeId" property="fOrganizeid" jdbcType="VARCHAR" />
-		<result column="F_Category" property="fCategory" jdbcType="INTEGER" />
-		<result column="F_EnCode" property="fEncode" jdbcType="VARCHAR" />
-		<result column="F_FullName" property="fFullname" jdbcType="VARCHAR" />
-		<result column="F_Type" property="fType" jdbcType="VARCHAR" />
-		<result column="F_AllowEdit" property="fAllowedit" jdbcType="BIT" />
-		<result column="F_AllowDelete" property="fAllowdelete"
-			jdbcType="BIT" />
-		<result column="F_SortCode" property="fSortcode" jdbcType="INTEGER" />
-		<result column="F_DeleteMark" property="fDeletemark" jdbcType="BIT" />
-		<result column="F_EnabledMark" property="fEnabledmark"
-			jdbcType="BIT" />
-		<result column="F_Description" property="fDescription"
-			jdbcType="VARCHAR" />
-		<result column="F_CreatorTime" property="fCreatortime"
-			jdbcType="TIMESTAMP" />
-		<result column="F_CreatorUserId" property="fCreatoruserid"
-			jdbcType="VARCHAR" />
-		<result column="F_LastModifyTime" property="fLastmodifytime"
-			jdbcType="TIMESTAMP" />
-		<result column="F_LastModifyUserId" property="fLastmodifyuserid"
-			jdbcType="VARCHAR" />
-		<result column="F_DeleteTime" property="fDeletetime" jdbcType="TIMESTAMP" />
-		<result column="F_DeleteUserId" property="fDeleteuserid"
-			jdbcType="VARCHAR" />
-		<result column="F_Responsibility" property="fResponsibility"
-			jdbcType="VARCHAR" />	
+		<id column="id" jdbcType="VARCHAR" property="id" />
+		<result column="organizeId" jdbcType="VARCHAR" property="organizeid" />
+		<result column="category" jdbcType="INTEGER" property="category" />
+		<result column="enCode" jdbcType="VARCHAR" property="encode" />
+		<result column="fullName" jdbcType="VARCHAR" property="fullname" />
+		<result column="type" jdbcType="VARCHAR" property="type" />
+		<result column="responsibility" jdbcType="VARCHAR" property="responsibility" />
+		<result column="allowEdit" jdbcType="INTEGER" property="allowedit" />
+		<result column="allowDelete" jdbcType="INTEGER" property="allowdelete" />
+		<result column="sortCode" jdbcType="INTEGER" property="sortcode" />
+		<result column="deleteMark" jdbcType="INTEGER" property="deletemark" />
+		<result column="enabledMark" jdbcType="INTEGER" property="enabledmark" />
+		<result column="description" jdbcType="VARCHAR" property="description" />
+		<result column="creatorTime" jdbcType="TIMESTAMP" property="creatortime" />
+		<result column="creatorUserId" jdbcType="VARCHAR" property="creatoruserid" />
+		<result column="lastModifyTime" jdbcType="TIMESTAMP" property="lastmodifytime" />
+		<result column="lastModifyUserId" jdbcType="VARCHAR" property="lastmodifyuserid" />
+		<result column="deleteTime" jdbcType="TIMESTAMP" property="deletetime" />
+		<result column="deleteUserId" jdbcType="VARCHAR" property="deleteuserid" />
 	</resultMap>
 
 	<sql id="Base_Column_List">
-		F_Id, F_OrganizeId, F_Category,
-		F_EnCode, F_FullName, F_Type,
-		F_AllowEdit, F_AllowDelete, F_SortCode,
-		F_DeleteMark, F_EnabledMark, F_Description,
-		F_CreatorTime, F_CreatorUserId, F_LastModifyTime,
-		F_LastModifyUserId, F_DeleteTime, F_DeleteUserId,F_Responsibility
+		id, organizeId, category, enCode, fullName, type, responsibility, allowEdit, allowDelete,
+    sortCode, deleteMark, enabledMark, description, creatorTime, creatorUserId, lastModifyTime,
+    lastModifyUserId, deleteTime, deleteUserId
 	</sql>
 
 	<select id="queryAllDataByCategory" resultMap="BaseResultMap"

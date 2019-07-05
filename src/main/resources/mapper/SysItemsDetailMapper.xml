@@ -2,64 +2,64 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.wt.overflow.dao.SysItemsDetailMapper" >
   <resultMap id="BaseResultMap" type="com.wt.overflow.bean.SysItemsdetail" >
-    <result column="F_Id" property="fId" jdbcType="VARCHAR" />
-    <result column="F_ItemId" property="fItemid" jdbcType="VARCHAR" />
-    <result column="F_ParentId" property="fParentid" jdbcType="VARCHAR" />
-    <result column="F_ItemCode" property="fItemcode" jdbcType="VARCHAR" />
-    <result column="F_ItemName" property="fItemname" jdbcType="VARCHAR" />
-    <result column="F_SimpleSpelling" property="fSimplespelling" jdbcType="VARCHAR" />
-    <result column="F_IsDefault" property="fIsdefault" jdbcType="BIT" />
-    <result column="F_Layers" property="fLayers" jdbcType="INTEGER" />
-    <result column="F_SortCode" property="fSortcode" jdbcType="INTEGER" />
-    <result column="F_DeleteMark" property="fDeletemark" jdbcType="BIT" />
-    <result column="F_EnabledMark" property="fEnabledmark" jdbcType="BIT" />
-    <result column="F_Description" property="fDescription" jdbcType="VARCHAR" />
-    <result column="F_CreatorTime" property="fCreatortime" jdbcType="TIMESTAMP" />
-    <result column="F_CreatorUserId" property="fCreatoruserid" jdbcType="VARCHAR" />
-    <result column="F_LastModifyTime" property="fLastmodifytime" jdbcType="TIMESTAMP" />
-    <result column="F_LastModifyUserId" property="fLastmodifyuserid" jdbcType="VARCHAR" />
-    <result column="F_DeleteTime" property="fDeletetime" jdbcType="TIMESTAMP" />
-    <result column="F_DeleteUserId" property="fDeleteuserid" jdbcType="VARCHAR" />
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="itemId" jdbcType="VARCHAR" property="itemid" />
+    <result column="parentId" jdbcType="VARCHAR" property="parentid" />
+    <result column="itemCode" jdbcType="VARCHAR" property="itemcode" />
+    <result column="itemName" jdbcType="VARCHAR" property="itemname" />
+    <result column="simpleSpelling" jdbcType="VARCHAR" property="simplespelling" />
+    <result column="isDefault" jdbcType="INTEGER" property="isdefault" />
+    <result column="layers" jdbcType="INTEGER" property="layers" />
+    <result column="sortCode" jdbcType="INTEGER" property="sortcode" />
+    <result column="enabledMark" jdbcType="INTEGER" property="enabledmark" />
+    <result column="enabledDelete" jdbcType="INTEGER" property="enableddelete" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="deleteMark" jdbcType="INTEGER" property="deletemark" />
+    <result column="creatorTime" jdbcType="TIMESTAMP" property="creatortime" />
+    <result column="creatorUserId" jdbcType="VARCHAR" property="creatoruserid" />
+    <result column="lastModifyTime" jdbcType="TIMESTAMP" property="lastmodifytime" />
+    <result column="lastModifyUserId" jdbcType="VARCHAR" property="lastmodifyuserid" />
+    <result column="deleteTime" jdbcType="TIMESTAMP" property="deletetime" />
+    <result column="deleteUserId" jdbcType="VARCHAR" property="deleteuserid" />
   </resultMap>
   
    <sql id="Base_Column_List" >
-      F_Id, F_ItemId, F_ParentId, 
-      F_ItemCode, F_ItemName, F_SimpleSpelling, 
-      F_IsDefault, F_Layers, F_SortCode, 
-      F_DeleteMark, F_EnabledMark, F_Description, 
-      F_CreatorTime, F_CreatorUserId, F_LastModifyTime, 
-      F_LastModifyUserId, F_DeleteTime, F_DeleteUserId
+      id, itemId, parentId, itemCode, itemName, simpleSpelling, isDefault, layers, sortCode,
+    enabledMark, enabledDelete, description, deleteMark, creatorTime, creatorUserId,
+    lastModifyTime, lastModifyUserId, deleteTime, deleteUserId
   </sql>
   
   
   <update id="deleteItemsDetailByFId" parameterType="java.util.Map">
-		update sys_itemsdetail set F_DeleteMark  = 1,F_DeleteUserId =#{F_DeleteUserId,jdbcType=VARCHAR} ,F_DeleteTime =#{F_DeleteTime,jdbcType=TIMESTAMP} 
-		where F_Id=#{itemsId,jdbcType=VARCHAR}
+		update sys_itemsdetail
+		set deleteMark  = 1,deleteUserId =#{deleteUserId,jdbcType=VARCHAR} ,
+		deleteTime =#{deleteTime,jdbcType=TIMESTAMP}
+		where id=#{itemsId,jdbcType=VARCHAR}
   </update>
   
    <select id="queryOneByFId" resultMap="BaseResultMap" parameterType="java.util.Map" >
     select 
     <include refid="Base_Column_List" />
-    from sys_itemsdetail where F_DeleteMark = 0 and  F_Id= #{keyword,jdbcType=VARCHAR} 
+    from sys_itemsdetail where deleteMark = 0 and  F_Id= #{keyword,jdbcType=VARCHAR}
   </select> 
   
   <select id="queryAllData" resultMap="BaseResultMap" parameterType="java.util.Map" >
     select 
     <include refid="Base_Column_List" />
-    from sys_itemsdetail where F_DeleteMark = 0 
+    from sys_itemsdetail where deleteMark = 0
   </select> 
   
   <select id="queryMainRole" resultMap="BaseResultMap" parameterType="java.util.Map" >
-  	SELECT   d.F_Id, d.F_ItemId, d.F_ParentId, 
-      d.F_ItemCode, d.F_ItemName, d.F_SimpleSpelling, 
-      d.F_IsDefault, d.F_Layers, d.F_SortCode, 
-      d.F_DeleteMark, d.F_EnabledMark, d.F_Description, 
-      d.F_CreatorTime, d.F_CreatorUserId, d.F_LastModifyTime, 
-     d.F_LastModifyUserId, d.F_DeleteTime, d.F_DeleteUserId
+  	SELECT   d.id, d.itemId, d.parentId,
+      d.itemCode, d.itemName, d.simpleSpelling,
+      d.isDefault, d.layers, d.sortCode,
+      d.deleteMark, d.enabledMark, d.description,
+      d.creatorTime, d.creatorUserId, d.lastModifyTime,
+     d.lastModifyUserId, d.deleteTime, d.deleteUserId
 	
-	FROM   sys_itemsdetail d INNER  JOIN sys_Items i ON i.F_Id = d.F_ItemId
-		WHERE   1 = 1 AND i.F_EnCode = 'RoleType' AND d.F_EnabledMark = 1 AND d.F_DeleteMark = 0
-	ORDER BY d.F_SortCode ASC
+	FROM   sys_itemsdetail d INNER  JOIN sys_Items i ON i.id = d.itemId
+		WHERE   1 = 1 AND i.enCode = 'RoleType' AND d.enabledMark = 1 AND d.deleteMark = 0
+	ORDER BY d.sortCode ASC
   </select> 
   
   
@@ -68,9 +68,9 @@
  	<include refid="Base_Column_List" />
     from sys_itemsdetail 
     <where>
-    	F_DeleteMark = 0 and F_ItemId = #{itemId,jdbcType=VARCHAR}
+    	deleteMark = 0 and itemId = #{itemId,jdbcType=VARCHAR}
     	<if test="keyword != null and keyword !='' ">
-				 and (F_ItemName like ('%'+#{keyword}+'%') or F_ItemCode like
+				 and (itemName like ('%'+#{keyword}+'%') or itemCode like
 				('%'+#{keyword}+'%') )
 		</if>
 		

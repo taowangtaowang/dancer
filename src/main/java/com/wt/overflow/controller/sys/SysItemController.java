@@ -140,7 +140,8 @@ public class SysItemController {
 			@RequestParam(value="fFullname", defaultValue="") String fFullname) throws Exception {
 		Map<String, Object> parameter = new HashMap<String, Object>();
 		//@RequestParam(value="fEnabledmark", defaultValue="1") Integer fEnabledmark,
-		Integer status = sysItemsService.updateItems(request,keyValue,fFullname,fEncode,fSortcode,(fEnabledmark==1?true:false),fParentid,fDescription);
+		Integer status = sysItemsService.updateItems(request,keyValue,fFullname,fEncode,fSortcode,
+				fEnabledmark,fParentid,fDescription);
 		if(status>0){
 			parameter.put("state", "success");
 			parameter.put("message", "操作成功");

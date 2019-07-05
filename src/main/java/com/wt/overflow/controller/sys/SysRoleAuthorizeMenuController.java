@@ -77,12 +77,13 @@ public class SysRoleAuthorizeMenuController {
 			@RequestParam(value="fEncode", defaultValue="") String F_EnCode,
 			@RequestParam(value="fType", defaultValue="") String F_Type,
 			@RequestParam(value="fSortcode", defaultValue="1") Integer F_SortCode,
-			@RequestParam(value="fAllowddit", defaultValue="false") Boolean F_AllowEdit,
-			@RequestParam(value="fAllowDelete", defaultValue="false") Boolean F_AllowDelete,
-			@RequestParam(value="fEnabledmark", defaultValue="false") Boolean F_EnabledMark,
+			@RequestParam(value="fAllowddit", defaultValue="0") int F_AllowEdit,
+			@RequestParam(value="fAllowDelete", defaultValue="0") int F_AllowDelete,
+			@RequestParam(value="fEnabledmark", defaultValue="0") int F_EnabledMark,
 			@RequestParam(value="fDescription", defaultValue="") String F_Description,
 			@RequestParam(value="permissionIds", defaultValue="") String permissionIds) throws Exception {
 		return sysRoleAuthorizeMenuService.updateSysRoleAuthorizeMenu(request,
-				keyValue,F_OrganizeId,F_FullName,F_EnCode,F_Type,F_SortCode,F_AllowEdit,F_AllowDelete,F_EnabledMark,F_Description,permissionIds);
+				keyValue,F_OrganizeId,F_FullName,F_EnCode,F_Type,F_SortCode,
+				F_AllowEdit,F_AllowDelete,F_EnabledMark,F_Description,permissionIds);
 	}
 }

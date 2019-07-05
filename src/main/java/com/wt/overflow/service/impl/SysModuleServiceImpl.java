@@ -10,9 +10,7 @@ import com.wt.overflow.service.SysModuleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 菜单相关
@@ -30,22 +28,22 @@ public class SysModuleServiceImpl implements SysModuleService {
 
 	public SysModule selectByPrimaryKey(String fId) {
 		SysModule sysModule = sysModuleMapper.selectByPrimaryKey(fId);
-		if(sysModule.getfLastmodifyuserid()!=null&&!(sysModule.getfLastmodifyuserid().equals(""))){
-			SysUser sysUser =sysUserMapper.queryOneBySysUserId(sysModule.getfLastmodifyuserid());
+		if(sysModule.getLastmodifyuserid()!=null&&!(sysModule.getLastmodifyuserid().equals(""))){
+			SysUser sysUser =sysUserMapper.queryOneBySysUserId(sysModule.getLastmodifyuserid());
 			if(sysUser!=null){
-				sysModule.setfLastmodifyuserid(sysUser.getfRealname());
+				sysModule.setLastmodifyuserid(sysUser.getRealname());
 			}else{
-				sysModule.setfLastmodifyuserid("无");
+				sysModule.setLastmodifyuserid("无");
 			}
-		}else{sysModule.setfLastmodifyuserid("无");}
-		if(sysModule.getfCreatoruserid()!=null&&!(sysModule.getfCreatoruserid().equals(""))){
-			SysUser sysUser =sysUserMapper.queryOneBySysUserId(sysModule.getfCreatoruserid());
+		}else{sysModule.setLastmodifyuserid("无");}
+		if(sysModule.getCreatoruserid()!=null&&!(sysModule.getCreatoruserid().equals(""))){
+			SysUser sysUser =sysUserMapper.queryOneBySysUserId(sysModule.getCreatoruserid());
 			if(sysUser!=null){
-				sysModule.setfCreatoruserid(sysUser.getfRealname());
+				sysModule.setCreatoruserid(sysUser.getRealname());
 			}else{
-				sysModule.setfCreatoruserid("无");
+				sysModule.setCreatoruserid("无");
 			}
-		}else{sysModule.setfCreatoruserid("无");}
+		}else{sysModule.setCreatoruserid("无");}
 		return sysModule;
 	
 		
@@ -54,14 +52,14 @@ public class SysModuleServiceImpl implements SysModuleService {
 	
 	public boolean insertSysModule(SysModule sysModule) {
 	   byte b =0;
-	   sysModule.setfDeletemark(b);
+	   sysModule.setDeletemark(b);
 		return sysModuleMapper.insertModule(sysModule);
 	}
 
 	
 	public boolean deleteByModuleKey(SysModule sysModule) {
 		byte b =1;
-		sysModule.setfDeletemark(b);
+		sysModule.setDeletemark(b);
 		return sysModuleMapper.deleteByModuleKey(sysModule);
 	}
 

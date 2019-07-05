@@ -19,20 +19,47 @@
         <property name="driverClassName" value="${jdbc.driverClassName}" />  
 	</bean>
 
-	<!-- 配置mybatisSqlSessionFactoryBean -->
+
+	<bean id="bmsSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="plugins">
+			<array>
+				<bean class="com.github.pagehelper.PageInterceptor">
+					<property name="properties">
+						<value>helperDialect=mysql</value>
+					</property>
+				</bean>
+			</array>
+		</property>
+	</bean>
+
+	<bean id="bmsTk" class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.wt.overflow.dao"/>
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+		<property name="properties">
+			<value>
+				mappers=tk.mybatis.mapper.common.Mapper
+			</value>
+		</property>
+	</bean>
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="mapperLocations" value="classpath:mapper/*.xml" />
 	</bean>
-	<!-- 配置mybatis mapper接口 -->
+	<!--&lt;!&ndash; 配置mybatisSqlSessionFactoryBean &ndash;&gt;
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="mapperLocations" value="classpath:mapper/*.xml" />
+	</bean>
+	&lt;!&ndash; 配置mybatis mapper接口 &ndash;&gt;
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="basePackage" value="com.wt.overflow.dao" />
 	</bean>
 
-	<!-- 配置事务管理器 -->
+	&lt;!&ndash; 配置事务管理器 &ndash;&gt;
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
-	</bean>
+	</bean>-->
 
 </beans>

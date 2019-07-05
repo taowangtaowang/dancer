@@ -3,83 +3,93 @@ package com.wt.overflow.bean;
 import java.util.Date;
 
 public class SysRoleauthorize {
-    private String fId;
+    private String id;
 
-    private Integer fItemtype;
+    private int itemtype;
 
-    private String fItemid;
+    private String itemid;
 
-    private Integer fObjecttype;
+    private int objecttype;
 
-    private String fObjectid;
+    private String objectid;
 
-    private Integer fSortcode;
+    private int sortcode;
 
-    private Date fCreatortime;
+    private Date creatortime;
 
-    private String fCreatoruserid;
+    private String creatoruserid;
 
-    public String getfId() {
-        return fId;
+    private int deletemark;
+
+    public String getId() {
+        return id;
     }
 
-    public void setfId(String fId) {
-        this.fId = fId == null ? null : fId.trim();
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public Integer getfItemtype() {
-        return fItemtype;
+    public int getItemtype() {
+        return itemtype;
     }
 
-    public void setfItemtype(Integer fItemtype) {
-        this.fItemtype = fItemtype;
+    public void setItemtype(int itemtype) {
+        this.itemtype = itemtype;
     }
 
-    public String getfItemid() {
-        return fItemid;
+    public String getItemid() {
+        return itemid;
     }
 
-    public void setfItemid(String fItemid) {
-        this.fItemid = fItemid == null ? null : fItemid.trim();
+    public void setItemid(String itemid) {
+        this.itemid = itemid;
     }
 
-    public Integer getfObjecttype() {
-        return fObjecttype;
+    public int getObjecttype() {
+        return objecttype;
     }
 
-    public void setfObjecttype(Integer fObjecttype) {
-        this.fObjecttype = fObjecttype;
+    public void setObjecttype(int objecttype) {
+        this.objecttype = objecttype;
     }
 
-    public String getfObjectid() {
-        return fObjectid;
+    public String getObjectid() {
+        return objectid;
     }
 
-    public void setfObjectid(String fObjectid) {
-        this.fObjectid = fObjectid == null ? null : fObjectid.trim();
+    public void setObjectid(String objectid) {
+        this.objectid = objectid;
     }
 
-    public Integer getfSortcode() {
-        return fSortcode;
+    public int getSortcode() {
+        return sortcode;
     }
 
-    public void setfSortcode(Integer fSortcode) {
-        this.fSortcode = fSortcode;
+    public void setSortcode(int sortcode) {
+        this.sortcode = sortcode;
     }
 
-    public Date getfCreatortime() {
-        return fCreatortime;
+    public Date getCreatortime() {
+        return creatortime;
     }
 
-    public void setfCreatortime(Date fCreatortime) {
-        this.fCreatortime = fCreatortime;
+    public void setCreatortime(Date creatortime) {
+        this.creatortime = creatortime;
     }
 
-    public String getfCreatoruserid() {
-        return fCreatoruserid;
+    public String getCreatoruserid() {
+        return creatoruserid;
     }
 
-    public void setfCreatoruserid(String fCreatoruserid) {
-        this.fCreatoruserid = fCreatoruserid == null ? null : fCreatoruserid.trim();
+    public void setCreatoruserid(String creatoruserid) {
+        this.creatoruserid = creatoruserid;
+    }
+
+    public int getDeletemark() {
+        return deletemark;
+    }
+
+    public void setDeletemark(int deletemark) {
+        this.deletemark = deletemark;
     }
 }

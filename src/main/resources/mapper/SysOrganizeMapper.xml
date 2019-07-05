@@ -2,45 +2,40 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.wt.overflow.dao.SysOrganizeMapper" >
   <resultMap id="BaseResultMap" type="com.wt.overflow.bean.SysOrganize" >
-    <result column="F_Id" property="fId" jdbcType="VARCHAR" />
-    <result column="F_ParentId" property="fParentid" jdbcType="VARCHAR" />
-    <result column="F_Layers" property="fLayers" jdbcType="INTEGER" />
-    <result column="F_EnCode" property="fEncode" jdbcType="VARCHAR" />
-    <result column="F_FullName" property="fFullname" jdbcType="VARCHAR" />
-    <result column="F_ShortName" property="fShortname" jdbcType="VARCHAR" />
-    <result column="F_CategoryId" property="fCategoryid" jdbcType="VARCHAR" />
-    <result column="F_ManagerId" property="fManagerid" jdbcType="VARCHAR" />
-    <result column="F_TelePhone" property="fTelephone" jdbcType="VARCHAR" />
-    <result column="F_MobilePhone" property="fMobilephone" jdbcType="VARCHAR" />
-    <result column="F_WeChat" property="fWechat" jdbcType="VARCHAR" />
-    <result column="F_Fax" property="fFax" jdbcType="VARCHAR" />
-    <result column="F_Email" property="fEmail" jdbcType="VARCHAR" />
-    <result column="F_AreaId" property="fAreaid" jdbcType="VARCHAR" />
-    <result column="F_Address" property="fAddress" jdbcType="VARCHAR" />
-    <result column="F_AllowEdit" property="fAllowedit" jdbcType="BIT" />
-    <result column="F_AllowDelete" property="fAllowdelete" jdbcType="BIT" />
-    <result column="F_SortCode" property="fSortcode" jdbcType="INTEGER" />
-    <result column="F_DeleteMark" property="fDeletemark" jdbcType="BIT" />
-    <result column="F_EnabledMark" property="fEnabledmark" jdbcType="BIT" />
-    <result column="F_Description" property="fDescription" jdbcType="VARCHAR" />
-    <result column="F_CreatorTime" property="fCreatortime" jdbcType="TIMESTAMP" />
-    <result column="F_CreatorUserId" property="fCreatoruserid" jdbcType="VARCHAR" />
-    <result column="F_LastModifyTime" property="fLastmodifytime" jdbcType="TIMESTAMP" />
-    <result column="F_LastModifyUserId" property="fLastmodifyuserid" jdbcType="VARCHAR" />
-    <result column="F_DeleteTime" property="fDeletetime" jdbcType="TIMESTAMP" />
-    <result column="F_DeleteUserId" property="fDeleteuserid" jdbcType="VARCHAR" />
+      <id column="id" jdbcType="VARCHAR" property="id" />
+      <result column="parentId" jdbcType="VARCHAR" property="parentid" />
+      <result column="layers" jdbcType="INTEGER" property="layers" />
+      <result column="enCode" jdbcType="VARCHAR" property="encode" />
+      <result column="fullName" jdbcType="VARCHAR" property="fullname" />
+      <result column="shortName" jdbcType="VARCHAR" property="shortname" />
+      <result column="categoryId" jdbcType="VARCHAR" property="categoryid" />
+      <result column="managerId" jdbcType="VARCHAR" property="managerid" />
+      <result column="telePhone" jdbcType="VARCHAR" property="telephone" />
+      <result column="mobilePhone" jdbcType="VARCHAR" property="mobilephone" />
+      <result column="weChat" jdbcType="VARCHAR" property="wechat" />
+      <result column="fax" jdbcType="VARCHAR" property="fax" />
+      <result column="email" jdbcType="VARCHAR" property="email" />
+      <result column="areaId" jdbcType="VARCHAR" property="areaid" />
+      <result column="address" jdbcType="VARCHAR" property="address" />
+      <result column="allowEdit" jdbcType="INTEGER" property="allowedit" />
+      <result column="allowDelete" jdbcType="INTEGER" property="allowdelete" />
+      <result column="sortCode" jdbcType="INTEGER" property="sortcode" />
+      <result column="deleteMark" jdbcType="INTEGER" property="deletemark" />
+      <result column="enabledMark" jdbcType="INTEGER" property="enabledmark" />
+      <result column="description" jdbcType="VARCHAR" property="description" />
+      <result column="creatorTime" jdbcType="TIMESTAMP" property="creatortime" />
+      <result column="creatorUserId" jdbcType="VARCHAR" property="creatoruserid" />
+      <result column="lastModifyTime" jdbcType="TIMESTAMP" property="lastmodifytime" />
+      <result column="lastModifyUserId" jdbcType="VARCHAR" property="lastmodifyuserid" />
+      <result column="deleteTime" jdbcType="TIMESTAMP" property="deletetime" />
+      <result column="deleteUserId" jdbcType="VARCHAR" property="deleteuserid" />
   </resultMap>
   
   <sql id="Base_Column_List" >
-      F_Id, F_ParentId, F_Layers, 
-      F_EnCode, F_FullName, F_ShortName, 
-      F_CategoryId, F_ManagerId, F_TelePhone, 
-      F_MobilePhone, F_WeChat, F_Fax, 
-      F_Email, F_AreaId, F_Address, 
-      F_AllowEdit, F_AllowDelete, F_SortCode, 
-      F_DeleteMark, F_EnabledMark, F_Description, 
-      F_CreatorTime, F_CreatorUserId, F_LastModifyTime, 
-      F_LastModifyUserId, F_DeleteTime, F_DeleteUserId
+      id, parentId, layers, enCode, fullName, shortName, categoryId, managerId, telePhone,
+    mobilePhone, weChat, fax, email, areaId, address, allowEdit, allowDelete, sortCode,
+    deleteMark, enabledMark, description, creatorTime, creatorUserId, lastModifyTime,
+    lastModifyUserId, deleteTime, deleteUserId
   </sql>
   
   <select id="queryAllData" resultMap="BaseResultMap" parameterType="java.util.Map" >

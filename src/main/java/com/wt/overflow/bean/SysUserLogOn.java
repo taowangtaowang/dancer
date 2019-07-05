@@ -3,203 +3,203 @@ package com.wt.overflow.bean;
 import java.util.Date;
 
 public class SysUserLogOn {
-    private String fId;
+    private String id;
 
-    private String fUserid;
+    private String userid;
 
-    private String fUserpassword;
+    private String userpassword;
 
-    private String fUsersecretkey;
+    private String usersecretkey;
 
-    private Date fAllowstarttime;
+    private Date allowstarttime;
 
-    private Date fAllowendtime;
+    private Date allowendtime;
 
-    private Date fLockstartdate;
+    private Date lockstartdate;
 
-    private Date fLockenddate;
+    private Date lockenddate;
 
-    private Date fFirstvisittime;
+    private Date firstvisittime;
 
-    private Date fPreviousvisittime;
+    private Date previousvisittime;
 
-    private Date fLastvisittime;
+    private Date lastvisittime;
 
-    private Date fChangepassworddate;
+    private Date changepassworddate;
 
-    private Boolean fMultiuserlogin;
+    private Integer multiuserlogin;
 
-    private Integer fLogoncount;
+    private Integer logoncount;
 
-    private Boolean fUseronline;
+    private Integer useronline;
 
-    private String fQuestion;
+    private String question;
 
-    private String fAnswerquestion;
+    private String answerquestion;
 
-    private Boolean fCheckipaddress;
+    private Integer checkipaddress;
 
-    private String fLanguage;
+    private String language;
 
-    private String fTheme;
+    private String theme;
 
-    public String getfId() {
-        return fId;
+    public String getId() {
+        return id;
     }
 
-    public void setfId(String fId) {
-        this.fId = fId == null ? null : fId.trim();
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getfUserid() {
-        return fUserid;
+    public String getUserid() {
+        return userid;
     }
 
-    public void setfUserid(String fUserid) {
-        this.fUserid = fUserid == null ? null : fUserid.trim();
+    public void setUserid(String userid) {
+        this.userid = userid;
     }
 
-    public String getfUserpassword() {
-        return fUserpassword;
+    public String getUserpassword() {
+        return userpassword;
     }
 
-    public void setfUserpassword(String fUserpassword) {
-        this.fUserpassword = fUserpassword == null ? null : fUserpassword.trim();
+    public void setUserpassword(String userpassword) {
+        this.userpassword = userpassword;
     }
 
-    public String getfUsersecretkey() {
-        return fUsersecretkey;
+    public String getUsersecretkey() {
+        return usersecretkey;
     }
 
-    public void setfUsersecretkey(String fUsersecretkey) {
-        this.fUsersecretkey = fUsersecretkey == null ? null : fUsersecretkey.trim();
+    public void setUsersecretkey(String usersecretkey) {
+        this.usersecretkey = usersecretkey;
     }
 
-    public Date getfAllowstarttime() {
-        return fAllowstarttime;
+    public Date getAllowstarttime() {
+        return allowstarttime;
     }
 
-    public void setfAllowstarttime(Date fAllowstarttime) {
-        this.fAllowstarttime = fAllowstarttime;
+    public void setAllowstarttime(Date allowstarttime) {
+        this.allowstarttime = allowstarttime;
     }
 
-    public Date getfAllowendtime() {
-        return fAllowendtime;
+    public Date getAllowendtime() {
+        return allowendtime;
     }
 
-    public void setfAllowendtime(Date fAllowendtime) {
-        this.fAllowendtime = fAllowendtime;
+    public void setAllowendtime(Date allowendtime) {
+        this.allowendtime = allowendtime;
     }
 
-    public Date getfLockstartdate() {
-        return fLockstartdate;
+    public Date getLockstartdate() {
+        return lockstartdate;
     }
 
-    public void setfLockstartdate(Date fLockstartdate) {
-        this.fLockstartdate = fLockstartdate;
+    public void setLockstartdate(Date lockstartdate) {
+        this.lockstartdate = lockstartdate;
     }
 
-    public Date getfLockenddate() {
-        return fLockenddate;
+    public Date getLockenddate() {
+        return lockenddate;
     }
 
-    public void setfLockenddate(Date fLockenddate) {
-        this.fLockenddate = fLockenddate;
+    public void setLockenddate(Date lockenddate) {
+        this.lockenddate = lockenddate;
     }
 
-    public Date getfFirstvisittime() {
-        return fFirstvisittime;
+    public Date getFirstvisittime() {
+        return firstvisittime;
     }
 
-    public void setfFirstvisittime(Date fFirstvisittime) {
-        this.fFirstvisittime = fFirstvisittime;
+    public void setFirstvisittime(Date firstvisittime) {
+        this.firstvisittime = firstvisittime;
     }
 
-    public Date getfPreviousvisittime() {
-        return fPreviousvisittime;
+    public Date getPreviousvisittime() {
+        return previousvisittime;
     }
 
-    public void setfPreviousvisittime(Date fPreviousvisittime) {
-        this.fPreviousvisittime = fPreviousvisittime;
+    public void setPreviousvisittime(Date previousvisittime) {
+        this.previousvisittime = previousvisittime;
     }
 
-    public Date getfLastvisittime() {
-        return fLastvisittime;
+    public Date getLastvisittime() {
+        return lastvisittime;
     }
 
-    public void setfLastvisittime(Date fLastvisittime) {
-        this.fLastvisittime = fLastvisittime;
+    public void setLastvisittime(Date lastvisittime) {
+        this.lastvisittime = lastvisittime;
     }
 
-    public Date getfChangepassworddate() {
-        return fChangepassworddate;
+    public Date getChangepassworddate() {
+        return changepassworddate;
     }
 
-    public void setfChangepassworddate(Date fChangepassworddate) {
-        this.fChangepassworddate = fChangepassworddate;
+    public void setChangepassworddate(Date changepassworddate) {
+        this.changepassworddate = changepassworddate;
     }
 
-    public Boolean getfMultiuserlogin() {
-        return fMultiuserlogin;
+    public Integer getMultiuserlogin() {
+        return multiuserlogin;
     }
 
-    public void setfMultiuserlogin(Boolean fMultiuserlogin) {
-        this.fMultiuserlogin = fMultiuserlogin;
+    public void setMultiuserlogin(Integer multiuserlogin) {
+        this.multiuserlogin = multiuserlogin;
     }
 
-    public Integer getfLogoncount() {
-        return fLogoncount;
+    public Integer getLogoncount() {
+        return logoncount;
     }
 
-    public void setfLogoncount(Integer fLogoncount) {
-        this.fLogoncount = fLogoncount;
+    public void setLogoncount(Integer logoncount) {
+        this.logoncount = logoncount;
     }
 
-    public Boolean getfUseronline() {
-        return fUseronline;
+    public Integer getUseronline() {
+        return useronline;
     }
 
-    public void setfUseronline(Boolean fUseronline) {
-        this.fUseronline = fUseronline;
+    public void setUseronline(Integer useronline) {
+        this.useronline = useronline;
     }
 
-    public String getfQuestion() {
-        return fQuestion;
+    public String getQuestion() {
+        return question;
     }
 
-    public void setfQuestion(String fQuestion) {
-        this.fQuestion = fQuestion == null ? null : fQuestion.trim();
+    public void setQuestion(String question) {
+        this.question = question;
     }
 
-    public String getfAnswerquestion() {
-        return fAnswerquestion;
+    public String getAnswerquestion() {
+        return answerquestion;
     }
 
-    public void setfAnswerquestion(String fAnswerquestion) {
-        this.fAnswerquestion = fAnswerquestion == null ? null : fAnswerquestion.trim();
+    public void setAnswerquestion(String answerquestion) {
+        this.answerquestion = answerquestion;
     }
 
-    public Boolean getfCheckipaddress() {
-        return fCheckipaddress;
+    public Integer getCheckipaddress() {
+        return checkipaddress;
     }
 
-    public void setfCheckipaddress(Boolean fCheckipaddress) {
-        this.fCheckipaddress = fCheckipaddress;
+    public void setCheckipaddress(Integer checkipaddress) {
+        this.checkipaddress = checkipaddress;
     }
 
-    public String getfLanguage() {
-        return fLanguage;
+    public String getLanguage() {
+        return language;
     }
 
-    public void setfLanguage(String fLanguage) {
-        this.fLanguage = fLanguage == null ? null : fLanguage.trim();
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
-    public String getfTheme() {
-        return fTheme;
+    public String getTheme() {
+        return theme;
     }
 
-    public void setfTheme(String fTheme) {
-        this.fTheme = fTheme == null ? null : fTheme.trim();
+    public void setTheme(String theme) {
+        this.theme = theme;
     }
 }

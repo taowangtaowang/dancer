@@ -43,11 +43,11 @@ public class SysModuleController {
 			List<SysModules> sysModules = sysModuleService.findListParentid(nodeid);
 			for (SysModules Modules : sysModules) {
 				Modules.ModulesList();
-				SysModule sas = sysModuleService.SelectByfParentid(Modules.getfId());
+				SysModule sas = sysModuleService.SelectByfParentid(Modules.getId());
 				if (null == sas) {
-					Modules.setIsLeaf(true);
+					//Modules.setIsLeaf(1);
 				} else {
-					Modules.setIsLeaf(false);
+					//Modules.setIsLeaf(0);
 				}
 			}
 			data.put("rows", sysModules);
@@ -55,10 +55,10 @@ public class SysModuleController {
 			List<SysModules> arealist = sysModuleService.findListS(fFullname);
 			for (SysModules sysModules : arealist) {
 				sysModules.ModulesList();
-				if (null == fFullname || "" == fFullname)
-					sysModules.setIsLeaf(false);
-				else {
-					sysModules.setIsLeaf(true);
+				if (null == fFullname || "" == fFullname) {
+					//sysModules.setIsLeaf(false);
+				}else {
+					//sysModules.setIsLeaf(true);
 					sysModules.setExpanded(true);
 					sysModules.setLoaded(true);
 				}
@@ -96,10 +96,10 @@ public class SysModuleController {
 	@RequestMapping(value = "/insertModule")
 	@ResponseBody
 	public Object insertModule(HttpServletRequest request, SysModule sysModule) {
-		sysModule.setfId(UUIDUtil.getUUID());
-		sysModule.setfCreatortime(new Date());
-		String fParentid = sysModule.getfParentid();
-		Integer fLayers = sysModule.getfLayers();
+		sysModule.setId(UUIDUtil.getUUID());
+		sysModule.setCreatortime(new Date());
+		String fParentid = sysModule.getParentid();
+		Integer fLayers = sysModule.getLayers();
 
 		if("0".equals(fParentid)){
 			boolean datas = sysModuleService.insertSysModule(sysModule);
@@ -120,11 +120,11 @@ public class SysModuleController {
 
 		if(!"0".equals(fParentid)){
 			SysModule sysModu = sysModuleService.selectByPrimaryKey(fParentid);
-			sysModu.setfLayers(1);
+			sysModu.setLayers(1);
 			boolean datas = sysModuleService.updateByPrimaryKeySelective(sysModu);
 			Map<String, Object> data=new HashMap<String,Object>();
 		}
-		sysModule.setfLayers(2);
+		sysModule.setLayers(2);
 		boolean datas = sysModuleService.insertSysModule(sysModule);
 		Map<String, Object> data=new HashMap<String,Object>();
 		if(datas) {
@@ -150,8 +150,8 @@ public class SysModuleController {
 	@ResponseBody
 	public Object deleComplaint(SysModule sysModule) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		String id = sysModule.getfId();
-		sysModule.setfDeletetime(new Date());
+		String id = sysModule.getId();
+		sysModule.setDeletetime(new Date());
 		boolean updataByPrimaryKey = false;
 		if (null != id) {
 			updataByPrimaryKey = sysModuleService.deleteByModuleKey(sysModule);
@@ -177,9 +177,9 @@ public class SysModuleController {
 	@RequestMapping("updataModule")
 	@ResponseBody
 	public Object updataModule(SysModule sysModule) {
-		String fParentid = sysModule.getfParentid();
+		String fParentid = sysModule.getParentid();
 		Map<String, Object> map = new HashMap<String, Object>();
-		String fId = sysModule.getfId();
+		String fId = sysModule.getId();
 		boolean updataByPrimaryKey = false;
 		if (null != fId) {
 			updataByPrimaryKey = sysModuleService.updateByPrimaryKeySelective(sysModule);
