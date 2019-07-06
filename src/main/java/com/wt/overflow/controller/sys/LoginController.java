@@ -1,6 +1,7 @@
 package com.wt.overflow.controller.sys;
 
 import com.wt.overflow.bean.SysUser;
+import com.wt.overflow.exception.ResultUtil;
 import com.wt.overflow.service.LoginService;
 import com.wt.overflow.util.CodeUtil;
 import com.wt.overflow.util.MD5Util;
@@ -43,7 +44,7 @@ public class LoginController {
 	 */
 	@RequestMapping("verifyUser")
 	@ResponseBody
-	public Map<String, Object> verifyUser(HttpServletRequest request, HttpServletResponse response) {
+	public ResultUtil verifyUser(HttpServletRequest request, HttpServletResponse response) {
 		Map<String, Object> parameter = new HashMap<String, Object>();
 		String loginname = request.getParameter("username");
 		String password = request.getParameter("password");
@@ -65,33 +66,22 @@ public class LoginController {
 		if (Strings.isNotEmpty(loginname) && Strings.isNotEmpty(password)) {
 			List<SysUser> sysUserlist = loginService.queryByLoginName(loginname);
 			if (sysUserlist.isEmpty()) {
-				parameter.put("state", "error");
-				parameter.put("message","当前账号不存在");
-				return parameter;
+				return ResultUtil.error("当前账号不存在");
 			}
 			if(sysUserlist.get(0).getEnabledmark()==0){
-				parameter.put("state", "error");
-				parameter.put("message", "当前账号已被禁用");
-				return parameter;
+				return ResultUtil.error("当前账号已被禁用");
 			}
 			for (SysUser sysUser : sysUserlist) {// 账号唯一 F_Account
 				if (MD5Util.MD5(password).equals(sysUser.getUserPassword().toUpperCase())) {// 登录成功
 					// 写入用户登录日志。
 					//登录用户写进session
 					request.getSession().setAttribute("loginUser",sysUser);
-					parameter.put("state", "success");
-					parameter.put("message", "登录成功");
-					return parameter;
+					return ResultUtil.ok("登录成功");
 				}
 			}
-			parameter.put("state", "error");
-			parameter.put("message", "账号或者密码错误，请重新输入");
-			return parameter;
+			return ResultUtil.error("账号或者密码错误，请重新输入");
 		}
-
-		parameter.put("state", "error");
-		parameter.put("message", "账号或者密码输入有误");
-		return parameter;
+		return ResultUtil.error("账号或者密码输入有误");
 	}
 
 	/**

@@ -3,6 +3,10 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
+	<!--<typeHandlers>
+		<typeHandler handler="com.wt.overflow.interceptor.WtStringTypeHandler"
+					 javaType="java.lang.String" jdbcType="VARCHAR"/>
+	</typeHandlers>-->
 	<bean id="configProperties"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
@@ -31,6 +35,7 @@
 				</bean>
 			</array>
 		</property>
+
 	</bean>
 
 	<bean id="bmsTk" class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
@@ -45,21 +50,12 @@
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="mapperLocations" value="classpath:mapper/*.xml" />
-	</bean>
-	<!--&lt;!&ndash; 配置mybatisSqlSessionFactoryBean &ndash;&gt;
-	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSource" />
-		<property name="mapperLocations" value="classpath:mapper/*.xml" />
-	</bean>
-	&lt;!&ndash; 配置mybatis mapper接口 &ndash;&gt;
-	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.wt.overflow.dao" />
+		<!--自定义typeHandlers  可对调用后端逻辑的请求参数进行预处理-->
+		<property name="typeHandlers" ref="typeHandlers">
+		</property>
 	</bean>
 
-	&lt;!&ndash; 配置事务管理器 &ndash;&gt;
-	<bean id="transactionManager"
-		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource" />
-	</bean>-->
+	<bean id="typeHandlers" class="com.wt.overflow.interceptor.WtStringTypeHandler">
+	</bean>
 
 </beans>

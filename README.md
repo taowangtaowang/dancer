@@ -20,7 +20,7 @@ spark统计（mr统计）
 
 1  tkmybatis 登录 20190701 √
 
-2  自定义异常 swagger quartz (https://blog.csdn.net/xinpz/article/details/82344048)
+2  日志 自定义异常 swagger quartz (https://blog.csdn.net/xinpz/article/details/82344048)
 
 3  自定义原生内存缓存 利用原生ConcurrentMap<String, Future<User>>缓存
   

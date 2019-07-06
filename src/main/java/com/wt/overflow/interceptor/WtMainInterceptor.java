@@ -34,7 +34,7 @@ public class WtMainInterceptor implements Interceptor {
 	// 初始化属性
 	public void setProperties(Properties properties) {
 		// TODO Auto-generated method stub
-
+		System.out.println("自定义intceptor这里是初始化数据");
 	}
 
 }

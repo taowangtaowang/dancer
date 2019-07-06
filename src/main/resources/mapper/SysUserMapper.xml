@@ -5,6 +5,7 @@
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="account" jdbcType="VARCHAR" property="account" />
     <result column="realName" jdbcType="VARCHAR" property="realname" />
+    <result column="realName" jdbcType="VARCHAR" property="realname"  typeHandler="com.wt.overflow.interceptor.WtStringTypeHandler" />
     <result column="nickName" jdbcType="VARCHAR" property="nickname" />
     <result column="headIcon" jdbcType="VARCHAR" property="headicon" />
     <result column="gender" jdbcType="INTEGER" property="gender" />
@@ -55,8 +56,7 @@
   <update id="updateSysUserHeadIcon" parameterType="java.util.Map" >
     	update  sys_user set  F_HeadIcon = #{headIcon,jdbcType=VARCHAR}   where F_Id = #{fId,jdbcType=VARCHAR}
   </update>
-  
-  <select id="queryUserByPage" resultMap="BaseResultMap" parameterType="java.util.Map" >
+  <select id="queryUserByPage" resultMap="BaseResultMap" parameterType="java.util.Map"  >
     select 
     <include refid="Base_Column_List" />
     from sys_user 
