@@ -17,8 +17,6 @@ import java.util.Map;
 
 /**
  * 角色相关
- * 
- * @author wangt
  *
  */
 @Controller
@@ -43,10 +41,6 @@ public class SysRoleController {
 	 *            排序方式【asc，desc】
 	 * @param keyword
 	 *            关键字查询（筛选F_FullName或F_EnCode字段）
-	 * @return
-	 * @throws
-	 * @name wangt
-	 * @Date 2018年4月8日 下午3:46:50
 	 */
 	@RequestMapping("queryRoleByPage")
 	@ResponseBody
@@ -64,9 +58,6 @@ public class SysRoleController {
 	 * @param response
 	 *
 	 * @return
-	 * @throws Exception
-	 * @name wangt	
-	 * @Date 2018年4月9日 下午3:57:18
 	 */
 	@RequestMapping("deleteRole")
 	@ResponseBody
@@ -91,9 +82,6 @@ public class SysRoleController {
 	 * @param response
 	 *
 	 * @return
-	 * @throws Exception
-	 * @name wangt	
-	 * @Date 2018年4月9日 下午3:57:18
 	 */
 	@RequestMapping("queryOneByRoleId")
 	@ResponseBody
@@ -112,11 +100,7 @@ public class SysRoleController {
 	 * @param page
 	 * @param sidx
 	 * @param sord 
-	 * @param keyword
 	 * @return
-	 * @throws Exception
-	 * @name wangt	
-	 * @Date 2018年4月9日 下午4:58:12
 	 */
 	@RequestMapping("queryAllDuty")
 	@ResponseBody
@@ -138,9 +122,6 @@ public class SysRoleController {
 	 * @param sysRole
 	 * @param keyword
 	 * @return
-	 * @throws Exception
-	 * @name wangt	
-	 * @Date 2018年4月9日 下午5:21:32
 	 */
 	@RequestMapping("updateDuty")
 	@ResponseBody

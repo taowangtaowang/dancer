@@ -14,8 +14,6 @@ import java.util.List;
 
 /**
  * 菜单相关
- * @author wangt
- *
  */
 @Service
 public class SysModuleServiceImpl implements SysModuleService {

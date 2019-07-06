@@ -16,8 +16,6 @@ import java.util.Map;
 
 /**
  * 登录初始化相关
- * @author wangt
- *
  */
 @Service
 public class LoginServiceImpl implements LoginService {

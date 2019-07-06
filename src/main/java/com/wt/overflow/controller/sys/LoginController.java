@@ -25,9 +25,6 @@ import java.util.Map;
 
 /**
  * 用户登录相关
- * 
- * @author wangt
- *
  */
 @Controller
 @RequestMapping(value = "login")
@@ -118,8 +115,6 @@ public class LoginController {
 	 * 将验证码写到登录页面
 	 * @param req
 	 * @param resp
-	 * @name wangt	
-	 * @Date 2018年4月8日 下午2:35:39
 	 */
 	@RequestMapping("getImage")
 	@ResponseBody

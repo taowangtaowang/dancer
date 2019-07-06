@@ -23,8 +23,6 @@ import java.util.Map;
 
 /**
  * 用户相关
- * @author wangt
- *
  */
 @Service
 public class SysUserServiceImpl implements SysUserService {
@@ -173,8 +171,6 @@ public class SysUserServiceImpl implements SysUserService {
 	 * @param request
 	 * @param keyValue
 	 * @return
-	 * @name wangt	
-	 * @Date 2018年4月10日 上午10:27:30
 	 */
 	
 	public Integer updateSysUserReset(HttpServletRequest request, SysUser sysUser, String keyValue) {

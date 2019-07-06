@@ -1,26 +1,12 @@
-总体计划:
-
-加缓存(原生ConcurrentMap<String, Future<User>>缓存 redis缓存)
-  
-消息中间件
-
-es
-
-k8s/docker
-
-数据库分库分表 mycat
-
-sql优化
-
-spark统计（mr统计）
+说明：
+    敲字母的过程中，免不了不停的学习，不停地忘记 该仓库作为记录我整理知识的过程
 
 版本迭代：springmvc——>dubbo——>springboot——>springcloud
 
 
+1  tkmybatis 登录 √
 
-1  tkmybatis 登录 20190701 √
-
-2  日志 自定义异常 swagger quartz (https://blog.csdn.net/xinpz/article/details/82344048)
+2  日志 自定义异常√ swagger quartz (https://blog.csdn.net/xinpz/article/details/82344048)
 
 3  自定义原生内存缓存 利用原生ConcurrentMap<String, Future<User>>缓存
   
@@ -43,3 +29,11 @@ spark统计（mr统计）
 框架迭代
 
 ssm——boot——cloud——dubbo
+
+
+
+
+
+该工程为借用别人的 精简而来，主要目的是针对各种小东西做一些测试 ：
+1 项目中有部分接口调用不通  是因为我把数据库字段全部改了一遍 但是html上的一些东西暂时不想改  
+2 后台架子 暂时不想动

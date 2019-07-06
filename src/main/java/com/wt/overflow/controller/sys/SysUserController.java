@@ -21,8 +21,6 @@ import java.util.Map;
 
 /**
  * 用户相关
- * @author wangt
- *
  */
 @Controller
 @RequestMapping(value = "sysUser")
@@ -54,8 +52,6 @@ public class SysUserController {
 	 * @param response
 	 * @param sysUser 新增或者修改用户
 	 * @return
-	 * @name wangt	
-	 * @Date 2018年4月10日 上午9:21:10
 	 */
 	@RequestMapping("updateSysUser")
 	@ResponseBody
@@ -119,9 +115,6 @@ public class SysUserController {
 	 * @param response
 	 * @param keyValue
 	 * @return
-	 * @throws Exception
-	 * @name wangt	
-	 * @Date 2018年4月10日 上午10:05:26
 	 */
 	@RequestMapping("updateSysUserEnabled")
 	@ResponseBody
@@ -146,9 +139,6 @@ public class SysUserController {
 	 * @param response
 	 * @param keyValue
 	 * @return
-	 * @throws Exception
-	 * @name wangt	
-	 * @Date 2018年4月10日 上午10:05:26
 	 */
 	@RequestMapping("updateSysUserReset")
 	@ResponseBody
@@ -173,9 +163,6 @@ public class SysUserController {
 	 * @param response
 	 * @param fId 用户主键
 	 * @return
-	 * @throws Exception
-	 * @name wangt	
-	 * @Date 2018年4月23日 下午4:37:46
 	 */
 	@RequestMapping("updateSysUserHeadIcon")
 	@ResponseBody
@@ -201,9 +188,6 @@ public class SysUserController {
 	 * @param request
 	 * @param response
 	 * @return
-	 * @throws Exception
-	 * @name wangt	
-	 * @Date 2018年5月30日 上午9:26:05
 	 */
 	@RequestMapping("querySysUserByOrganId")
 	@ResponseBody

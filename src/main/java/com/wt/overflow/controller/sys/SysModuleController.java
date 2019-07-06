@@ -18,8 +18,6 @@ import java.util.Map;
 
 /**
  * 系统菜单controller
- * 
- * @author pengshaokun
  *
  */
 @Controller

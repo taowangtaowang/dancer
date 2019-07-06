@@ -19,9 +19,6 @@ import java.util.Map;
 
 /**
  * 所属角色相关 1 角色 2 岗位
- * 
- * @author wangt
- *
  */
 @Service
 public class SysRoleServiceImpl implements SysRoleService {
@@ -45,9 +42,6 @@ public class SysRoleServiceImpl implements SysRoleService {
 	 * @param keyword
 	 *            关键字查询（筛选F_FullName或F_EnCode字段）
 	 * @return
-	 *
-	 * @name wangt
-	 * @Date 2018年4月8日 下午3:46:50
 	 */
 	
 	public Map<String, Object> queryRoleByPage(Integer rows, Integer currpage, String sidx, String sord, String keyword) {
@@ -92,9 +86,6 @@ public class SysRoleServiceImpl implements SysRoleService {
 	 * @param sord
 	 * @param keyword
 	 * @return
-	 * @throws Exception
-	 * @name wangt	
-	 * @Date 2018年4月9日 下午4:58:12
 	 */
 	
 	public List<Map<String, Object>> queryAllDuty(Integer rows, Integer currpage, String sidx, String sord, String keyword) {
@@ -139,8 +130,6 @@ public class SysRoleServiceImpl implements SysRoleService {
 	 * @param sysRole
 	 * @param keyword
 	 * @return
-	 * @name wangt	
-	 * @Date 2018年4月9日 下午5:25:26
 	 */
 	
 	public Map<String, Object> updateDuty(HttpServletRequest request,SysRole sysRole, String keyword) {

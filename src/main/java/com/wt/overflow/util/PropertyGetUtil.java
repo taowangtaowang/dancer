@@ -18,10 +18,6 @@ public class PropertyGetUtil {
 	 * 随意获取配置文件定义的 相关值s
 	 * @param parm 配置文件定义的key 
 	 * @param propertiename   配置文件名称
-	 * @return
-	 * @throws IOException
-	 * @name wangt	
-	 * @Date 2017年9月7日 上午10:29:48
 	 */
 	public  List<String> getProperties(String parm,String propertiename) throws IOException {
 		Properties pps = new Properties();

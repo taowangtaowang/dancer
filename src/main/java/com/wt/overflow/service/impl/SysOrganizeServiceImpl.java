@@ -16,7 +16,6 @@ import java.util.*;
 
 /**
  * 所属单位相关
- * @author wangt
  */
 @Service("sysOrganizeService")
 public class SysOrganizeServiceImpl implements SysOrganizeService {

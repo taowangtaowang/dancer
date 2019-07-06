@@ -3,9 +3,6 @@ package com.wt.overflow.exception;
 /**
  * 
  * @Desc: 自定义异常
- * @author Mr Du
- * @createTime 2018年2月25日
- * @version: v1.0
  */
 public class RRException extends RuntimeException {
 	private static final long serialVersionUID = 1L;

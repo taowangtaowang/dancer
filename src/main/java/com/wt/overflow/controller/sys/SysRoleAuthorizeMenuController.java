@@ -15,8 +15,6 @@ import java.util.Map;
 
 /**
  * 权限相关
- * @author wangt
- *
  */
 @Controller
 @RequestMapping(value = "authorizeMenu")
@@ -34,9 +32,6 @@ public class SysRoleAuthorizeMenuController {
 	 * @param response
 	 * @param roleId 为“” 表示所有无权限 ，反之被选中
 	 * @return
-	 * @throws Exception
-	 * @name wangt	
-	 * @Date 2018年4月9日 上午10:51:29
 	 */
 	@RequestMapping("queryAllData")
 	@ResponseBody
@@ -64,9 +59,6 @@ public class SysRoleAuthorizeMenuController {
 	 * @param F_Description	描述信息
 	 * @param permissionIds	拥有权限IDS 用，链接  包括按钮菜单，后续需要自行区分类别
 	 * @return
-	 * @throws Exception
-	 * @name wangt	
-	 * @Date 2018年4月9日 下午2:53:24
 	 */
 	@RequestMapping("updateSysRoleAuthorizeMenu")
 	@ResponseBody

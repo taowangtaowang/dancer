@@ -33,15 +33,9 @@ public class SysRoleAuthorizeMenuServiceImpl implements SysRoleAuthorizeMenuServ
 	 * 查询所有的角色权限
 	 * 
 	 * @return
-	 * @throws IntrospectionException 
-	 * @throws InvocationTargetException 
-	 * @throws InstantiationException 
-	 * @throws IllegalAccessException 
-	 * @name wangt
-	 * @Date 2018年4月9日 上午9:30:03
 	 */
 	
-	public List<Map<String, Object>> queryAllData(String roleId) throws IllegalAccessException, InstantiationException, InvocationTargetException, IntrospectionException {
+	public List<Map<String, Object>> queryAllData(String roleId)  {
 		Map<String, Object> parameter = new HashMap<String, Object>();
 		Page page = new Page();
 		page.setSortField("F_SortCode");

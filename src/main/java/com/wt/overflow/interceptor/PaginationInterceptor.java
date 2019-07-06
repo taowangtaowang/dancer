@@ -48,7 +48,6 @@ import java.util.*;
  * 把它改为对应的统计语句再利用Mybatis封装好的参数和设 置参数的功能把Sql语句中的参数进行替换，
  * 之后再执行查询记录数的Sql语句进行总记录数的统计。
  * 
- * @author wl
  */
 @SuppressWarnings("restriction")
 @Intercepts( { @Signature(type = StatementHandler.class, method = "prepare", args = { Connection.class }) })

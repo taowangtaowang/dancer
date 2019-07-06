@@ -17,17 +17,6 @@ public class ObjectUtil {
 
 	/**
 	 * 将一个 JavaBean 对象转化为一个 Map
-	 * 
-	 * @param bean
-	 *            要转化的JavaBean 对象
-	 * @return 转化出来的 Map 对象
-	 * @throws IntrospectionException
-	 *             如果分析类属性失败
-	 * @throws IllegalArgumentException
-	 * @throws IllegalAccessException
-	 *             如果实例化 JavaBean 失败
-	 * @throws InvocationTargetException
-	 *             如果调用属性的 setter 方法失败
 	 */
 	public static Map<String, Object> convertBean(Object bean){
 		Class type = bean.getClass();
@@ -57,20 +46,11 @@ public class ObjectUtil {
 
 	/**
 	 * 将一个 Map 对象转化为一个 JavaBean
-	 * 
 	 * @param type
 	 *            要转化的类型
 	 * @param map
 	 *            包含属性值的 map
 	 * @return 转化出来的 JavaBean 对象
-	 * @throws IntrospectionException
-	 *             如果分析类属性失败
-	 * @throws IllegalAccessException
-	 *             如果实例化 JavaBean 失败
-	 * @throws InstantiationException
-	 *             如果实例化 JavaBean 失败
-	 * @throws InvocationTargetException
-	 *             如果调用属性的 setter 方法失败
 	 */
 	public static Object convertMap(Class type, Map map){
 		BeanInfo beanInfo = null ;
@@ -104,7 +84,6 @@ public class ObjectUtil {
 
 	/**
 	 * 判断 实体类对象所有属性是否全部为空
-	 * 
 	 * @param object
 	 *            实体类对象
 	 * @return

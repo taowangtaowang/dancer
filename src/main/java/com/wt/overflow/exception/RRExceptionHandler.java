@@ -9,9 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 
  * @Desc: 异常处理器
- * @author Mr Du
- * @createTime 2018年2月25日
- * @version: v1.0
  */
 @RestController
 public class RRExceptionHandler {
