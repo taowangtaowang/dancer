@@ -22,7 +22,8 @@ public class WtStringTypeHandler extends BaseTypeHandler<String> {
 	public void setNonNullParameter(PreparedStatement ps, int i, String parameter, JdbcType jdbcType)
 			throws SQLException {
 		System.out.println("参数为："+parameter);
-		ps.setString(i, parameter + "+typeHandlers");// 可以在这里将数据pre处理
+		//ps.setString(i, parameter + "+typeHandlers");// 可以在这里将数据pre处理
+		ps.setString(i, parameter );
 	}
 
 	public String getNullableResult(ResultSet rs, String columnName) throws SQLException {

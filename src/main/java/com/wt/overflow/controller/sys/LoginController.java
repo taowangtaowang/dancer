@@ -5,6 +5,8 @@ import com.wt.overflow.exception.ResultUtil;
 import com.wt.overflow.service.LoginService;
 import com.wt.overflow.util.CodeUtil;
 import com.wt.overflow.util.MD5Util;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,12 +38,13 @@ public class LoginController {
 	/**
 	 * 验证用户账号密码
 	 * @param request
-	 * @param response
 	 * @return
 	 */
 	@RequestMapping("verifyUser")
 	@ResponseBody
-	public ResultUtil verifyUser(HttpServletRequest request, HttpServletResponse response) {
+	@ApiOperation(value="登陆账号密码验证", notes="通过ResultUtil.state来界定是否登陆成功")
+	@ApiImplicitParam(paramType="HttpServletRequest", name = "request", value = "", required = true, dataType = "HttpServletRequest")
+	public ResultUtil verifyUser(HttpServletRequest request) {
 		Map<String, Object> parameter = new HashMap<String, Object>();
 		String loginname = request.getParameter("username");
 		String password = request.getParameter("password");
