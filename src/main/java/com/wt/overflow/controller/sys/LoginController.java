@@ -4,9 +4,6 @@ import com.wt.overflow.bean.SysUser;
 import com.wt.overflow.exception.ResultUtil;
 import com.wt.overflow.service.LoginService;
 import com.wt.overflow.util.CodeUtil;
-import com.wt.overflow.util.MD5Util;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
@@ -47,7 +44,7 @@ public class LoginController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "verifyUser",method = RequestMethod.GET)
+	@RequestMapping(value = "verifyUser",method = RequestMethod.POST)
 	@ResponseBody
 	@ApiOperation(value="登陆账号密码验证", notes="通过ResultUtil.state来界定是否登陆成功")
 	public ResultUtil verifyUser(
@@ -74,7 +71,7 @@ public class LoginController {
 				return ResultUtil.error("当前账号已被禁用");
 			}
 			for (SysUser sysUser : sysUserlist) {// 账号唯一 F_Account
-				if (MD5Util.MD5(password).equals(sysUser.getUserPassword().toUpperCase())) {// 登录成功
+				if (password.equals(sysUser.getUserPassword())) {// 登录成功
 					// 写入用户登录日志。
 					//登录用户写进session
 					request.getSession().setAttribute("loginUser",sysUser);
