@@ -4,7 +4,7 @@
     <!-- 日志级别 -->
     <property name="logLevel" value="DEBUG"/>
     <!-- 日志地址 -->
-    <property name="logPath" value="G:\\software\\tomcat\\tomcat8\\apache-tomcat-8.0.9-8080-dancer\\logs\\danver-log"/>
+    <property name="logPath" value="./logs"/>
     <!-- 最大保存时间 -->
     <property name="maxHistory" value="10"/>
     <!-- 异步缓冲队列的深度,该值会影响性能.默认值为256 -->
@@ -18,12 +18,43 @@
         </encoder>
     </appender>
 
-    <!-- 文件保存日志的相关配置，同步 -->
-    <appender name="logFile"  class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <!--启动日志打印进另外的目录-->
+    <appender name="logs-dancer-started"  class="ch.qos.logback.core.rolling.RollingFileAppender">
         <Prudent>true</Prudent>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <FileNamePattern>
-                ${logPath}/%d{yyyy-MM-dd}/%d{yyyy-MM-dd}.log
+                ./logs-dancer-started/%d{yyyy-MM-dd}/%d{yyyy-MM-dd}.log
+            </FileNamePattern>
+            <!-- 最多保留X天log -->
+            <maxHistory>3</maxHistory>
+            <totalsizecap>1MB</totalsizecap>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-4relative [%thread] %-5level %logger{35} - %msg %n</pattern>
+        </layout>
+    </appender>
+
+    <!-- 文件保存日志的相关配置，同步 -->
+    <appender name="logs-dancer-controller"  class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <Prudent>true</Prudent>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>
+                ./logs-dancer-controller/%d{yyyy-MM-dd}/%d{yyyy-MM-dd}.log
+            </FileNamePattern>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <!--<Pattern>
+                %d{yyyy-MM-dd HH:mm:ss} -%msg%n
+            </Pattern>-->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-4relative [%thread] %-5level %logger{35} - %msg %n</pattern>
+        </layout>
+    </appender>
+    <!-- 文件保存日志的相关配置，同步 -->
+    <appender name="logs-dancer-service"  class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <Prudent>true</Prudent>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>
+                ./logs-dancer-service/%d{yyyy-MM-dd}/%d{yyyy-MM-dd}.log
             </FileNamePattern>
         </rollingPolicy>
         <layout class="ch.qos.logback.classic.PatternLayout">
@@ -34,13 +65,24 @@
         </layout>
     </appender>
 
+    <!-- 未分包版本
     <logger name="root" level="${logLevel}">
+        <appender-ref ref="STDOUT"/>
         <appender-ref ref="logFile" />
     </logger>
-
     <logger name="org.springframework.scheduling">
-        <level value="DEBUG" />
-        <appender-ref ref="logFile" />
+        <level value="info" />
+    </logger>-->
+    <!--分包版本-->
+    <root level="${logLevel}">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="logs-dancer-started" />
+    </root>
+    <logger name="com.wt.overflow.controller.sys">
+        <appender-ref ref="logs-dancer-controller" />
     </logger>
-
+    <logger name="com.wt.overflow.service.impl">
+        <appender-ref ref="logs-dancer-service" />
+    </logger>
+    <!--说明：日志分包打印  需要功能分包-->
 </configuration>

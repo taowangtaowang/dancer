@@ -7,9 +7,11 @@ import com.wt.overflow.util.CodeUtil;
 import com.wt.overflow.util.MD5Util;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
-import org.apache.logging.log4j.util.Strings;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -32,6 +34,7 @@ import java.util.Map;
 @RequestMapping(value = "login")
 public class LoginController {
 
+	protected Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired
 	private LoginService loginService;
 
@@ -63,7 +66,7 @@ public class LoginController {
 		 
 		/*loginname = "admin";
 		password = "123456";*/
-		if (Strings.isNotEmpty(loginname) && Strings.isNotEmpty(password)) {
+		if (!StringUtils.isEmpty(loginname) && !StringUtils.isEmpty(password)) {
 			List<SysUser> sysUserlist = loginService.queryByLoginName(loginname);
 			if (sysUserlist.isEmpty()) {
 				return ResultUtil.error("当前账号不存在");
@@ -122,6 +125,7 @@ public class LoginController {
 	@RequestMapping("getImage")
 	@ResponseBody
 	public void getImage(HttpServletRequest req, HttpServletResponse resp) {
+		logger.info("日志测试 controller包");
 		// 调用工具类生成的验证码和验证码图片
 		Map<String, Object> codeMap = CodeUtil.generateCodeAndPic();
 

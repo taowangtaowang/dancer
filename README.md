@@ -6,7 +6,7 @@
 
 1  tkmybatis 登录 √
 
-2  日志× 自定义异常√ swagger× quartz (过滤登陆未完成)
+2  日志√ 自定义异常√ swagger× quartz (过滤登陆未完成,日志超限切割未验证)
 
 3  自定义原生内存缓存 利用原生ConcurrentMap<String, Future<User>>缓存
   

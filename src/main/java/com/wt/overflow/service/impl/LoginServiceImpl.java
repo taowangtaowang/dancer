@@ -4,6 +4,8 @@ import com.wt.overflow.bean.*;
 import com.wt.overflow.dao.*;
 import com.wt.overflow.service.LoginService;
 import com.wt.overflow.util.ObjectUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
@@ -30,8 +32,11 @@ public class LoginServiceImpl implements LoginService {
 	private SysModuleMapper sysModuleMapper;
 	@Autowired
 	private SysModuleButtonMapper sysModuleButtonMapper;
+
+	protected Logger logger = LoggerFactory.getLogger(getClass());
 	@Override
 	public List<SysUser> queryByLoginName(String loginname) {
+		logger.info("日志测试service包");
 		Example example = new Example(SysUser.class);
 		Example.Criteria criteria = example.createCriteria();
 		criteria.andEqualTo("account",loginname);
