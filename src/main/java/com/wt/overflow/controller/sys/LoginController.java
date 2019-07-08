@@ -6,13 +6,17 @@ import com.wt.overflow.service.LoginService;
 import com.wt.overflow.util.CodeUtil;
 import com.wt.overflow.util.MD5Util;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.imageio.ImageIO;
@@ -43,18 +47,15 @@ public class LoginController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping("verifyUser")
+	@RequestMapping(value = "verifyUser",method = RequestMethod.GET)
 	@ResponseBody
 	@ApiOperation(value="登陆账号密码验证", notes="通过ResultUtil.state来界定是否登陆成功")
-	@ApiImplicitParam(paramType="HttpServletRequest", name = "request", value = "", required = true, dataType = "HttpServletRequest")
-	public ResultUtil verifyUser(HttpServletRequest request) {
-		Map<String, Object> parameter = new HashMap<String, Object>();
-		String loginname = request.getParameter("username");
-		String password = request.getParameter("password");
-		//String ImageCode = request.getParameter("ImageCode"); 验证标识
+	public ResultUtil verifyUser(
+			@ApiParam(required=true,value="账号",name="username")@RequestParam(value="username")String username,
+			@ApiParam(required=true,value="密码",name="password")@RequestParam(value="password")String password,
+			HttpServletRequest request) {
 		String authCode = request.getParameter("code");// 验证码
-		
-		/*if (!Strings.isNotEmpty(authCode)) { 
+		/*if (!Strings.isNotEmpty(authCode)) {
 			parameter.put("state", "error");
 		 	parameter.put("message", "验证码有误"); return parameter; 
 		}
@@ -66,8 +67,8 @@ public class LoginController {
 		 
 		/*loginname = "admin";
 		password = "123456";*/
-		if (!StringUtils.isEmpty(loginname) && !StringUtils.isEmpty(password)) {
-			List<SysUser> sysUserlist = loginService.queryByLoginName(loginname);
+		if (!StringUtils.isEmpty(username) && !StringUtils.isEmpty(password)) {
+			List<SysUser> sysUserlist = loginService.queryByLoginName(username);
 			if (sysUserlist.isEmpty()) {
 				return ResultUtil.error("当前账号不存在");
 			}

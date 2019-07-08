@@ -61,8 +61,8 @@ public class MD5Util {
 	}
 
 	public static void main(String[] args) {
-		String md5 = MD5("e10adc3949ba59abbe56e057f20f883e");//  123456前端加密后：e10adc3949ba59abbe56e057f20f883e   原来e10adc3949ba59abbe56e057f20f883e
-		String md52 = getMD5("EDBA32A24AE3054F9975F1A836B74817");
+		String md5 = MD5("123456");//  123456前端加密后：e10adc3949ba59abbe56e057f20f883e   原来e10adc3949ba59abbe56e057f20f883e
+		String md52 = getMD5("E10ADC3949BA59ABBE56E057F20F883E");
 		System.out.println("加密前："+md5);System.out.println("解密后："+md52);
 	}
 }
