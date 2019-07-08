@@ -65,8 +65,6 @@ public class LoginController {
 			parameter.put("message", "验证码错误，请重新输入"); return parameter;
 		}*/
 		 
-		/*loginname = "admin";
-		password = "123456";*/
 		if (!StringUtils.isEmpty(username) && !StringUtils.isEmpty(password)) {
 			List<SysUser> sysUserlist = loginService.queryByLoginName(username);
 			if (sysUserlist.isEmpty()) {

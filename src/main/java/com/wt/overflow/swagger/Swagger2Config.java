@@ -39,7 +39,7 @@ public class Swagger2Config extends WebMvcConfigurationSupport {
         return new ApiInfoBuilder()
                 .title("dancer-API")
                 .termsOfServiceUrl("www.wt990099.cn")
-                .description("此API提供给前端人员调用")
+                .description("dancer-API")
                 .license("License Version 2.0")
                 .licenseUrl("www.wt990099.cn")
                 .version("2.0").build();
