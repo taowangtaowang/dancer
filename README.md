@@ -16,15 +16,15 @@
 
 6  中间件activemq  rabbitmq  Kafka                                        <3队列的区别>
 
-7  es 结合队列刷数据 至es
+7  k8s docker
 
-8  k8s docker
+8  分库分表 mycat的应用  主从复制读写分离
 
-9  分库分表 mycat的应用  主从复制读写分离
+9  sql优化等
 
-10 sql优化等
+10 spark日志统计，访问统计等（flink统计）
 
-11 spark日志统计，访问统计等（flink统计）
+11 es 结合队列刷数据 至es
 
 框架迭代
 

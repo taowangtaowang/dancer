@@ -2,6 +2,7 @@ package com.wt.overflow.service.impl;
 
 import com.wt.overflow.bean.SysRole;
 import com.wt.overflow.bean.SysUser;
+import com.wt.overflow.cache.BaseCacheService;
 import com.wt.overflow.dao.SysRoleMapper;
 import com.wt.overflow.dao.SysUserMapper;
 import com.wt.overflow.service.SysRoleService;
@@ -27,6 +28,8 @@ public class SysRoleServiceImpl implements SysRoleService {
 	private SysRoleMapper sysRoleMapper;
 	@Autowired
 	private SysUserMapper sysUserMapper;
+	@Autowired
+	private BaseCacheService baseCacheService;
 
 	/**
 	 * 分页查询
@@ -105,7 +108,8 @@ public class SysRoleServiceImpl implements SysRoleService {
 
 	
 	public SysRole queryOneByRoleId(String roleId) {
-		SysRole sysRole = sysRoleMapper.queryOneByRoleId(roleId);
+		SysRole sysRole = baseCacheService.getRoleByRoleId(roleId);
+		//SysRole sysRole = sysRoleMapper.queryOneByRoleId(roleId);
 		if(sysRole.getLastmodifyuserid()!=null&&!(sysRole.getLastmodifyuserid().equals(""))){
 			SysUser sysUser =sysUserMapper.queryOneBySysUserId(sysRole.getLastmodifyuserid());
 			if(sysUser!=null){
