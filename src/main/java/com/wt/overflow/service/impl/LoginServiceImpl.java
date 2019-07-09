@@ -40,10 +40,10 @@ public class LoginServiceImpl implements LoginService {
 		Example example = new Example(SysUser.class);
 		Example.Criteria criteria = example.createCriteria();
 		criteria.andEqualTo("account",loginname);
-		Map<String, Object> parameter = new HashMap<String, Object>();
+		/*Map<String, Object> parameter = new HashMap<String, Object>();
 		parameter.put("loginname", loginname);
-		return sysUserMapper.queryByLoginName(parameter);
-		//return sysUserMapper.selectByExample(example);
+		return sysUserMapper.queryByLoginName(parameter);*/
+		return sysUserMapper.selectByExample(example);
 	}
 
 	
@@ -56,32 +56,22 @@ public class LoginServiceImpl implements LoginService {
 		Map<String, Object> res = new HashMap<String, Object>();
 		res.put("sysItem", null);
 		res.put("dataItems", null);
-		// organize 组织信息
-		/*Map<String,Object> map = new HashMap<String,Object>();
-		map.put("nodeid","0");*/
-		List<SysOrganize> sysOrganizelist = sysOrganizeMapper.queryAllData(new HashMap<String,Object>());
-		//List<Map<Object,Object>> sysOrganMaplist = new ArrayList<Map<Object,Object>>();
-		Map<String, Object> sysOrganMaplist = new HashMap<String, Object>();
-		for (SysOrganize sysOrganize : sysOrganizelist) {
-			Map<Object,Object> sysOrganMap = new  HashMap<Object,Object>();
-			Map<Object,Object> detailmap = new  HashMap<Object,Object>();
-			detailmap.put("encode", sysOrganize.getEncode());
-			detailmap.put("fullname", sysOrganize.getFullname());
-			sysOrganMap.put(sysOrganize.getId(), detailmap);
-			sysOrganMaplist.put(sysOrganize.getId(), detailmap);
-		}
-		
-		res.put("organize", sysOrganMaplist);
-		// role 角色信息 如果是
-		Map<String, Object> parameter = new HashMap<String, Object>();
-		parameter.put("category", String.valueOf(1));
-		List<SysRole> sysRolelist = sysRoleMapper.queryAllDataByCategory(parameter);// F_Category=1
-		//List<Map<Object,Object>> sysRoleMaplist = new ArrayList<Map<Object,Object>>();
+
+		Example sysOrganizeExample = new Example(SysUser.class);
+		Example.Criteria sysOrganizeCriteria = sysOrganizeExample.createCriteria();
+		sysOrganizeCriteria.andEqualTo("deleteMark",0);
+		List<SysOrganize> sysOrganizelist = sysOrganizeMapper.selectByExample(sysOrganizeExample);
+		res.put("organize", sysOrganizelist);
+
+		// role 角色信息
+		Example sysRoleExample = new Example(SysUser.class);
+		Example.Criteria sysRoleCriteria = sysRoleExample.createCriteria();
+		sysRoleCriteria.andEqualTo("category",1);
+		List<SysRole> sysRolelist = sysRoleMapper.selectByExample(sysRoleExample);
 		Map<String, Object> sysRoleMaplist = new HashMap<String, Object>();
 		for (SysRole sysRole : sysRolelist) {
 			Map<Object,Object> sysRoleMap = new  HashMap<Object,Object>();
 			Map<Object,Object> detailmap = new  HashMap<Object,Object>();
-			
 			detailmap.put("encode", sysRole.getEncode());
 			detailmap.put("fullname", sysRole.getFullname());
 			sysRoleMap.put(sysRole.getId(), detailmap);
@@ -89,9 +79,11 @@ public class LoginServiceImpl implements LoginService {
 		}
 		res.put("role", sysRoleMaplist);
 		// duty 岗位信息
+		Example sysRoleExample2 = new Example(SysUser.class);
+		Example.Criteria sysRoleCriteria2 = sysRoleExample2.createCriteria();
+		sysRoleCriteria2.andEqualTo("category",2);
+		List<SysRole> sysdutylist = sysRoleMapper.selectByExample(sysRoleExample2);
 		Map<String, Object> sysDutyMaplist = new HashMap<String, Object>();
-		parameter.put("category", String.valueOf(2));
-		List<SysRole> sysdutylist = sysRoleMapper.queryAllDataByCategory(parameter);// F_Category=2
 		for (SysRole sysRole : sysdutylist) {
 			Map<Object,Object> sysRoleMap = new  HashMap<Object,Object>();
 			Map<Object,Object> detailmap = new  HashMap<Object,Object>();
@@ -102,6 +94,7 @@ public class LoginServiceImpl implements LoginService {
 			sysDutyMaplist.put(sysRole.getId(), detailmap);
 		}
 		res.put("duty", sysDutyMaplist);
+
 		// user 登录用户信息
 		res.put("user", sysUser);
 		// authorizeMenu 拥有权限菜单
@@ -113,6 +106,7 @@ public class LoginServiceImpl implements LoginService {
 		}
 		String userRoleId = sysUser.getRoleid() == null ? "" : sysUser.getRoleid();
 		String isAdminStr =( isAdmin?"0":"1");//1 代表admin用户
+		HashMap<String,Object> parameter = new HashMap<String,Object>();
 		parameter.put("isAdmin", isAdminStr);
 		parameter.put("userRoleId", userRoleId);
 		parameter.put("enabledMark", 1);//该菜单是否有效

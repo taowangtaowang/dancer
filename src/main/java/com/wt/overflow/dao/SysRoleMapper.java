@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 @MapperScan
-public interface SysRoleMapper extends Mapper{
+public interface SysRoleMapper extends Mapper<SysRole>{
 
 	List<SysRole> queryAllDataByCategory(Map<String, Object> parameter);
 

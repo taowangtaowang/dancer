@@ -14,7 +14,7 @@
 
 5  redis缓存  利用redis实现单点登陆session控制                            <3缓存的区别>
 
-6  中间件activemq  rabbitmq  Kafka                                        <3队列的区别>
+6  中间件activemq  rabbitmq  Kafka   日志队列                             <4队列的区别>
 
 7  k8s docker
 

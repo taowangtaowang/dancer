@@ -3,10 +3,12 @@ package com.wt.overflow.bean;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.util.Date;
 
 @Table(name = "sys_user")
-public class SysUser {
+public class SysUser implements Serializable{
+
     @Id
     @Column(name = "id")
     private String id;

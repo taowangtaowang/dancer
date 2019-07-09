@@ -1,44 +1,50 @@
 package com.wt.overflow.bean;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
 
+@Table(name = "sys_role")
 public class SysRole {
+    @Id
+    @Column(name = "id")
     private String id;
-
+    @Column(name = "organizeId")
     private String organizeid;
-
+    @Column(name = "category")
     private int category;
-
+    @Column(name = "enCode")
     private String encode;
-
+    @Column(name = "fullName")
     private String fullname;
-
+    @Column(name = "type")
     private String type;
-
+    @Column(name = "responsibility")
     private String responsibility;
-
+    @Column(name = "allowEdit")
     private int allowedit;
-
+    @Column(name = "allowDelete")
     private int allowdelete;
-
+    @Column(name = "sortCode")
     private int sortcode;
-
+    @Column(name = "deleteMark")
     private int deletemark;
-
+    @Column(name = "enabledMark")
     private int enabledmark;
-
+    @Column(name = "description")
     private String description;
-
+    @Column(name = "creatorTime")
     private Date creatortime;
-
+    @Column(name = "creatorUserId")
     private String creatoruserid;
-
+    @Column(name = "lastModifyTime")
     private Date lastmodifytime;
-
+    @Column(name = "lastModifyUserId")
     private String lastmodifyuserid;
-
+    @Column(name = "deleteTime")
     private Date deletetime;
-
+    @Column(name = "deleteUserId")
     private String deleteuserid;
 
     public String getId() {

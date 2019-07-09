@@ -24,7 +24,6 @@ public class BaseCacheServiceImpl implements BaseCacheService {
 
     private final ConcurrentMap<String, Future<SysRole>> BaseCacheMap_getRole_By_RoleId = new ConcurrentHashMap<String, Future<SysRole>>();
 
-
     @Autowired
     private SysRoleMapper sysRoleMapper;
 
@@ -46,7 +45,7 @@ public class BaseCacheServiceImpl implements BaseCacheService {
                             Example.Criteria criteria = example.createCriteria();
                             criteria.andEqualTo("id",pamStr);
                             List<SysRole> list = sysRoleMapper.selectByExample(example);
-                            return (T) list;
+                            return (T)(list.isEmpty()?null:list.get(0));
                         } else {
                             return null;
                         }

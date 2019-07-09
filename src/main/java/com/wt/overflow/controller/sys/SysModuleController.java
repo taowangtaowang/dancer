@@ -28,14 +28,13 @@ public class SysModuleController {
 
 	/**
 	 * 关键字查询菜单信息
-	 * @param request
 	 * @param fullname
 	 * @param nodeid
 	 * @return
 	 */
 	@RequestMapping("findList")
 	@ResponseBody
-	public Object searchsysModule(HttpServletRequest request, String fullname, String nodeid) {
+	public Object searchsysModule( String fullname, String nodeid) {
 		Map<String, Object> data = new HashMap<String, Object>();
 		if (null != nodeid && "" != nodeid) {// 查询某菜单父节点子数据
 			List<SysModules> sysModules = sysModuleService.findListParentid(nodeid);

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<!--该配置文件只用于mq设置https://blog.csdn.net/qq_22075041/article/details/77602996-->
+
+	<!--配置ActionMQ的连接工厂,用amq配置-->
+	<bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+		<property name="brokerURL" value="tcp://127.0.0.1:61616"/>
+	</bean>
+	<!--<amq:connectionFactory id="connectionFactory" brokerURL="tcp://localhost:61616"/>-->
+
+	<!--配置Queue消息目的地,用amq配置-->
+	<bean id="quartzQueue" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg value="QuartzQueue"/>
+		<!--<constructor-arg index="0" value="QuartzQueue"/>-->  <!--带index参数-->
+	</bean>
+	<bean id="realTimeQueue" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg value="RealTimeQueue"/>
+	</bean>
+	<!--<amq:queue id="queue" physicalName="FirstQueue"/>-->
+
+	<!--配置Topic消息目的地-->
+	<!--<bean id="topic" class="org.apache.activemq.command.ActiveMQTopic">
+        <constructor-arg index="0" value="MyTopic"/>
+    </bean-->
+
+	<!--配置JmsTemplate：手动，有超时时间-->
+	<bean id="jmsTemplate1" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="connectionFactory"/>
+		<property name="defaultDestination" ref="quartzQueue"/>
+		<property name="receiveTimeout" value="2000" />
+	</bean>
+	<!--配置JmsTemplate：即时——通过监听器实现-->
+	<bean id="jmsTemplate2" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="defaultDestination" ref="realTimeQueue" />
+	</bean>
+
+</beans>
