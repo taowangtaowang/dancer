@@ -37,5 +37,14 @@
 		<property name="connectionFactory" ref="connectionFactory" />
 		<property name="defaultDestination" ref="realTimeQueue" />
 	</bean>
+	<!--这个是实现MessageListener版本的监听-->
+	<bean id="RealTimeActiveMqServiceImpl1" class="com.wt.overflow.listener.ActiveMqListener1"/>
+
+	<bean class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="destination" ref="realTimeQueue" />
+		<property name="messageListener" ref="RealTimeActiveMqServiceImpl1" />
+	</bean>
+	<!--这个是实现SessionAwareMessageListener版本的监听-->
 
 </beans>

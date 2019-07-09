@@ -32,16 +32,16 @@ public class RealTimeActiveMqServiceImpl2 implements RealTimeActiveMqService2,Se
 
     public void onMessage(Message message, Session session) throws JMSException {
         System.out.println("收到一条消息");
-       String receive = (String) ((ObjectMessage) message).getObject();
+        String receive = (String) ((ObjectMessage) message).getObject();
         System.out.println("消息内容是：" + receive);
         //message.setJMSReplyTo(Destination);
 
-        long conf = 12345678;
+        /*long conf = 12345678;
         MessageProducer sender = session.createProducer(message.getJMSReplyTo());
         StreamMessage smsg = session.createStreamMessage();
         smsg.setJMSCorrelationID(message.getJMSMessageID());
         smsg.writeLong(conf);
-        sender.send(smsg);
+        sender.send(smsg);*/
 
         /*MessageProducer producer = session.createProducer(destination);
         Message textMessage = session.createTextMessage("ConsumerSessionAwareMessageListener。。。");

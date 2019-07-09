@@ -73,7 +73,7 @@ public class ActiveMqController {
     public ResultUtil activeMqTest21(
             @ApiParam(required=true,value="账号",name="messageStr")@RequestParam(value="messageStr")String messageStr){
         realTimeActiveMqService1.send(messageStr);//发送消息到队列中
-        return ResultUtil.ok("");
+        return ResultUtil.ok("处理成功");
         //弊端  好像拿不到返回值的消息
     }
     /**
