@@ -3,6 +3,7 @@ package com.wt.overflow.controller.sys;
 import com.wt.overflow.bean.SysUser;
 import com.wt.overflow.exception.ResultUtil;
 import com.wt.overflow.service.LoginService;
+import com.wt.overflow.service.TestService;
 import com.wt.overflow.util.CodeUtil;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -38,6 +39,24 @@ public class LoginController {
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired
 	private LoginService loginService;
+	@Autowired
+	private TestService testService;
+
+	/**
+	 * 测试事务
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("testTransactionManager")
+	@ResponseBody
+	public ResultUtil  testTransactionManager(HttpServletRequest request, HttpServletResponse response) {
+		int res = testService.testTransactionManager();
+		if(res>0)
+			return ResultUtil.ok("事务测试成功");
+		else
+			return ResultUtil.error("事务测试失败");
+	}
 
 	/**
 	 * 验证用户账号密码
@@ -47,7 +66,7 @@ public class LoginController {
 	@RequestMapping(value = "verifyUser",method = RequestMethod.POST)
 	@ResponseBody
 	@ApiOperation(value="登陆账号密码验证", notes="通过ResultUtil.state来界定是否登陆成功")
-	public ResultUtil verifyUser(
+	public ResultUtil verifyUser1(
 			@ApiParam(required=true,value="账号",name="username")@RequestParam(value="username")String username,
 			@ApiParam(required=true,value="密码",name="password")@RequestParam(value="password")String password,
 			HttpServletRequest request) {
@@ -56,12 +75,10 @@ public class LoginController {
 			parameter.put("state", "error");
 		 	parameter.put("message", "验证码有误"); return parameter; 
 		}
-		 
 		if(!request.getSession().getAttribute("code").toString().toUpperCase().equals(authCode.toUpperCase())) {
 			// 验证码通过 parameter.put("state", "error");
 			parameter.put("message", "验证码错误，请重新输入"); return parameter;
 		}*/
-		 
 		if (!StringUtils.isEmpty(username) && !StringUtils.isEmpty(password)) {
 			List<SysUser> sysUserlist = loginService.queryByLoginName(username);
 			if (sysUserlist.isEmpty()) {
