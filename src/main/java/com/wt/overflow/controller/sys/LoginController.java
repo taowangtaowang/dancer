@@ -3,7 +3,6 @@ package com.wt.overflow.controller.sys;
 import com.wt.overflow.bean.SysUser;
 import com.wt.overflow.exception.ResultUtil;
 import com.wt.overflow.service.LoginService;
-import com.wt.overflow.service.TestService;
 import com.wt.overflow.util.CodeUtil;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -39,24 +38,6 @@ public class LoginController {
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired
 	private LoginService loginService;
-	@Autowired
-	private TestService testService;
-
-	/**
-	 * 测试事务
-	 * @param request
-	 * @param response
-	 * @return
-	 */
-	@RequestMapping("testTransactionManager")
-	@ResponseBody
-	public ResultUtil  testTransactionManager(HttpServletRequest request, HttpServletResponse response) {
-		int res = testService.testTransactionManager();
-		if(res>0)
-			return ResultUtil.ok("事务测试成功");
-		else
-			return ResultUtil.error("事务测试失败");
-	}
 
 	/**
 	 * 验证用户账号密码

@@ -4,9 +4,10 @@
 版本迭代：springmvc——>dubbo——>springboot——>springcloud
 
 
+
 1  tkmybatis 登录 √
 
-2  日志√ 自定义异常√ swagger√  quartz  
+2  日志√ 自定义异常√ swagger √  quartz  
 
 3  自定义原生内存缓存 利用原生ConcurrentMap<String, Future<User>>缓存
   
@@ -32,7 +33,7 @@ ssm——boot——cloud——dubbo
 
 
 
-
+http://127.0.0.1:8080/dancer/swagger-ui.html
 
 该工程为借用别人的 精简而来，主要目的是针对各种小东西做一些测试 ：
 1 项目中有部分接口调用不通  是因为我把数据库字段全部改了一遍 但是html上的一些东西暂时不想改  
