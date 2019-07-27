@@ -2,7 +2,6 @@ package com.wt.overflow.service.impl;
 
 import com.wt.overflow.bean.SysModule;
 import com.wt.overflow.bean.SysModules;
-import com.wt.overflow.bean.SysOnes;
 import com.wt.overflow.bean.SysUser;
 import com.wt.overflow.dao.SysModuleMapper;
 import com.wt.overflow.dao.SysUserMapper;
@@ -51,19 +50,19 @@ public class SysModuleServiceImpl implements SysModuleService {
 	public boolean insertSysModule(SysModule sysModule) {
 	   byte b =0;
 	   sysModule.setDeletemark(b);
-		return sysModuleMapper.insertModule(sysModule);
+		return sysModuleMapper.insertSelective(sysModule)>0?true :false;
 	}
 
 	
 	public boolean deleteByModuleKey(SysModule sysModule) {
 		byte b =1;
 		sysModule.setDeletemark(b);
-		return sysModuleMapper.deleteByModuleKey(sysModule);
+		return sysModuleMapper.updateByPrimaryKeySelective(sysModule)>0?true : false;
 	}
 
 	
 	public boolean updateByPrimaryKeySelective(SysModule sysModule) {
-		return sysModuleMapper.updateByPrimaryKeySelective(sysModule);
+		return (sysModuleMapper.updateByPrimaryKeySelective(sysModule)>0)?true: false;
 	}
 
 	

@@ -47,7 +47,7 @@ public class LoginController {
 	@RequestMapping(value = "verifyUser",method = RequestMethod.POST)
 	@ResponseBody
 	@ApiOperation(value="登陆账号密码验证", notes="通过ResultUtil.state来界定是否登陆成功")
-	public ResultUtil verifyUser(
+	public ResultUtil verifyUser1(
 			@ApiParam(required=true,value="账号",name="username")@RequestParam(value="username")String username,
 			@ApiParam(required=true,value="密码",name="password")@RequestParam(value="password")String password,
 			HttpServletRequest request) {
@@ -56,12 +56,10 @@ public class LoginController {
 			parameter.put("state", "error");
 		 	parameter.put("message", "验证码有误"); return parameter; 
 		}
-		 
 		if(!request.getSession().getAttribute("code").toString().toUpperCase().equals(authCode.toUpperCase())) {
 			// 验证码通过 parameter.put("state", "error");
 			parameter.put("message", "验证码错误，请重新输入"); return parameter;
 		}*/
-		 
 		if (!StringUtils.isEmpty(username) && !StringUtils.isEmpty(password)) {
 			List<SysUser> sysUserlist = loginService.queryByLoginName(username);
 			if (sysUserlist.isEmpty()) {

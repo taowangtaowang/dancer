@@ -2,12 +2,13 @@ package com.wt.overflow.dao;
 
 import com.wt.overflow.bean.SysRole;
 import org.mybatis.spring.annotation.MapperScan;
+import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
 import java.util.Map;
 
 @MapperScan
-public interface SysRoleMapper {
+public interface SysRoleMapper extends Mapper<SysRole>{
 
 	List<SysRole> queryAllDataByCategory(Map<String, Object> parameter);
 
