@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wt.overflow.dao.OperationLogMapper" >
+	<resultMap id="BaseResultMap" type="com.wt.overflow.bean.OperationLog" >
+		<result column="ID" property="ID" jdbcType="VARCHAR" />
+		<result column="QS" property="QS" jdbcType="VARCHAR" />
+		<result column="ZDDW" property="ZDDW" jdbcType="VARCHAR" />
+		<result column="ZBDW" property="ZBDW" jdbcType="VARCHAR" />
+		<result column="ZCJG" property="ZCJG" jdbcType="VARCHAR" />
+		<result column="CBDW" property="CBDW" jdbcType="VARCHAR" />
+		<result column="XBDW" property="XBDW" jdbcType="VARCHAR" />
+		<result column="ZZDW" property="ZZDW" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="Base_Column_List" >
+		ID, QS, ZDDW, ZBDW, ZCJG, CBDW, XBDW, ZZDW
+	</sql>
+
+	<insert id="adds" parameterType="java.util.List">
+		INSERT INTO T_OPERATION_LOG
+		(FLOW_ID,
+		SYSTEM_NAME,
+		OPERATE_USER,
+		CREATE_TIME,
+		MODULE,
+		FUNCTION,
+		RESULT)
+		VALUES
+		<foreach collection="list" item="item" index="index" separator="," >
+			(#{item.flowId,jdbcType=VARCHAR},
+			#{item.systemName,jdbcType=VARCHAR},
+			#{item.operateUser,jdbcType=VARCHAR},
+			#{item.createTime,jdbcType=TIMESTAMP},
+			#{item.module,jdbcType=VARCHAR},
+			#{item.function, jdbcType=VARCHAR},
+			#{item.result, jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+
+</mapper>

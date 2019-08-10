@@ -13,6 +13,7 @@ import com.wt.overflow.util.page.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import tk.mybatis.mapper.entity.Example;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -130,25 +131,32 @@ public class SysUserServiceImpl implements SysUserService {
 
 	
 	public SysUser queryOneBySysUserId(String keyValue) {
-		SysUser sysUser = sysUserMapper.queryOneBySysUserId(keyValue);
-		if(sysUser.getLastmodifyuserid()!=null&&!(sysUser.getLastmodifyuserid().equals(""))){
-			SysUser sysUser1 =sysUserMapper.queryOneBySysUserId(sysUser.getLastmodifyuserid());
-			if(sysUser1!=null){
-				sysUser.setLastmodifyuserid(sysUser.getRealname());
-			}else{
-				sysUser.setLastmodifyuserid("无");
-			}
-		}else{sysUser.setLastmodifyuserid("无");}
-		if(sysUser.getCreatoruserid()!=null&&!(sysUser.getCreatoruserid().equals(""))){
-			SysUser sysUser1 =sysUserMapper.queryOneBySysUserId(sysUser.getCreatoruserid());
-			if(sysUser1!=null){
-				sysUser.setCreatoruserid(sysUser.getRealname());
-			}else{
-				sysUser.setCreatoruserid("无");
-			}
-		}else{sysUser.setCreatoruserid("无");}
-
-		return sysUser ;
+		Example example = new Example(SysUser.class);
+		Example.Criteria criteria = example.createCriteria();
+		criteria.andEqualTo("account",keyValue);
+		List<SysUser> sysUserList = sysUserMapper.selectByExample(example);
+		//SysUser sysUser = sysUserMapper.queryOneBySysUserId(keyValue);
+		if (!sysUserList.isEmpty()){
+			SysUser sysUser = sysUserList.get(0);
+			if(sysUser.getLastmodifyuserid()!=null&&!(sysUser.getLastmodifyuserid().equals(""))){
+				SysUser sysUser1 =sysUserMapper.queryOneBySysUserId(sysUser.getLastmodifyuserid());
+				if(sysUser1!=null){
+					sysUser.setLastmodifyuserid(sysUser.getRealname());
+				}else{
+					sysUser.setLastmodifyuserid("无");
+				}
+			}else{sysUser.setLastmodifyuserid("无");}
+			if(sysUser.getCreatoruserid()!=null&&!(sysUser.getCreatoruserid().equals(""))){
+				SysUser sysUser1 =sysUserMapper.queryOneBySysUserId(sysUser.getCreatoruserid());
+				if(sysUser1!=null){
+					sysUser.setCreatoruserid(sysUser.getRealname());
+				}else{
+					sysUser.setCreatoruserid("无");
+				}
+			}else{sysUser.setCreatoruserid("无");}
+			return sysUser ;
+		}
+		return null ;
 	}
 
 	

@@ -59,14 +59,15 @@ public class LoginServiceImpl implements LoginService {
 
 		Example sysOrganizeExample = new Example(SysUser.class);
 		Example.Criteria sysOrganizeCriteria = sysOrganizeExample.createCriteria();
-		sysOrganizeCriteria.andEqualTo("deleteMark",0);
 		List<SysOrganize> sysOrganizelist = sysOrganizeMapper.selectByExample(sysOrganizeExample);
 		res.put("organize", sysOrganizelist);
 
 		// role 角色信息
-		Example sysRoleExample = new Example(SysUser.class);
+		Example sysRoleExample = new Example(SysRole.class);
 		Example.Criteria sysRoleCriteria = sysRoleExample.createCriteria();
-		sysRoleCriteria.andEqualTo("category",1);
+		//sysRoleCriteria.andEqualTo("category",1);
+		sysRoleCriteria.andNotEqualTo("enabledmark",1);
+
 		List<SysRole> sysRolelist = sysRoleMapper.selectByExample(sysRoleExample);
 		Map<String, Object> sysRoleMaplist = new HashMap<String, Object>();
 		for (SysRole sysRole : sysRolelist) {

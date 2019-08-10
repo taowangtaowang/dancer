@@ -2,6 +2,7 @@ package com.wt.overflow.controller.sys;
 
 import com.wt.overflow.bean.SysUser;
 import com.wt.overflow.exception.ResultUtil;
+import com.wt.overflow.log.CustomOperationLogger;
 import com.wt.overflow.service.LoginService;
 import com.wt.overflow.util.CodeUtil;
 import io.swagger.annotations.ApiOperation;
@@ -46,11 +47,16 @@ public class LoginController {
 	 */
 	@RequestMapping(value = "verifyUser",method = RequestMethod.POST)
 	@ResponseBody
-	@ApiOperation(value="登陆账号密码验证", notes="通过ResultUtil.state来界定是否登陆成功")
+	@ApiOperation(value="登陆账号密码验证",
+			notes="通过ResultUtil.state来界定是否登陆成功",nickname = "登录-LoginController")
 	public ResultUtil verifyUser1(
 			@ApiParam(required=true,value="账号",name="username")@RequestParam(value="username")String username,
 			@ApiParam(required=true,value="密码",name="password")@RequestParam(value="password")String password,
 			HttpServletRequest request) {
+		//该方式可应用于操作日志的特殊处理  一般可以用apo切面时间操作日志
+		/*CustomOperationLogger.getLogger().log("登陆账号密码验证",
+				"通过ResultUtil.state来界定是否登陆成功", "登录-LoginController","无");*/
+		//完结
 		String authCode = request.getParameter("code");// 验证码
 		/*if (!Strings.isNotEmpty(authCode)) {
 			parameter.put("state", "error");
@@ -64,9 +70,6 @@ public class LoginController {
 			List<SysUser> sysUserlist = loginService.queryByLoginName(username);
 			if (sysUserlist.isEmpty()) {
 				return ResultUtil.error("当前账号不存在");
-			}
-			if(sysUserlist.get(0).getEnabledmark()==0){
-				return ResultUtil.error("当前账号已被禁用");
 			}
 			for (SysUser sysUser : sysUserlist) {// 账号唯一 F_Account
 				if (password.equals(sysUser.getUserPassword())) {// 登录成功
