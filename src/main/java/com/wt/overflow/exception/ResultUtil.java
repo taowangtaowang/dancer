@@ -71,18 +71,18 @@ public class ResultUtil implements Serializable {
 		return new ResultUtil(0,"success");
 	}
 	
-	public static ResultUtil ok(Object list){
+	public static ResultUtil ok(Object resData){
 		ResultUtil result = new ResultUtil();
 		result.setCode(0);
 		result.setState("success");
-		result.setData(list);
+		result.setData(resData);
 		return result;
 	}
-	public static ResultUtil ok(String msg){
+	public static ResultUtil ok(String resMsg){
 		ResultUtil result = new ResultUtil();
 		result.setCode(0);
 		result.setState("success");
-		result.setMsg(msg);
+		result.setMsg(resMsg);
 		return result;
 	}
 	

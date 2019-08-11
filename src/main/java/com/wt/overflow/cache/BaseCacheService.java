@@ -1,13 +1,13 @@
 package com.wt.overflow.cache;
 
-import com.wt.overflow.bean.SysRole;
+import com.wt.overflow.bean.Account;
 
 public interface BaseCacheService {
     /**
-     * 根据角色id查询角色相关信息
-      * @param roleId
+     * 根据用户id查询当前用户信息
+     * @param accountId
      * @return
      */
-    SysRole getRoleByRoleId(String roleId);
+    Account getAccountById(String accountId);
 
 }

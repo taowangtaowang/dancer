@@ -56,7 +56,7 @@ public class SysUser implements Serializable{
     @Column(name = "deleteMark")
     private int deletemark;
     @Column(name = "enabledMark")
-    private int enabledmark;
+    private int enabledMark;
     @Column(name = "description")
     private String description;
     @Column(name = "creatorTime")
@@ -242,12 +242,12 @@ public class SysUser implements Serializable{
         this.deletemark = deletemark;
     }
 
-    public int getEnabledmark() {
-        return enabledmark;
+    public int getEnabledMark() {
+        return enabledMark;
     }
 
-    public void setEnabledmark(int enabledmark) {
-        this.enabledmark = enabledmark;
+    public void setEnabledMark(int enabledMark) {
+        this.enabledMark = enabledMark;
     }
 
     public String getDescription() {

@@ -1,44 +1,45 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%--
+  Created by IntelliJ IDEA.
+  User: sxjun
+  Date: 2015/8/12
+  Time: 13:47
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>验证码页面</title>
-<script type="text/javascript"
-    src="${pageContext.request.contextPath}/page/js/lib/jquery-1.11.1.js"></script>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+  <style type="text/css">
+    body, html {width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+    #allmap{width:100%;height:500px;}
+    p{margin-left:5px; font-size:14px;}
+  </style>
+  <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=cTYtHPV1spdnWgFSeKfXqjTh"></script>
+  <script type="text/javascript" src="http://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js"></script>
+  <script type="text/javascript" src="http://api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer_min.js"></script>
+  <title>点聚合</title>
 </head>
 <body>
-    <form action="${pageContext.request.contextPath}/login/verifyUser" method="post">
-        	请输入验证码：<input type="text" name="ImageCode" style="width: 80px;" /> <img id="imgObj" alt="验证码"
-            src="${pageContext.request.contextPath}/login/getImage"><a href="#" onclick="changeImg()">换一张</a><br/> <input
-            type="submit" value="提交" />
-    </form>
-
+<div id="allmap"></div>
+<p>缩放地图，查看点聚合效果</p>
 </body>
-<script type="text/javascript">
-    $(function() {
-
-    });
-
-    function changeImg() {        
-        var imgSrc = $("#imgObj");    
-        var src = imgSrc.attr("src");        
-        imgSrc.attr("src", chgUrl(src));
-    }
-    
-    // 时间戳
-    // 为了使每次生成图片不一致，即不让浏览器读缓存，所以需要加上时间戳
-    function chgUrl(url) {
-        var timestamp = (new Date()).valueOf();
-        url = url.substring(0, 30);
-        if ((url.indexOf("&") >= 0)) {
-            url = url + "×tamp=" + timestamp;
-        } else {
-            url = url + "?timestamp=" + timestamp;
-        }
-        return url;
-    }
-
-</script>
 </html>
+<script type="text/javascript">
+  // 百度地图API功能
+  var map = new BMap.Map("allmap");
+  map.centerAndZoom(new BMap.Point(116.404, 39.915), 4);
+  map.enableScrollWheelZoom();
+
+  var MAX = 10;
+  var markers = [];
+  var pt = null;
+  var i = 0;
+  for (; i < MAX; i++) {
+    pt = new BMap.Point(116.404, 39.915);
+    markers.push(new BMap.Marker(pt));
+  }
+  //最简单的用法，生成一个marker数组，然后调用markerClusterer类即可。
+  var markerClusterer = new BMapLib.MarkerClusterer(map, {markers:markers});
+</script>

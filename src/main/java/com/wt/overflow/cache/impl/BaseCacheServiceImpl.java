@@ -1,9 +1,9 @@
 package com.wt.overflow.cache.impl;
 
-import com.wt.overflow.bean.SysRole;
+import com.wt.overflow.bean.Account;
 import com.wt.overflow.cache.BaseCacheService;
 import com.wt.overflow.cache.CacheConstants;
-import com.wt.overflow.dao.SysRoleMapper;
+import com.wt.overflow.dao.AccountMapper;
 import com.wt.overflow.exception.RRException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,14 +22,14 @@ public class BaseCacheServiceImpl implements BaseCacheService {
 
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
-    private final ConcurrentMap<String, Future<SysRole>> BaseCacheMap_getRole_By_RoleId = new ConcurrentHashMap<String, Future<SysRole>>();
+    private final ConcurrentMap<String, Future<Account>> BaseCacheMap_get_Account_ById = new ConcurrentHashMap<String, Future<Account>>();
 
     @Autowired
-    private SysRoleMapper sysRoleMapper;
+    private AccountMapper accountMapper;
 
     @Override
-    public SysRole getRoleByRoleId(String roleId) {
-        return getBaseCache(BaseCacheMap_getRole_By_RoleId, roleId,"getRoleByRoleId");
+    public Account getAccountById(String accountId) {
+        return getBaseCache(BaseCacheMap_get_Account_ById, accountId,"getAccountById");
     }
     //利用future实现的缓存
     private <T> T getBaseCache(ConcurrentMap<String, Future<T>> cacheMap, String pamStr,String type) {
@@ -40,11 +40,11 @@ public class BaseCacheServiceImpl implements BaseCacheService {
                     @Override
                     public T call() throws Exception {
                         // TODO 类型转换不够优雅，后续去优化
-                        if (type.equals(CacheConstants.GET_Role_By_RoleId)) {
-                            Example example = new Example(SysRole.class);
+                        if (type.equals(CacheConstants.GET_Account_By_Id)) {
+                            Example example = new Example(Account.class);
                             Example.Criteria criteria = example.createCriteria();
                             criteria.andEqualTo("id",pamStr);
-                            List<SysRole> list = sysRoleMapper.selectByExample(example);
+                            List<Account> list = accountMapper.selectByExample(example);
                             return (T)(list.isEmpty()?null:list.get(0));
                         } else {
                             return null;

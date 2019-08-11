@@ -1,15 +1,12 @@
 package com.wt.overflow.service;
 
-import com.wt.overflow.bean.SysUser;
+import com.wt.overflow.bean.Account;
 
 import java.util.List;
-import java.util.Map;
 
 
 public interface LoginService {
 
-	List<SysUser> queryByLoginName(String loginname);
-
-	Map<String, Object> queryInitData(SysUser sysUser);
+	List<Account> queryByAccount(String account);
 
 }
