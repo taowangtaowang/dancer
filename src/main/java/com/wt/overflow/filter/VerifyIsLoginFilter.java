@@ -15,7 +15,8 @@ import java.util.List;
  * @author vbon.hxp
  * 
  */
-public class VerifyIsLoginFilter implements Filter {
+public class VerifyIsLoginFilter {
+	//public class VerifyIsLoginFilter implements Filter {
 	public void destroy() {
 	}
 

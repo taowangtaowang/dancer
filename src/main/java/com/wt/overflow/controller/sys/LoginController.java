@@ -4,7 +4,6 @@ import com.wt.overflow.bean.Account;
 import com.wt.overflow.exception.ResultUtil;
 import com.wt.overflow.service.LoginService;
 import com.wt.overflow.service.MenuService;
-import com.wt.overflow.util.CodeUtil;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
@@ -17,13 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.imageio.ImageIO;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.awt.image.RenderedImage;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -111,7 +105,7 @@ public class LoginController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "selectShowMenus")
+	@RequestMapping(value = "selectShowMenus",method = RequestMethod.POST)
 	@ResponseBody
 	@ApiOperation(value = "查询当前登录用户的菜单权限",
 			notes = "从登录用户获取当前用户所拥有的权限", nickname = "获取菜单权限-LoginController")
@@ -129,7 +123,7 @@ public class LoginController {
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping("exit")
+	@RequestMapping(value="exit",method = RequestMethod.GET)
 	@ResponseBody
 	@ApiOperation(value = "退出登录",
 			notes = "通過清除session达到退出登录", nickname = "登录-LoginController")
@@ -141,40 +135,5 @@ public class LoginController {
 		return parameter;
 	}
 
-
-	/**
-	 * 将验证码写到登录页面
-	 *
-	 * @param req
-	 * @param resp
-	 */
-	@RequestMapping("getImage")
-	@ResponseBody
-	public void getImage(HttpServletRequest req, HttpServletResponse resp) {
-		logger.info("日志测试 controller包");
-		// 调用工具类生成的验证码和验证码图片
-		Map<String, Object> codeMap = CodeUtil.generateCodeAndPic();
-
-		// 将四位数字的验证码保存到Session中。
-		HttpSession session = req.getSession();
-		session.setAttribute("code", codeMap.get("code").toString());
-
-		// 禁止图像缓存。
-		resp.setHeader("Pragma", "no-cache");
-		resp.setHeader("Cache-Control", "no-cache");
-		resp.setDateHeader("Expires", -1);
-		resp.setHeader("Pragma", "no-cache");
-		resp.setContentType("image/jpeg");
-		//resp.addHeader("ImageCode", session.getAttribute("code").toString());// 验证码唯一
-		// 将图像输出到Servlet输出流中。
-		ServletOutputStream sos;
-		try {
-			sos = resp.getOutputStream();
-			ImageIO.write((RenderedImage) codeMap.get("codePic"), "jpeg", sos);
-			sos.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 
 }

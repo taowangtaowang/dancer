@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +28,7 @@ public class TestController {
      * @param response
      * @return
      */
-    @RequestMapping("testTransactionManager")
+    @RequestMapping(value="testTransactionManager",method = RequestMethod.GET)
     @ResponseBody
     @ApiOperation(value="此api只做测试使用-testcontroller", notes="此api只做测试使用")
     public ResultUtil testTransactionManager(

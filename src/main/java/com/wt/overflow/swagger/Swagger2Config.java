@@ -3,8 +3,8 @@ package com.wt.overflow.swagger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -15,12 +15,18 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 //http://127.0.0.1:8080/dancer/swagger-ui.html
-@Component
 @Configuration
 @EnableSwagger2
 @ComponentScan(basePackages = {"com.wt.overflow.controller.sys"})
 @EnableWebMvc
 public class Swagger2Config extends WebMvcConfigurationSupport {
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
+        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+    }
+
 
     @Bean
     public Docket swaggerSpringMvcPlugin() {
@@ -37,12 +43,13 @@ public class Swagger2Config extends WebMvcConfigurationSupport {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("dancer-API")
-                .termsOfServiceUrl("www.wt990099.cn")
-                .description("dancer-API")
-                .license("License Version 2.0")
-                .licenseUrl("www.wt990099.cn")
-                .version("2.0").build();
+                .title("dancer-API")               //大标题 title
+                .description("www.wt990099.cn")             //小标题
+                .version("1.0.0")                           //版本
+                .termsOfServiceUrl("www.wt990099.cn")    //终端服务程序
+                .license("手持代码的侠客")                         //链接显示文字
+                .licenseUrl("http://www.wt990099.cn")           //网站链接
+                .build();
     }
 
 

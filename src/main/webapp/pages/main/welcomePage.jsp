@@ -6,7 +6,7 @@
 <body>
 <link  type="text/css" rel="stylesheet" href="/dancer/assets/thinker-md/thinker-md.vendor.css" />
 <h4>
-  敲字母的过程中，免不了不停的学习，不停地忘记 该仓库作为记录我整理的知识 所以版本做一些记录：
+  敲字母的过程中，免不了不停的学习，不停地忘记 该仓库作为记录我整理的知识 所以版本做一些记录.
 </h4>
 <h4>
   版本迭代：springmvc——>dubbo——>springboot——>springcloud

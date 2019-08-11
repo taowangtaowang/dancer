@@ -11,25 +11,26 @@ http://www.springframework.org/schema/mvc
 http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
 
 	<!-- 启动注解驱动的Spring MVC功能，注册请求url和注解POJO类方法的映射-->
-	<mvc:annotation-driven>
-	</mvc:annotation-driven>
-
+	<mvc:annotation-driven/>
+	<!--<mvc:default-servlet-handler />-->
 	<!--资源文件路径-->
-	<mvc:resources mapping="/Content/**" location="/Content/" /> 
+	<mvc:resources mapping="/assets/**" location="/assets/" />
 
 	<!-- 启动包扫描功能，以便注册带有@Controllers、@service、@repository、@Component等注解的类成为spring的bean -->
 	<context:component-scan base-package="com.wt.overflow.controller.sys" />
+
+	<!--开启swagger https://my.oschina.net/u/3872757/blog/1844742-->
+	<bean class="com.wt.overflow.swagger.Swagger2Config" />
+	<mvc:resources mapping="swagger-ui.html" location="classpath:/META-INF/resources/" />
+	<mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/" />
+
+
 	<!-- 对模型视图名称的解析，在请求时模型视图名称添加前后缀 -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
 		<property name="prefix" value="/"/>
 		<property name="suffix" value=".jsp"/>
-		<property name="order" value="0"/>
 	</bean>
 
-	<!--开启swagger-->
-	<!--  swagger静态文件路径 -->
-	<mvc:resources mapping="/swagger/**" location="/WEB-INF/swagger/" cache-period="31556926"/>
-	<mvc:default-servlet-handler />
-	<bean class="com.wt.overflow.swagger.Swagger2Config" />
+
 </beans>
