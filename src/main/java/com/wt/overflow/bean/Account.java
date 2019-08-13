@@ -7,13 +7,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
 
-@Table(name = "Account")
+@Table(name = "account")
 public class Account implements Serializable {
 
     @Id
     @Column(name = "id")
     @ApiModelProperty(value = "主键")
-    private String id;//account.id (用户id)
+    private int id;//account.id (用户id)
 
     @Column(name = "account")
     private String account;
@@ -22,11 +22,11 @@ public class Account implements Serializable {
     @Column(name = "register_time")
     private String register_time;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

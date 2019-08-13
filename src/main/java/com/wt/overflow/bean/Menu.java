@@ -8,7 +8,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.io.Serializable;
 
-@Table(name = "Menu")
+@Table(name = "menu")
 public class Menu implements Serializable {
     @Id
     @Column(name = "id")

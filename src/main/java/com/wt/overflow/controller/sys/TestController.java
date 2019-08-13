@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 @Controller
 @RequestMapping(value = "test")
 public class TestController {
@@ -23,17 +24,15 @@ public class TestController {
 
 
     /**
-     * 测试事务
-     * @param request
-     * @param response
+     * 单库测试事务
      * @return
      */
-    @RequestMapping(value="testTransactionManager",method = RequestMethod.GET)
+    @RequestMapping("testTransactionManager")
     @ResponseBody
     @ApiOperation(value="此api只做测试使用-testcontroller", notes="此api只做测试使用")
     public ResultUtil testTransactionManager(
             @ModelAttribute SysUser sysUser,
-                    HttpServletRequest request, HttpServletResponse response) {
+            HttpServletRequest request, HttpServletResponse response) {
         int res = testService.testTransactionManager(sysUser);
         if(res>0)
             return ResultUtil.ok("事务测试成功");
@@ -41,5 +40,18 @@ public class TestController {
             return ResultUtil.error("事务测试失败");
     }
 
+
+
+    /**
+     * 测试多数据源
+     * @return
+     */
+    @RequestMapping(value="testSomeDataSourceTransaction",method = RequestMethod.GET)
+    @ResponseBody
+    @ApiOperation(value="此api只做测试使用-testcontroller", notes="多数据源测试")
+    public ResultUtil testSomeDataSourceTransaction() {
+        testService.testSomeDataSourceTransaction();
+        return ResultUtil.ok("事务测试成功");
+    }
 
 }
