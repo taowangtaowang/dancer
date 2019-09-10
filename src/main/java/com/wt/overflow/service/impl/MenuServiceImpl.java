@@ -6,7 +6,8 @@ import com.wt.overflow.dao.MenuMapper;
 import com.wt.overflow.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tk.mybatis.mapper.entity.Example;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,29 +25,29 @@ public class MenuServiceImpl implements MenuService {
      * @param account
      * @return
      */
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     @Override
     public List<Map<String, Object>> selectShowMenus(Account account) {
         List<Map<String, Object>> maps = new ArrayList<Map<String, Object>>();
         //获取所有菜单
-        Example menuExample = new Example(Menu.class);
-        //Example.Criteria menuCriteria = menuExample.createCriteria();
-        List<Menu> menuList = menuMapper.selectByExample(menuExample);
+        List<Menu> menuList = menuMapper.selectAll();
         List<Menu> rootMenus = getRootMenus(menuList);
-
-        for (Menu menu : rootMenus) {
-            Map<String, Object> map = new HashMap<String, Object>();
-            map.put("id", menu.getId());
-            map.put("text", menu.getName());
-            map.put("order", menu.getOrderby());
-            //菜单额外属性
-            Map<String, Object> attrMap = new HashMap<String, Object>();
-            attrMap.put("url", menu.getUrl());
-            map.put("attributes", attrMap);
-            map.put("url", menu.getUrl());
-            map.put("icon", menu.getIcon());
-            List<Map<String, Object>> childrenMenus = getChildrenMenus(menuList, menu.getId());
-            map.put("children", childrenMenus);
-            maps.add(map);
+        if(!rootMenus.isEmpty()){
+            rootMenus.forEach(e->{
+                Map<String, Object> map = new HashMap<String, Object>();
+                map.put("id", e.getId());
+                map.put("text", e.getName());
+                map.put("order", e.getOrderby());
+                //菜单额外属性
+                Map<String, Object> attrMap = new HashMap<String, Object>();
+                attrMap.put("url", e.getUrl());
+                map.put("attributes", attrMap);
+                map.put("url", e.getUrl());
+                map.put("icon", e.getIcon());
+                List<Map<String, Object>> childrenMenus = getChildrenMenus(menuList, e.getId());
+                map.put("children", childrenMenus);
+                maps.add(map);
+            });
         }
         return maps;
     }
@@ -59,16 +60,19 @@ public class MenuServiceImpl implements MenuService {
      */
     private List<Menu> getRootMenus(List<Menu> menus) {
         List<Menu> rootMenus = new ArrayList<Menu>();
-        for (Menu menu : menus) {
-            if (menu.getParentId() == null) {
-                rootMenus.add(menu);
-                continue;
-            }
-            Menu parentMenu = get(menus, menu.getParentId());
-            if (parentMenu == null) {
-                rootMenus.add(menu);
+        if(!menus.isEmpty()){
+            for (Menu menu : menus) {
+                if (menu.getParentId() == null) {
+                    rootMenus.add(menu);
+                    continue;
+                }
+                Menu parentMenu = get(menus, menu.getParentId());
+                if (parentMenu == null) {
+                    rootMenus.add(menu);
+                }
             }
         }
+
         return rootMenus;
     }
 

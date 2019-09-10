@@ -1,2 +1,4 @@
+.idea/
 target/
 dancer.iml
+jdbc.properties

@@ -2,30 +2,18 @@ package com.wt.overflow.bean;
 
 import io.swagger.annotations.ApiModelProperty;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Transient;
 import java.io.Serializable;
 
-@Table(name = "menu")
 public class Menu implements Serializable {
-    @Id
-    @Column(name = "id")
     @ApiModelProperty(value = "主键")
     private String id;//
 
-    @Column(name = "parent_id")
     private String parentId; //菜单上级id
-    @Column(name = "name")
     private String name;//菜单名字
-    @Column(name = "url")
     private String url;//菜单链接地址
-    @Column(name = "orderby")
     private String orderby;//菜单排序.
 
 
-    @Transient
     private String icon;//菜单图片
 
     public String getId() {

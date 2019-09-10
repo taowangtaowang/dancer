@@ -7,7 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tk.mybatis.mapper.entity.Example;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -22,13 +23,12 @@ public class LoginServiceImpl implements LoginService {
 	private AccountMapper accountMapper;
 
 	protected Logger logger = LoggerFactory.getLogger(getClass());
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 	@Override
 	public List<Account> queryByAccount(String account) {
 		logger.info("日志测试service包");
-		Example accountExample = new Example(Account.class);
-		Example.Criteria accountCriteria = accountExample.createCriteria();
-		accountCriteria.andEqualTo("account",account);
-		return accountMapper.selectByExample(accountExample);
+		Account accounts = new Account();accounts.setAccount(account);
+		return accountMapper.selectByExample(accounts);
 	}
 
 }

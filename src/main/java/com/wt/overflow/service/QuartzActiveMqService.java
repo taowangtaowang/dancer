@@ -1,9 +1,9 @@
 package com.wt.overflow.service;
 
-import com.wt.overflow.bean.SysUser;
+import com.wt.overflow.bean.Account;
 
 public interface QuartzActiveMqService {
-    boolean simpleSend(SysUser messageStr);
+    boolean simpleSend(Account account);
 
     boolean send(String messageStr);
 

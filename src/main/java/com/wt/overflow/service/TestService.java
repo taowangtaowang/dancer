@@ -1,9 +1,9 @@
 package com.wt.overflow.service;
 
-import com.wt.overflow.bean.SysUser;
+import com.wt.overflow.bean.Account;
 
 public interface TestService {
-    int testTransactionManager(SysUser sysUser);
+    int testTransactionManager(Account account);
 
     void testSomeDataSourceTransaction();
 }

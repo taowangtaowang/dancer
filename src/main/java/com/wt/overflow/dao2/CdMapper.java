@@ -1,10 +1,14 @@
 package com.wt.overflow.dao2;
 
 import com.wt.overflow.bean.Cd;
-import org.mybatis.spring.annotation.MapperScan;
-import tk.mybatis.mapper.common.Mapper;
+import org.apache.ibatis.annotations.Mapper;
 
-@MapperScan
-public interface CdMapper extends Mapper<Cd> {
+import java.util.List;
 
+@Mapper
+public interface CdMapper {
+
+    List<Cd> selectAll();
+
+    int insert(Cd cd);
 }

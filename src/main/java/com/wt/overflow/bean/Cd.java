@@ -2,18 +2,14 @@ package com.wt.overflow.bean;
 
 import io.swagger.annotations.ApiModelProperty;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
 import java.io.Serializable;
 
-@Table(name = "Cd")
 public class Cd implements Serializable {
 
-    @Id
-    @Column(name = "id")
     @ApiModelProperty(value = "主键")
     private int id;//account.id (用户id)
+
+    private String names;
 
 
     public int getId() {
@@ -24,4 +20,11 @@ public class Cd implements Serializable {
         this.id = id;
     }
 
+    public String getNames() {
+        return names;
+    }
+
+    public void setNames(String names) {
+        this.names = names;
+    }
 }

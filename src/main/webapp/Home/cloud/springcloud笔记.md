@@ -102,16 +102,15 @@
 				断路器：hystrix
 				网关：zuul
 				分布式追踪系统：sleuth+zipkin
-
+        
 		学习资料：https://blog.csdn.net/zhangweiwei2020/article/details/78646252
-
-
-
-
-
-
-
-
+    dubbo,cloud的优劣：
+        1   Dubbo 缺省协议采用单一长连接和 NIO 异步通讯，适合于小数据量大并发的服务调用，以及服务消费者机器数远大于服务提供者机器数的情况。
+            Spring Cloud 使用 HTTP 协议的 REST API。
+            2者之间在并发传输对象上 性能上基本上2-3倍的差距
+        2   微服务架构，可以集成更多的东西来自定义实现特定场景，比如zuul网关 task任务 bus消息总线 sleuth链路追踪等等
+        3      
+    
 4、微服务下电商项目基础模块设计
 	简介：微服务下电商项目基础模块设计 分离几个模块，课程围绕这个基础项目进行学习	
 		小而精的方式学习微服务
@@ -163,60 +162,27 @@
 		CAP定理：
 			指的是在一个分布式系统中，Consistency（一致性）、 Availability（可用性）、Partition tolerance（分区容错性），三者不可同时获得。
 
-
-
-
 		一致性（C）：在分布式系统中的所有数据备份，在同一时刻是否同样的值。（所有节点在同一时间的数据完全一致，越多节点，数据同步越耗时）
-
-		
 		可用性（A）：负载过大后，集群整体是否还能响应客户端的读写请求。（服务一直可用，而且是正常响应时间）
-
-
-		分区容错性（P）：分区容忍性，就是高可用性，一个节点崩了，并不影响其它的节点（100个节点，挂了几个，不影响服务，越多机器越好）
-
-
+		分区容错性（P）：分区容忍性，就是可能我们的分布式应用部署在多个不同的网络之间，可能网络之间存在不能访问的问题。这个问题无法绝对避免，都是有可能出现的所以 我们默认P总是成立
 		CAP理论就是说在分布式存储系统中，最多只能实现上面的两点。而由于当前的网络硬件肯定会出现延迟丢包等问题，所以分区容忍性是我们必须需要实现的。所以我们只能在一致性和可用性之间进行权衡
-
-		
-
-
 
 3、分布式系统CAP原理常见面试题和注册中心选择————重点
 		简介:讲解CAP原则在面试中回答和注册中心选择
 
 		C A 满足的情况下，P不能满足的原因：
 			数据同步(C)需要时间，也要正常的时间内响应(A)，那么机器数量就要少，所以P就不满足
-		
 		CP 满足的情况下，A不能满足的原因：
 			数据同步(C)需要时间, 机器数量也多(P)，但是同步数据需要时间，所以不能再正常时间内响应，所以A就不满足
-
 		AP 满足的情况下，C不能满足的原因：
 			机器数量也多(P)，正常的时间内响应(A)，那么数据就不能及时同步到其他节点，所以C不满足
-
 		注册中心选择：
 			Zookeeper：CP设计，保证了一致性，集群搭建的时候，某个节点失效，则会进行选举行的leader，或者半数以上节点不可用，则无法提供服务，因此可用性没法满足
-                 
 			Eureka：AP原则，无主从节点，一个节点挂了，自动切换其他节点可以使用，去中心化
-
-
 		结论：分布式系统中P,肯定要满足，所以只能在CA中二选一
 			没有最好的选择，最好的选择是根据业务场景来进行架构设计
-
 			如果要求一致性，则选择zookeeper，如金融行业
-			
 			如果要去可用性，则Eureka，如电商系统
-
-
-
-
-
-
-
-
-
-
-
-
 
 4、SpringCloud微服务核心组件Eureka介绍和闭源后影响
 	简介：
@@ -230,17 +196,6 @@
 	
 	参考：https://www.jianshu.com/p/d32ae141f680
 		 https://blog.csdn.net/zjcjava/article/details/78608892
-
-
-
-
-
-
-
-
-
-
-
 
 5、服务注册和发现Eureka Server搭建实战
 	简介：使用IDEA搭建Eureka服务中心Server端并启动，项目基本骨架介绍
@@ -268,21 +223,6 @@
 	maven地址: https://www.cnblogs.com/sword-successful/p/6408281.html
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 6、服务注册和发现之Eureka Client搭建商品服务实战
 	简介：搭建用商品服务，并将服务注册到注册中心
 
@@ -293,11 +233,11 @@
 	
 	4、配置文件加入注册中心地址
 		使用eureka客户端 官方文档：http://cloud.spring.io/spring-cloud-netflix/single/spring-cloud-netflix.html#netflix-eureka-client-starter
-
-
-
-
-
+    eureka:
+      client:
+        serviceUrl:
+          defaultZone: http://localhost:8761/eureka/
+      
 7、Eureka服务注册中心配置控制台问题处理
 	简介：讲解服务注册中心管理后台，（后续还会细讲）
 
@@ -312,15 +252,8 @@
 
 		
 	问题二：为什么只加一个注册中心地址，就可以注册
-	By having spring-cloud-starter-netflix-eureka-client on the classpath, your application automatically registers with the Eureka Server. Configuration is required to locate the Eureka server, as shown in the following example:
-
-
-
-
-
-
-
-
+	By having spring-cloud-starter-netflix-eureka-client on the classpath, your application automatically
+	 registers with the Eureka Server. Configuration is required to locate the Eureka server, as shown in the following example:
 
 
 第四章 服务消费者ribbon和feign实战和注册中心高可用
@@ -333,28 +266,18 @@
 			远程过程调用，像调用本地服务(方法)一样调用服务器的服务
 			支持同步、异步调用
 			客户端和服务器之间建立TCP连接，可以一次建立一个，也可以多个调用复用一次链接
-
 			PRC数据包小
 				protobuf
 				thrift
 			rpc：编解码，序列化，链接，丢包，协议
-
-
 		Rest(Http):
 			http请求，支持多种协议和功能
 			开发方便成本低
-
 			http数据包大
-
 			java开发：HttpClient，URLConnection
 
-
-
-
-
-
-
 2、微服务调用方式之ribbon实战 订单调用商品服务
+
 	简介：实战电商项目 订单服务 调用商品服务获取商品信息
 		1、创建order_service项目
 		2、开发伪下单接口
@@ -368,21 +291,29 @@
 			  }
 		4、根据名称进行调用商品，获取商品详情
 
-
-
-
-
 3、高级篇幅之Ribbon负载均衡源码分析实战
+
 	简介: 讲解ribbon服务间调用负载均衡源码分析
 		1、完善下单接口
 		2、分析@LoadBalanced
 			1）首先从注册中心获取provider的列表
 			2）通过一定的策略选择其中一个节点
 			3）再返回给restTemplate调用
-
-
-
-
+    复杂均衡策略：
+        RoundRobinRule 默认   轮询各个server的策略方式
+        AvailabilityFilteringRule   
+            1）在默认情况下，这台服务器如果3次连接失败，这台服务器就会被设置为“短路”状态。短路状态将持续30秒，如果再次连接失败，短路的持续时间就会几何级地增加。
+            注意：可以通过修改配置loadbalancer.<clientName>.connectionFailureCountThreshold来修改连接失败多少次之后被设置为短路状态。默认是3次。
+            2）并发数过高的服务器。如果一个服务器的并发连接数过高，配置了AvailabilityFilteringRule规则的客户端也会将其忽略。并发连接数的上线，可以由客户端的<clientName>.
+                <clientConfigNameSpace>.ActiveConnectionsLimit属性进行配置。
+        WeightedResponseTimeRule    为每一个服务器赋予一个权重值。服务器响应时间越长，这个服务器的权重就越小。这个规则会随机选择服务器，这个权重值会影响服务器的选择。
+        ZoneAvoidanceRule   以区域可用的服务器为基础进行服务器的选择。使用Zone对服务器进行分类，这个Zone可以理解为一个机房、一个机架等。
+        BestAvailableRule   忽略哪些短路的服务器，并选择并发数较低的服务器。
+        RandomRule  随机选择一个可用的服务器。
+        Retry   重试机制的选择逻辑           
+        
+        还可以自定义均衡策略:实现IRule   
+        
 4、高级篇幅之服务间调用之负载均衡策略调整实战
 	简介：实战调整默认负载均衡策略实战
 
@@ -393,61 +324,30 @@
 		product-service:
 		  ribbon:
 		    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
-
 	策略选择：
 		1、如果每个机器配置一样，则建议不修改策略 (推荐)
 		2、如果部分机器配置强，则可以改为 WeightedResponseTimeRule
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 5、微服务调用方式之feign 实战 订单调用商品服务
+
 	简介：改造电商项目 订单服务 调用商品服务获取商品信息
 		Feign： 伪RPC客户端(本质还是用http)
 		官方文档: https://cloud.spring.io/spring-cloud-openfeign/
-
-
 		1、使用feign步骤讲解（新旧版本依赖名称不一样）
 			加入依赖
 				 <dependency>
 			        <groupId>org.springframework.cloud</groupId>
 			        <artifactId>spring-cloud-starter-openfeign</artifactId>
 			    </dependency>
+			
 			启动类增加@EnableFeignClients
 			增加一个接口 并@FeignClient(name="product-service")
-
 		2、编码实战
-
-
 		3、注意点：
 			1、路径
 			2、Http方法必须对应
 			3、使用requestBody，应该使用@PostMapping
 			4、多个参数的时候，通过@RequestParam（"id") int id)方式调用
-
-
-
-
-
-
-
 
 6、Feign核心源码解读和服务调用方式ribbon和Feign选择	
 	简介: 讲解Feign核心源码解读和 服务间的调用方式ribbon、feign选择
@@ -476,42 +376,24 @@
 		            e.printStackTrace();
 		        }
 
-
-
-
-
 第五章 互联网架构服务降级熔断 Hystrix 实战
-
 
 1、分布式核心知识之熔断、降级讲解
 	简介：系统负载过高，突发流量或者网络等各种异常情况介绍，常用的解决方案
 
 	1、熔断：
 		保险丝，熔断服务，为了防止整个系统故障，包含子和下游服务
-
 		下单服务 -》商品服务
 				-》用户服务 （出现异常-》熔断）
-
 	2、降级：
 		抛弃一些非核心的接口和数据
-
 		旅行箱的例子：只带核心的物品，抛弃非核心的，等有条件的时候再去携带这些物品
-
-		
 	3、熔断和降级互相交集
 		相同点：
 			1）从可用性和可靠性触发，为了防止系统崩溃
 			2）最终让用户体验到的是某些功能暂时不能用
-
 		不同点
 			1）服务熔断一般是下游服务故障导致的，而服务降级一般是从整体系统负荷考虑，由调用方控制
-		
-
-
-
-
-
-
 
 
 2、Netflix开源组件断路器Hystrix介绍
@@ -520,34 +402,18 @@
 	文档地址：
 		https://github.com/Netflix/Hystrix
 		https://github.com/Netflix/Hystrix/wiki
-
 	1、什么是Hystrix？
 		1）hystrix对应的中文名字是“豪猪”
-		
 		2）hystrix	英[hɪst'rɪks] 美[hɪst'rɪks]
-
-	
 	2、为什么要用？
 		在一个分布式系统里，一个服务依赖多个服务，可能存在某个服务调用失败，
 		比如超时、异常等，如何能够保证在一个依赖出问题的情况下，不会导致整体服务失败，
 		通过Hystrix就可以解决
-
 		http://cloud.spring.io/spring-cloud-netflix/single/spring-cloud-netflix.html#_circuit_breaker_hystrix_clients
-
 	3、提供了熔断、隔离、Fallback、cache、监控等功能
-
-
 	4、熔断后怎么处理？
 		出现错误之后可以 fallback 错误的处理信息
-
 		兜底数据
-
-
-
-
-
-
-
 
 3、Feign结合Hystrix断路器开发实战《上》
 	简介：讲解SpringCloud整合断路器的使用，用户服务异常情况
@@ -556,17 +422,13 @@
 	
 	注意：网上新旧版本问题，所以要以官网为主，不然部分注解会丢失
 	最新版本 2.0
-
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
         </dependency>
-
-
 	2、增加注解
 		启动类里面增加注解
 		@EnableCircuitBreaker
-
 		注解越来越多-》 SpringCloudApplication注解
 
 	3、API接口编码实战
@@ -576,10 +438,6 @@
 			api方法上增加 @HystrixCommand(fallbackMethod = "saveOrderFail")
 			
 			编写fallback方法实现，方法签名一定要和api方法签名一致（注意点！！！）
-
-
-
-		
 
 	补充： 修改maven仓库地址
 	pom.xml中修改
@@ -599,25 +457,6 @@
         </repository>
     </repositories>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 4、Feign结合Hystrix断路器开发实战《下》
 	简介：讲解SpringCloud整合断路器的使用，用户服务异常情况
 	1、feign结合Hystrix
@@ -628,22 +467,6 @@
 			    enabled: true
 
 		2）FeignClient(name="xxx", fallback=xxx.class ), class需要继承当前FeignClient的类
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 5、熔断降级服务异常报警通知实战
@@ -676,11 +499,6 @@
                 System.out.println("已经发送过短信，20秒内不重复发送");
             }
         }).start();
-		
-
-
-
-
 
 6、高级篇幅之深入源码剖析Hystrix降级策略和调整
 	简介：源码分析Hystrix降级策略和调整
@@ -714,14 +532,6 @@
 	          thread:
 	            timeoutInMilliseconds: 4000
 
-
-
-
-
-
-
-
-
 7、断路器Dashboard监控仪表盘实战
 	简介：讲解断路器Dashboard基础使用和查看
 	1、加入依赖
@@ -737,22 +547,16 @@
 
     2、启动类增加注解
     	@EnableHystrixDashboard
-
-    	
     3、配置文件增加endpoint
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-
+    management:
+      endpoints:
+        web:
+          exposure:
+            include: "*"
 
     4、访问入口
     	http://localhost:8781/hystrix
-
     	Hystrix Dashboard输入： http://localhost:8781/actuator/hystrix.stream 
-
-    
     参考资料
     	默认开启监控配置
     	https://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/#boot-features-security-actuator
@@ -760,23 +564,12 @@ management:
         配置文件类：
     		spring-configuration-metadata.json
 
-
-
-
-
-
-
 8、断路器监控仪表参数讲解和模拟熔断
 	简介：讲解 断路器监控仪表盘参数和模拟熔断
 
 	1、sse  server-send-event推送到前端
 
 	资料：https://github.com/Netflix/Hystrix/wiki/Dashboard
-
-
-
-
-
 
 
 第六章 微服务网关zuul开发实战 
@@ -810,49 +603,27 @@ management:
 		
 		nginx+lua：是一个高性能的HTTP和反向代理服务器,lua是脚本语言，让Nginx执行Lua脚本，并且高并发、非阻塞的处理各种请求
 
-
-
-
-
-
-
 2、SpringCloud的网关组件zuul基本使用
 	简介：讲解zuul网关基本使用
 
 	1、加入依赖
-
-
 	2、启动类加入注解 @EnableZuulProxy
 		默认集成断路器  @EnableCircuitBreaker
-
 		默认访问规则  
 			http://gateway:port/service-id/**
-
 				例子：默认 /order-service/api/v1/order/save?user_id=2&product_id=1
 					 自定义 /xdclass_order/api/v1/order/save?user_id=2&product_id=1
-
 		自定义路由转发：
 			zuul:
 			 routes:
 			 	order-service: /apigateway/**
-
-
 		环境隔离配置：
 			需求 ：不想让默认的服务对外暴露接口
 				/order-service/api/v1/order/save
-
 			配置：
 			zuul: 
 				ignored-patterns:
 					- /*-service/api/v1/order/save
-
-
-
-
-
-
-
-
 
 3、高级篇幅之Zuul常用问题分析和网关过滤器原理分析
 
@@ -869,13 +640,6 @@ management:
 	4、共享RequestContext，上下文对象
 
 
-
-
-
-
-
-
-
 4、自定义Zuul过滤器实现登录鉴权实战
 	简介：自定义Zuul过滤器实现登录鉴权实战
 
@@ -886,21 +650,12 @@ management:
 	3、在类顶部加注解，@Component,让Spring扫描
 
 
-
-
-
-
-
 5、高级篇幅之高并发情况下接口限流特技	
 	简介：谷歌guava框架介绍，网关限流使用
 
 	1、nginx层限流
 
 	2、网关层限流
-
-
-
-
 
 6、Zuul微服务网关集群搭建
 	简介：微服务网关Zull集群搭建
@@ -909,17 +664,11 @@ management:
 	https://www.cnblogs.com/liuyisai/p/5990645.html
 
 
-
-
-
 第七章 分布式链路追踪系统Sleuth和ZipKin实战
 	
 
 	1、微服务下的链路追踪讲解和重要性
 		简介：讲解什么是分布式链路追踪系统，及使用好处
-		
-
-
 
 	2、SpringCloud的链路追踪组件Sleuth实战
 		简介：讲解分布式链路追踪组件Sleuth实战
@@ -946,17 +695,8 @@ management:
 	         <artifactId>spring-cloud-starter-sleuth</artifactId>
 	     	</dependency>
 
-
-
-
-
-
 	3、SpringCloud的链路追踪组件Sleuth常见问题说明
 		简介：讲解分布式链路追踪组件Sleuth常见问题说明
-
-
-	  
-
 
 	4、可视化链路追踪系统Zipkin部署
 		简介：讲解Zipkin的介绍和部署
@@ -986,12 +726,6 @@ management:
 			http://blog.daocloud.io/cncf-3/
 			https://www.zhihu.com/question/27994350
 			https://yq.aliyun.com/articles/514488?utm_content=m_43347
-
-
-
-
-
-
 
 	5、高级篇幅之链路追踪组件Zipkin+Sleuth实战
 		简介：使用Zipkin+Sleuth业务分析调用链路分析实战
@@ -1023,17 +757,6 @@ management:
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 	
 第八章 微服务核心知识分布式配置中心Config实战
 	
@@ -1057,8 +780,6 @@ management:
 
 
 
-
-
 	2、SpringCloud的配置中心组件config-server实战
 		简介：讲解SpringCloud配置中心config-server实战
 		1、新建项目，创建config-server
@@ -1066,16 +787,6 @@ management:
 			@EnableConfigServer
 
 
-
-
-
-
-
-
-
-
-
-	
 	3、使用git服务器结合Config搭建分布式配置中心
 		简介：讲解使用git服务器结合Config搭建分布式配置中心
 
@@ -1120,7 +831,6 @@ management:
 			lable 仓库分支、默认master分支
 
 
-
 4、分布式配置中心客户端使用实战
 	简介：微服务里面客户端接入配置中心实战
 		官方文档：http://cloud.spring.io/spring-cloud-config/single/spring-cloud-config.html#_spring_cloud_config_client
@@ -1155,10 +865,6 @@ management:
 		注意点：
 			1.配置文件要用bootstrap.yml
 			2.默认读取文件名是 服务名称
-
-
-
-
 
 
 第九章 微服务消息总线Bus结合消息队列RabbitMQ实战
@@ -1912,31 +1618,6 @@ docker pull registry.cn-shenzhen.aliyuncs.com/xdclass/xdclass_images:eureka-v201
 		 http://47.106.120.173:9000/apigateway/order/api/v1/order/save?user_id=5&product_id=3&token=232serer
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 第十四章 课程总结和常见问题处理
 
 	1、SpringCloud微服务常见问题和解决思路
@@ -1992,11 +1673,4 @@ docker pull registry.cn-shenzhen.aliyuncs.com/xdclass/xdclass_images:eureka-v201
 
 			可以关注：k8s / service mesh /server less 等技术
 
-		
-		总结：
-			1）后续会推出对应的课程，还有项目实战系列，大家记得关注 小D课堂，官网 ：https://xdclass.net,  
-
-			2）也可以加我微信交流： jack794666918
-
-			3）购买对应的课程后，记得进我们小D课堂官方的交流群，我会在里面分享主流技术和答疑，面试经验等等，还会同步更新资料和还超级干货分享 
 

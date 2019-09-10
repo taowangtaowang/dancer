@@ -1,6 +1,6 @@
 package com.wt.overflow.controller.sys;
 
-import com.wt.overflow.bean.SysUser;
+import com.wt.overflow.bean.Account;
 import com.wt.overflow.exception.ResultUtil;
 import com.wt.overflow.service.QuartzActiveMqService;
 import com.wt.overflow.service.RealTimeActiveMqService1;
@@ -39,8 +39,8 @@ public class ActiveMqController {
     @ApiOperation(value="activeMqTest1手动版本测试", notes="直接手动调用发送手动调用接收")
     public ResultUtil activeMqTest1(
             @ApiParam(required=true,value="账号",name="messageStr")@RequestParam(value="messageStr")String messageStr){
-        SysUser sysUser = new SysUser();sysUser.setRealname("发送的消息是："+messageStr);
-        quartzActiveMqService.simpleSend(sysUser);//直接将消息转化并入队
+        Account account = new Account();account.setAccount("发送的消息是："+messageStr);
+        quartzActiveMqService.simpleSend(account);//直接将消息转化并入队
         //发送mqService.send(messageStr);  两者的区别？？
         return ResultUtil.ok(quartzActiveMqService.receive());
         //return ResultUtil.error("当前账号已被禁用");

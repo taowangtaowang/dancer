@@ -1,6 +1,6 @@
 package com.wt.overflow.service.impl;
 
-import com.wt.overflow.bean.SysUser;
+import com.wt.overflow.bean.Account;
 import com.wt.overflow.service.QuartzActiveMqService;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
@@ -32,8 +32,8 @@ public class QuartzActiveMqServiceImpl implements QuartzActiveMqService {
      * 直接将消息转化并入队
      */
     @Override
-    public boolean simpleSend(SysUser sysUser) {
-        jmsTemplate1.convertAndSend(sysUser);
+    public boolean simpleSend(Account account) {
+        jmsTemplate1.convertAndSend(account);
         return true;
     }
     /**
@@ -62,8 +62,8 @@ public class QuartzActiveMqServiceImpl implements QuartzActiveMqService {
             return null;
         }
         try {
-            SysUser sysUser = (SysUser) message.getObject();
-            return sysUser.getRealname();
+            Account account = (Account) message.getObject();
+            return account.getAccount();
         } catch (JMSException e) {
             e.printStackTrace();
         }

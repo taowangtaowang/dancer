@@ -11,9 +11,6 @@ import java.util.List;
 
 /**
  * spring过滤器，预处理日期格式
- * 
- * @author vbon.hxp
- * 
  */
 public class VerifyIsLoginFilter {
 	//public class VerifyIsLoginFilter implements Filter {

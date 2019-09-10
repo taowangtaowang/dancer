@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 import java.util.concurrent.*;
@@ -41,10 +40,8 @@ public class BaseCacheServiceImpl implements BaseCacheService {
                     public T call() throws Exception {
                         // TODO 类型转换不够优雅，后续去优化
                         if (type.equals(CacheConstants.GET_Account_By_Id)) {
-                            Example example = new Example(Account.class);
-                            Example.Criteria criteria = example.createCriteria();
-                            criteria.andEqualTo("id",pamStr);
-                            List<Account> list = accountMapper.selectByExample(example);
+                            Account account = new Account();account.setId(Integer.parseInt(pamStr));
+                            List<Account> list = accountMapper.selectByExample(account);
                             return (T)(list.isEmpty()?null:list.get(0));
                         } else {
                             return null;

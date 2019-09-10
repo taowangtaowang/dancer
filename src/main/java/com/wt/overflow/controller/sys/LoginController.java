@@ -42,7 +42,7 @@ public class LoginController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "check-login", method = RequestMethod.POST)
+	@RequestMapping(value = "checkLogin", method = RequestMethod.POST)
 	@ResponseBody
 	@ApiOperation(value = "登陆账号密码验证",
 			notes = "通过ResultUtil.state来界定是否登陆成功", nickname = "登录-LoginController")
@@ -50,12 +50,8 @@ public class LoginController {
 			@ApiParam(required = true, value = "账号", name = "account") @RequestParam(value = "account") String account,
 			@ApiParam(required = true, value = "密码", name = "password") @RequestParam(value = "password") String password,
 			HttpServletRequest request) {
-		//该方式可应用于操作日志的特殊处理  一般可以用apo切面时间操作日志
-		/*CustomOperationLogger.getLogger().log("登陆账号密码验证",
-				"通过ResultUtil.state来界定是否登陆成功", "登录-LoginController","无");*/
-		//完结
-		String authCode = request.getParameter("code");// 验证码
-		/*if (!Strings.isNotEmpty(authCode)) {
+		/*String authCode = request.getParameter("code");// 验证码
+		if (!Strings.isNotEmpty(authCode)) {
 			parameter.put("state", "error");
 		 	parameter.put("message", "验证码有误"); return parameter; 
 		}
