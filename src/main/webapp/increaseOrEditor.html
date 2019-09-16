@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>dancer</title>
+    <!-- Bootstrap core CSS -->
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <link href="assets/css/index.css" rel="stylesheet">
+    <link href="assets/css/config.css" rel="stylesheet">
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="assets/css/jquery.pagination.css" rel="stylesheet">
+    <!-- 表单验证 -->
+    <link href="assets/css/bootstrapValidator.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- nav导航 -->
+    <nav class="navbar navbar-inverse bdr-n z-ind">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">后台管理平台</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">admin <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">设置</a></li>
+                            <li><a href="#">个人中心</a></li>
+                            <li onclick="logout()"><a href="#">退出</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- 页面主体 -->
+    <div class="dh mainbox">
+        <!-- 左边菜单 -->
+        <div class="navleft leftnav-bgc">
+            <dl class="list_dl">
+                <dt class="list_dt">
+                    <span class="_after"></span>
+                    <p>基础菜单</p>
+                    <i class="list_dt_icon"></i>
+                </dt>
+                <dd class="list_dd">
+                    <ul>
+                        <li class="list_li">
+                            <a class="list_a" href="queryTable.html">菜单管理</a>
+                        </li>
+                        <li class="list_li">
+                            <a class="list_a" href="increaseOrEditor.html">增加编辑</a>
+                        </li>
+                        <li class="list_li">
+                            <a class="list_a" href="fileTree.html">角色管理</a>
+                        </li>
+                        <li class="list_li">
+                            <a class="list_a" href="error.html">错误页面</a>
+                        </li>
+                    </ul>
+                </dd>
+                <dt class="list_dt">
+                    <span class="_after"></span>
+                    <p>一级菜单</p>
+                    <i class="list_dt_icon"></i>
+                </dt>
+                <dd class="list_dd">
+                    <ul>
+                        <li class="list_li">二级菜单</li>
+                        <li class="list_li">二级菜单</li>
+                    </ul>
+                </dd>
+                <dt class="list_dt">
+                    <span class="_after"></span>
+                    <p>一级菜单</p>
+                    <i class="list_dt_icon"></i>
+                </dt>
+                <dd class="list_dd">
+                    <ul>
+                        <li class="list_li">二级菜单</li>
+                    </ul>
+                </dd>
+                <dt class="list_dt">
+                    <span class="_after"></span>
+                    <p>一级菜单</p>
+                    <i class="list_dt_icon"></i>
+                </dt>
+                <dd class="list_dd">
+                    <ul>
+                        <li class="list_li">二级菜单</li>
+                    </ul>
+                </dd>
+            </dl>
+        </div>
+        <!-- 右边主显示部分 -->
+        <div class="main-rightbox">
+            <div class="mainrightbox">
+                <!-- 路径导航 -->
+                <ol class="breadcrumb">
+                    <li><a href="index.html">首页</a></li>
+                    <li class="active">基础管理</li>
+                    <li class="active">菜单管理</li>
+                    <li class="active">增加编辑</li>
+                </ol>
+                <!-- 网页主体内容部分 -->
+                <div class="main_box ioep">
+                    <!-- 页面单排显示 -->
+                    <!-- <div class="modal-conbox">
+                        <form role="form" class="form-horizontal">
+                            <div class="form-group">
+                                <label for="firstname" class="col-sm-3 control-label">用户角色</label>
+                                <div class="col-sm-9">
+                                    <select class="form-control">
+                                        <option>管理员</option>
+                                        <option>超级管理员</option>
+                                        <option>普通用户</option>
+                                        <option>开发者</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastname" class="col-sm-3 control-label">用户名</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="lastname" placeholder="请输入用户名">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastname" class="col-sm-3 control-label">邮箱</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="lastname" placeholder="请输入邮箱">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastname" class="col-sm-3 control-label">密码</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="lastname" placeholder="请输入密码">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastname" class="col-sm-3 control-label">确认</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="lastname" placeholder="请输入密码">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-5 col-sm-2">
+                                    <button type="submit" class="btn btn-primary">提交</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div> -->
+                    <!-- 页面双排显示 -->
+                    <div class="rows">
+                        <div class="col-md-10 col-md-offset-1">
+                            <form role="form" class="form-horizontal rows" id="form-test">
+                                <div class="form-group col-md-6">
+                                    <label for="firstname" class="col-sm-5 control-label">用户角色</label>
+                                    <div class="col-sm-7">
+                                        <select class="form-control" name="role">
+                                            <option value="">--请选择--</option>                                            
+                                            <option value="0">管理员</option>
+                                            <option value="1">超级管理员</option>
+                                            <option value="2">普通用户</option>
+                                            <option value="3">开发者</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="user" class="col-sm-5 control-label">用户名</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" id="user" name="text" placeholder="请输入用户名" />
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="email" class="col-sm-5 control-label">邮箱</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" id="email" name="email" placeholder="请输入邮箱">
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="pwd" class="col-sm-5 control-label">密码</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" id="pwd" name="pwd" placeholder="请输入密码">
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="pwdd" class="col-sm-5 control-label">确认</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" id="pwdd" name="pwdd" placeholder="请输入密码">
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <div class="col-sm-offset-5 col-sm-2">
+                                        <button id="btn-test" type="submit" class="btn btn-primary">提交</button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 引入公共js文件 -->
+    <script src="assets/js/jquery-3.3.1.min.js"></script>
+    <script src="assets/js/jquery.slimscroll.min.js"></script>
+    <script src="assets/js/bootstrap.js"></script>
+    <script src="assets/js/modal.js"></script>
+    <script src="assets/js/jquery.pagination.min.js"></script>
+    <!-- 表单验证 -->
+    <script src="assets/js/bootstrapValidator.js"></script>
+
+    <script>
+        /**
+         *  此方法为切换左边菜单的js文件
+         */
+        $(".list_dt").on("click", function() {
+            $('.list_dd').stop();
+            $(this).siblings("dt").removeAttr("id");
+            if ($(this).attr("id") == "open") {
+                $(this).removeAttr("id").siblings("dd").slideUp();
+            } else {
+                $(this).attr("id", "open").next().slideDown().siblings("dd").slideUp();
+            }
+        });
+        /**
+         * 退出登录
+         */
+        function logout() {
+            window.location.href = "login.html";
+        };
+
+
+        /**
+         * 表单验证
+         */
+        $(function() {
+            $("#form-test").bootstrapValidator({
+                live: 'enabled', //验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证  
+                excluded: [':disabled', ':hidden', ':not(:visible)'], //排除无需验证的控件，比如被禁用的或者被隐藏的  
+                submitButtons: '#btn-test', //指定提交按钮，如果验证失败则变成disabled，但我没试成功，反而加了这句话非submit按钮也会提交到action指定页面  
+                message: '通用的验证失败消息', //好像从来没出现过  
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    role: {
+                        validators: {
+                            notEmpty: {
+                                message: '请选择用户角色'
+                            }
+                        }
+                    },
+                    text: {
+                        validators: {
+                            notEmpty: { //检测非空,radio也可用  
+                                message: '文本框必须输入'
+                            },
+                            stringLength: { //检测长度  
+                                min: 6,
+                                max: 30,
+                                message: '长度必须在6-30之间'
+                            }
+                        }
+                    },
+                    email: {
+                        validators: {
+                            notEmpty: {
+                                message: '邮箱不能为空！'
+                            },
+                            emailAddress: {
+                                message: '请输入正确的邮箱地址'
+                            }
+                        }
+
+                    },
+                    pwd: {
+                        validators: {
+                            notEmpty: {
+                                message: '密码不能为空！'
+                            },
+                            identical: {
+                                field: 'pwdd',
+                                message: '请输入确认密码'
+                            }
+                        }
+                    },
+                    pwdd: {
+                        validators: {
+                            notEmpty: {
+                                message: '密码不能为空！'
+                            },
+                            identical: {
+                                field: 'pwd',
+                                message: '与密码输入不相同，请重新输入'
+                            }
+                        }
+                    },
+                }
+            });
+            $("#btn-test").click(function() { //非submit按钮点击后进行验证，如果是submit则无需此句直接验证  
+                $("#form-test").bootstrapValidator('validate'); //提交验证  
+                if ($("#form-test").data('bootstrapValidator').isValid()) { //获取验证结果，如果成功，执行下面代码  
+                    alert("yes"); //验证成功后的操作，如ajax  
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

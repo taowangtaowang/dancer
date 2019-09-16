@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>角色管理</title>
+    <!-- Bootstrap core CSS -->
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <link href="assets/css/index.css" rel="stylesheet">
+    <link href="assets/css/config.css" rel="stylesheet">
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/bootstrapstyle.css" type="text/css">
+</head>
+
+<body>
+    <!-- nav导航 -->
+    <nav class="navbar navbar-inverse bdr-n z-ind">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">后台管理平台</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">admin <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">设置</a></li>
+                            <li><a href="#">个人中心</a></li>
+                            <li onclick="logout()"><a href="#">退出</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- 页面主体 -->
+    <div class="dh mainbox">
+        <!-- 左边菜单 -->
+        <div class="navleft leftnav-bgc">
+            <dl class="list_dl">
+                <dt class="list_dt">
+                    <span class="_after"></span>
+                    <p>基础菜单</p>
+                    <i class="list_dt_icon"></i>
+                </dt>
+                <dd class="list_dd">
+                    <ul>
+                        <li class="list_li">
+                            <a class="list_a" href="queryTable.html">菜单管理</a>
+                        </li>
+                        <li class="list_li">
+                            <a class="list_a" href="increaseOrEditor.html">增加编辑</a>
+                        </li>
+                        <li class="list_li">
+                            <a class="list_a" href="fileTree.html">角色管理</a>
+                        </li>
+                        <li class="list_li">
+                            <a class="list_a" href="error.html">错误页面</a>
+                        </li>
+                    </ul>
+                </dd>
+                <dt class="list_dt">
+                    <span class="_after"></span>
+                    <p>一级菜单</p>
+                    <i class="list_dt_icon"></i>
+                </dt>
+                <dd class="list_dd">
+                    <ul>
+                        <li class="list_li">二级菜单</li>
+                        <li class="list_li">二级菜单</li>
+                    </ul>
+                </dd>
+                <dt class="list_dt">
+                    <span class="_after"></span>
+                    <p>一级菜单</p>
+                    <i class="list_dt_icon"></i>
+                </dt>
+                <dd class="list_dd">
+                    <ul>
+                        <li class="list_li">二级菜单</li>
+                    </ul>
+                </dd>
+                <dt class="list_dt">
+                    <span class="_after"></span>
+                    <p>一级菜单</p>
+                    <i class="list_dt_icon"></i>
+                </dt>
+                <dd class="list_dd">
+                    <ul>
+                        <li class="list_li">二级菜单</li>
+                    </ul>
+                </dd>
+            </dl>
+        </div>
+        <!-- 右边主显示部分 -->
+        <div class="main-rightbox">
+            <div class="mainrightbox">
+                <!-- 路径导航 -->
+                <ol class="breadcrumb">
+                    <li><a href="index.html">首页</a></li>
+                    <li class="active">基础管理</li>
+                    <li class="active">角色管理</li>
+                </ol>
+                <!-- 显示表格 -->
+                <div class="main_box">
+                    <blockquote>
+                        <h4>菜单管理</h4>
+                    </blockquote>
+                    <div class="rows" style="height:100%;">
+                        <div class="col-xs-3 " style="min-height:700px;border:1px solid #ddd;">
+                            <ul id="fileTree" class="ztree"></ul>
+                        </div>
+                        <div class="col-xs-9">
+                            <div>
+                                <button type="button" class="btn btn-primary">添加下节点</button>
+                                <button type="button" class="btn btn-primary">删除</button>
+                                <button type="button" class="btn btn-primary">修改</button>
+                                <button type="button" class="btn btn-primary" onclick="getdata();">获取选择的节点</button>
+                            </div>
+                            <div class="breadcrumb ban-m">
+                                <form class="form-horizontal">
+                                    <div class="rows">
+                                        <div class="col-xs-4">
+
+                                            <div class="form-group">
+                                                <label for="inputEmail3" class="col-sm-4 control-label">菜单名</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" id="" placeholder="菜单名">
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <div class="form-group">
+                                                <label for="inputPassword3" class="col-sm-4 control-label">链接地址</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" id="address" placeholder="链接地址">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- 引入公共js文件 -->
+    <script src="assets/js/jquery-3.3.1.min.js"></script>
+    <script src="assets/js/jquery.slimscroll.min.js"></script>
+    <script src="assets/js/bootstrap.js"></script>
+    <script src="assets/js/modal.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.ztree.core.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.ztree.excheck.js"></script>
+    <script>
+        /**
+         *  此方法为切换左边菜单的js文件
+         */
+        $(".list_dt").on("click", function() {
+            $('.list_dd').stop();
+            $(this).siblings("dt").removeAttr("id");
+            if ($(this).attr("id") == "open") {
+                $(this).removeAttr("id").siblings("dd").slideUp();
+            } else {
+                $(this).attr("id", "open").next().slideDown().siblings("dd").slideUp();
+            }
+        });
+        /**
+         * 退出登录
+         */
+        function logout() {
+            window.location.href = "login.html";
+        };
+
+        /**
+         * 树形插件方法
+         * 
+         */
+        var setting = {
+            view: {
+                selectedMulti: false
+            },
+            check: {
+                enable: true
+            },
+            data: {
+                simpleData: {
+                    enable: true
+                }
+            },
+            edit: {
+                enable: true
+            }
+        };
+
+        var zNodes = [{
+                id: 1,
+                pId: 0,
+                name: "基础管理",
+                open: false
+            }, {
+                id: 101,
+                pId: 1,
+                name: "菜单管理"
+            }, {
+                id: 102,
+                pId: 1,
+                name: "用户列表"
+            }, {
+                id: 103,
+                pId: 1,
+                name: "角色管理"
+            }, {
+                id: 104,
+                pId: 1,
+                name: "权限管理"
+            }, {
+                id: 108,
+                pId: 1,
+                name: "公司管理"
+            }, {
+                id: 109,
+                pId: 1,
+                name: "测试菜单"
+            }, {
+                id: 110,
+                pId: 1,
+                name: "角色菜单"
+            },
+
+            {
+                id: 2,
+                pId: 0,
+                name: "售货机管理",
+                open: false
+            }, {
+                id: 201,
+                pId: 2,
+                name: "机器群组列表"
+            }, {
+                id: 206,
+                pId: 2,
+                name: "机器列表"
+            },
+
+            {
+                id: 3,
+                pId: 0,
+                name: "群组管理",
+                open: false
+            }, {
+                id: 301,
+                pId: 3,
+                name: "广告群组列表"
+            },
+
+            {
+                id: 4,
+                pId: 0,
+                name: "会员管理",
+                open: false
+            }, {
+                id: 401,
+                pId: 4,
+                name: "会员管理"
+            }, {
+                id: 402,
+                pId: 4,
+                name: "会员卡管理"
+            }, {
+                id: 403,
+                pId: 4,
+                name: "会员充值管理"
+            }, {
+                id: 404,
+                pId: 5,
+                name: "余额退款申请"
+            },
+
+            {
+                id: 5,
+                pId: 0,
+                name: "活动商券管理",
+                open: false
+            }, {
+                id: 501,
+                pId: 5,
+                name: "折扣活动管理"
+            }, {
+                id: 502,
+                pId: 5,
+                name: "立减活动管理"
+            }, {
+                id: 503,
+                pId: 5,
+                name: "代金券列表"
+            }, {
+                id: 504,
+                pId: 5,
+                name: "折扣券列表"
+            }, {
+                id: 505,
+                pId: 5,
+                name: "兑换券列表"
+            }, {
+                id: 506,
+                pId: 5,
+                name: "会员礼物管理"
+            }, {
+                id: 507,
+                pId: 5,
+                name: "活动机器管理"
+            },
+
+            {
+                id: 6,
+                pId: 0,
+                name: "交易管理",
+                open: false
+            }, {
+                id: 601,
+                pId: 6,
+                name: "订单列表"
+            }
+        ];
+
+        $(document).ready(function() {
+            $.fn.zTree.init($("#fileTree"), setting, zNodes);
+        });
+        /**
+         * ====================================
+         * 获取选中的节点
+         * 参考文档  http://www.treejs.cn/v3/api.php
+         * ====================================
+         */
+        function getdata(e, treeId, treeNode) {
+            var treeObj = $.fn.zTree.getZTreeObj("fileTree"),
+                nodes = treeObj.getCheckedNodes(true),
+                v = "";
+            for (var i = 0; i < nodes.length; i++) {
+                v += nodes[i].name + ",";
+                alert("ID:" + nodes[i].id + "name:" + nodes[i].name); //获取选中节点的值
+            }
+        }
+    </script>
+</body>
+
+</html>

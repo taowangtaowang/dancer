@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>dancer</title>
+    <!-- Bootstrap core CSS -->
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <link href="assets/css/login.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="login">
+        <h1><img src="assets/images/gongfanglogo.png" alt="" width="80px"></h1>
+        <form method="post">
+            <input class="user" type="text" name="u" id="user" placeholder="用户名" required="required" />
+            <input class="pwd" type="password" name="p" id="password" placeholder="密码" required="required" />
+            <div class="t-box dp-n">
+                <img src="assets/images/error.png" alt="" class="t-img">
+                <p class="t-color"></p>
+            </div>
+
+        </form>
+        <button type="submit" class=" btn btn-primary btn-block btn-large">登录</button>
+    </div>
+    <!-- 引入公共js文件 -->
+    <script src="assets/js/jquery-3.3.1.min.js"></script>
+    <script src="assets/js/bootstrap.js"></script>
+    <script>
+        $(".btn").on("click", function() {
+            var user = $(".user").val();
+            if (user == "") {
+                $(".t-box").removeClass("dp-n");
+                $(".t-color").html("用户名不能为空！");
+                return;
+            };
+            var pwd = $(".pwd").val();
+            if (pwd == "") {
+                $(".t-box").removeClass("dp-n");
+                $(".t-color").html("密码不能为空！");
+                return;
+            };
+
+            $.ajax({
+                type:"POST",
+                url:"user/checkLogin",
+                dataType:"json", //预期服务器返回数据的类型
+                data:{"account":$("#user").val(),"password":$("#password").val()},
+                success:function(data){
+                    if(data.state="success"){
+                        window.location.href = "index.html";
+                    }else{
+                        $(".t-box").removeClass("dp-n");
+                        $(".t-color").html("用户名或密码错误！");
+                    }
+                 },
+                error:function(jqXHR){
+                     alert("发生错误："+ jqXHR.status);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

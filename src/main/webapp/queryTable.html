@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>dancer</title>
+    <!-- Bootstrap core CSS -->
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <link href="assets/css/index.css" rel="stylesheet">
+    <link href="assets/css/config.css" rel="stylesheet">
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="assets/css/jquery.pagination.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <!-- nav导航 -->
+    <nav class="navbar navbar-inverse bdr-n z-ind">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">后台管理平台</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">admin <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">设置</a></li>
+                            <li><a href="#">个人中心</a></li>
+                            <li onclick="logout()"><a href="#">退出</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- 页面主体 -->
+    <div class="dh mainbox">
+        <!-- 左边菜单 -->
+        <div class="navleft leftnav-bgc">
+            <dl class="list_dl">
+                <dt class="list_dt">
+                    <span class="_after"></span>
+                    <p>用户菜单</p>
+                    <i class="list_dt_icon"></i>
+                </dt>
+                <dd class="list_dd">
+                    <ul id="menulist">
+                        <li class="list_li">
+                            <a class="list_a" href="queryTable.html">用户管理</a>
+                        </li>
+                    </ul>
+                </dd>
+                <!--<dt class="list_dt">
+                    <span class="_after"></span>
+                    <p>一级菜单</p>
+                    <i class="list_dt_icon"></i>
+                </dt>-->
+            </dl>
+        </div>
+        <!-- 右边主显示部分 -->
+        <div class="main-rightbox">
+            <div class="mainrightbox">
+                <!-- 路径导航 -->
+                <ol class="breadcrumb">
+                    <li><a href="index.html">首页</a></li>
+                    <li class="active">用户菜单</li>
+                    <li class="active">用户管理</li>
+                </ol>
+                <!-- 显示表格 -->
+                <div class="main_box">
+                    <!-- 顶部搜索添加框 -->
+                    <div class="row">
+                        <!-- 搜索框 -->
+                        <div class="col-lg-2 col-md-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search for...">
+                                <span class="input-group-btn">
+                                  <button class="btn btn-default" type="button">搜索</button>
+                            </span>
+                            </div>
+                        </div>
+                        <div class="col-li-2 col-md-4">
+                            <button type="button" class="btn btn-primary adduser" onclick="addfun()">添加</button>
+                        </div>
+                    </div>
+                    <!-- 表格显示区域 -->
+                    <div class="maintab">
+                        <table class="table table-striped table-bordered table-hover" id="sample_1">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes" /></th>
+                                    <th>ID</th>
+                                    <th class="">菜单名称</th>
+                                    <th class="">地址</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody">
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- 分页 -->
+                    <div class="text-center">
+                        <!-- <nav aria-label="Page navigation">
+                            <ul class="pagination">
+                                <li>
+                                    <a href="#" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                <li><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">5</a></li>
+                                <li>
+                                    <a href="#" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav> -->
+                        <!-- 分页 -->
+                        <div id="pagination3" class="page fl"></div>
+                        <!-- 暂时放在这，后期去掉 -->
+                        <div class="box">
+                            <div id="pagination3" class="page fl"></div>
+                            <div class="info fl">
+                                <p>当前页数：<span id="current3">4</span></p>
+                            </div>
+                            <button id="getPage">getPage</button>
+                            <button id="setPage">setPage</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- 模态框 -->
+                <div class="modal-bg  dp-n">
+                    <div class="modal-conbox">
+                        <div class="modal-t">
+                            <span class="control-label modaltitle">添加用户</span>
+                            <img class="modalback closemodal" src="assets/images/close.png" alt="">
+                        </div>
+                        <form role="form" class="form-horizontal">
+                            <div class="form-group">
+                                <label for="firstname" class="col-sm-3 control-label">用户角色</label>
+                                <div class="col-sm-9">
+                                    <select class="form-control">
+                                        <option>管理员</option>
+                                        <option>超级管理员</option>
+                                        <option>普通用户</option>
+                                        <option>开发者</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastname" class="col-sm-3 control-label">用户名</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="lastname" placeholder="请输入用户名">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastname" class="col-sm-3 control-label">邮箱</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="lastname" placeholder="请输入邮箱">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastname" class="col-sm-3 control-label">密码</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="lastname" placeholder="请输入密码">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastname" class="col-sm-3 control-label">确认</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="lastname" placeholder="请输入密码">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-5 col-sm-2">
+                                    <button type="submit" class="btn btn-default">提交</button>
+                                </div>
+                            </div>
+                        </form>
+                        <!-- 删除 -->
+                        <div class="modaldet dp-n">
+                            <div>
+                                <p class="lead" style="font-size:16px;">确定要删除吗？</p>
+                            </div>
+                            <div class="text-right">
+                                <button type="button" class="btn btn-primary">确定</button>
+                                <button type="button" class="btn btn-primary">取消</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- 引入公共js文件 -->
+    <script src="assets/js/jquery-3.3.1.min.js"></script>
+    <script src="assets/js/jquery.slimscroll.min.js"></script>
+    <script src="assets/js/bootstrap.js"></script>
+    <!-- <script src="js/modal.js"></script> -->
+    <script src="assets/js/jquery.pagination.min.js"></script>
+
+    <script>
+        function initdata() {
+            $.ajax({
+                type: "POST",
+                url: "user/selectShowMenus",
+                dataType: "json", //预期服务器返回数据的类型
+                success: function (data) {
+                    if (data.state = "success") {
+                        var tbody = $("#tbody");
+                        for (var i = 0; i < data.data.length; i++) {
+                            var tr = $("<tr>" +
+                                "<td><input type='checkbox' class='checkboxes'/></td>" +
+                                "<td>" + data.data[i].text + "</td>" +
+                                "<td>" + data.data[i].url + "</td>" +
+                                "<td><a href='' class='label label-success cp editmsg'>编辑</a> <a href='login.html' class='label label-success cp deletelist deletebgc'>删除</a></td>" +
+                                "</tr>");
+                            tbody.append(tr);
+                        }
+                    } else {
+                        $(".t-box").removeClass("dp-n");
+                        $(".t-color").html("用户名或密码错误！");
+                    }
+                },
+                error: function (jqXHR) {
+                    alert("发生错误：" + jqXHR.status);
+                }
+            });
+        }
+        window.onload = initdata;
+        /**
+         *  此方法为切换左边菜单的js文件
+         */
+        $(".list_dt").on("click", function() {
+            $('.list_dd').stop();
+            $(this).siblings("dt").removeAttr("id");
+            if ($(this).attr("id") == "open") {
+                $(this).removeAttr("id").siblings("dd").slideUp();
+            } else {
+                $(this).attr("id", "open").next().slideDown().siblings("dd").slideUp();
+            }
+        });
+        /**
+         * 退出登录
+         */
+        function logout() {
+            window.location.href = "login.html";
+        };
+        /**
+         * 此方法为分页插件提供方法 
+         * 分页功能
+         * 参考文档  http://www.jq22.com/jquery-info15113
+         */
+        $(function() {
+            $("#pagination3").pagination({
+                currentPage: 4,
+                totalPage: 1600,
+                isShow: true,
+                count: 7,
+                homePageText: "首页",
+                endPageText: "尾页",
+                prevPageText: "上一页",
+                nextPageText: "下一页",
+                callback: function(current) {
+                    /**
+                     * 回调函数，请求数据 
+                     * current为页面数
+                     */
+                    $("#current3").text(current);
+                    alert("请求数据" + current);
+                }
+            });
+
+            $("#getPage").on("click", function() {
+                var info = $("#pagination3").pagination("getPage");
+                alert("当前页数：" + info.current + ",总页数：" + info.total);
+            });
+
+            $("#setPage").on("click", function() {
+                $("#pagination3").pagination("setPage", 1, 10);
+            });
+        });
+
+        /**
+         * 页面挂载数据方法 
+         */
+        function getdata() {
+
+        }
+
+        function addfun() {
+            window.location.href = "increaseOrEditor.html";
+        }
+
+        function editfun() {
+            window.location.href = "increaseOrEditor.html";
+        }
+    </script>
+</body>
+
+</html>

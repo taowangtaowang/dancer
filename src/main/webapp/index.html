@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>dancer</title>
+    <!-- Bootstrap core CSS -->
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <link href="assets/css/index.css" rel="stylesheet">
+    <link href="assets/css/config.css" rel="stylesheet">
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <!-- nav导航 -->
+    <nav class="navbar navbar-inverse bdr-n z-ind">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">后台管理平台</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">admin <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">设置</a></li>
+                            <li><a href="#">个人中心</a></li>
+                            <li onclick="logout()"><a href="#">退出</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- 页面主体 -->
+    <div class="dh mainbox">
+        <!-- 左边菜单 -->
+        <div class="navleft leftnav-bgc">
+            <dl class="list_dl">
+                <dt class="list_dt">
+                    <span class="_after"></span>
+                    <p>用户菜单</p>
+                    <i class="list_dt_icon"></i>
+                </dt>
+                <dd class="list_dd">
+                    <ul id="menulist">
+                        <li class="list_li">
+                            <a class="list_a" href="queryTable.html">用户管理</a>
+                        </li>
+                    </ul>
+                </dd>
+                <!--<dt class="list_dt">
+                    <span class="_after"></span>
+                    <p>一级菜单</p>
+                    <i class="list_dt_icon"></i>
+                </dt>-->
+            </dl>
+        </div>
+        <!-- 右边主显示部分 -->
+        <div class="main-rightbox">
+            <div class="mainrightbox">
+                <!-- 路径导航 -->
+                <ol class="breadcrumb">
+                    <li><a href="index.html">首页</a></li>
+                </ol>
+                <!-- 主体部分 -->
+
+                <h4>&nbsp;字母的过程中，免不了不停的学习，不停地忘记 该仓库作为记录我整理的知识 所以版本做一些记录.</h4>
+                <h4>&nbsp;版本迭代：springmvc——>dubbo——>springboot——>springcloud</h4>
+                <pre>
+                    <code class="hljs livecodeserver">
+                        1 tkmybatis 登录 √
+
+                        2 日志√ 自定义异常√ swagger √ quartz
+
+                        3 自定义原生内存缓存 利用原生ConcurrentMap(string, Future)缓存
+
+                        4 mamcache
+
+                        5 redis缓存 利用redis实现单点登陆session控制 <3缓存的区别>
+
+                        6 中间件activemq rabbitmq Kafka 日志队列 <4队列的区别>
+
+                        7 k8s docker
+
+                        8 分库分表 mycat的应用 主从复制读写分离
+
+                        9 sql优化等
+
+                        10 spark日志统计，访问统计等（flink统计）
+
+                        11 es 结合队列刷数据 至es
+                        <span class="hljs-built_in"></span>
+                    </code>
+                </pre>
+                <span id="OSC_h4_2"></span>
+                <h4>&nbsp;该工程为借用别人的 精简而来，主要目的是针对各种小东西做一些测试</h4>
+                <pre>
+                    <code class="hljs">
+                        http://127.0.0.1:8080/dancer/swagger-ui.html
+
+                        1 项目中有部分接口调用不通 是因为我把数据库字段全部改了一遍 但是html上的一些东西暂时不想改
+                        2 后台架子 暂时不想动
+                        3 home文件夹下为最近整理知识
+                    </code>
+                </pre>
+                <span id="OSC_h4_3"></span>
+                <span id="OSC_h4_12"></span><h4>&nbsp;未完待续。。。</h4>
+
+            </div>
+        </div>
+    </div>
+    <!-- 引入公共js文件 -->
+    <script src="assets/js/jquery-3.3.1.min.js"></script>
+    <script src="assets/js/jquery.slimscroll.min.js"></script>
+    <script src="assets/js/bootstrap.js"></script>
+    <script>
+        // 此方法为切换左边菜单的js文件
+        $(".list_dt").on("click", function() {
+            $('.list_dd').stop();
+            $(this).siblings("dt").removeAttr("id");
+            if ($(this).attr("id") == "open") {
+                $(this).removeAttr("id").siblings("dd").slideUp();
+            } else {
+                $(this).attr("id", "open").next().slideDown().siblings("dd").slideUp();
+            }
+        });
+
+        //退出
+        function logout() {
+            window.location.href = "login.html";
+        }
+
+
+    </script>
+</body>
+
+</html>
