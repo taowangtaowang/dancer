@@ -5,9 +5,6 @@ import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 
 /**
- * @Author: qingshan
- * @Date: 2018/9/21 10:52
- * @Description: 咕泡学院，只为更好的你
  * 消息生产者
  */
 public class MyProducer {
@@ -32,10 +29,8 @@ public class MyProducer {
 
         // 发送消息
         String msg = "Hello world, Rabbit MQ";
-
-        // String exchange, String routingKey, BasicProperties props, byte[] body
+        // String exchange 交换机名称, String routingKey 路由关键字, BasicProperties props消息属性, byte[] body 消息实体
         channel.basicPublish(EXCHANGE_NAME, "gupao.best", null, msg.getBytes());
-
         channel.close();
         conn.close();
     }

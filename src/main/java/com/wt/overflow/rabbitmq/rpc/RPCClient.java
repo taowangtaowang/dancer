@@ -13,10 +13,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeoutException;
 
 /**
- * @Author: qingshan
- * @Date: 2018/9/21 10:52
- * @Description: 咕泡学院，只为更好的你
- * RPC客户端，后启动
+ * RPC客户端，后启动 (生产端)
  */
 public class RPCClient{
     private final static String REQUEST_QUEUE_NAME="RPC_REQUEST";

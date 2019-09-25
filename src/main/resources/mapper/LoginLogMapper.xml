@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wt.overflow.dao.LoginLogMapper" >
+	<resultMap id="BaseResultMap" type="com.wt.overflow.bean.LoginLog" >
+		<result column="id" property="id" jdbcType="VARCHAR" />
+		<result column="nickname" property="nickname" jdbcType="VARCHAR" />
+		<result column="operateUser" property="operateUser" jdbcType="VARCHAR" />
+		<result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="notes" property="notes" jdbcType="VARCHAR" />
+		<result column="functionValue" property="functionValue" jdbcType="VARCHAR" />
+		<result column="result" property="result" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="Base_Column_List" >
+		id, nickname, operateUser, createTime, notes, functionValue, result
+	</sql>
+
+	<insert id="adds" parameterType="java.util.List">
+		INSERT INTO login_log
+		(id, nickname, operateUser, createTime, notes, functionValue, result)
+		VALUES
+		<foreach collection="list" item="item" index="index" separator="," >
+			(#{item.id,jdbcType=VARCHAR},
+			#{item.nickname,jdbcType=VARCHAR},
+			#{item.operateUser,jdbcType=VARCHAR},
+			#{item.createTime,jdbcType=TIMESTAMP},
+			#{item.notes,jdbcType=VARCHAR},
+			#{item.functionValue, jdbcType=VARCHAR},
+			#{item.result, jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+
+</mapper>

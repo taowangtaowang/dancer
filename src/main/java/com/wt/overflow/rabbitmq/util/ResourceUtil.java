@@ -16,7 +16,8 @@ public class ResourceUtil {
     }
 
     public static String getKey(String key){
-        return resourceBundle.getString(key);
+        return "amqp://guest:guest@119.27.191.15:5672";
+        //return resourceBundle.getString(key);
     }
 
 }

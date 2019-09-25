@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-3.1.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<context:property-placeholder location="classpath*:jdbc.properties"/>
+
+	<!--——————————————数据源1————————————————————————————-->
+
+	<!-- 默认的dataSource -->
+	<bean id="dataSource1" class="com.atomikos.jdbc.AtomikosDataSourceBean" destroy-method="close">
+		<!-- 该数据源唯一的名称，不能重复 -->
+		<property name="uniqueResourceName" value="dataSource1"/>
+		<property name="xaDataSourceClassName" value="com.alibaba.druid.pool.xa.DruidXADataSource" />
+		<property name="borrowConnectionTimeout" value="60" />
+		<property name="minPoolSize" value="5" />
+		<property name="maxPoolSize" value="20" />
+		<property name="maxLifetime" value="0" />
+		<property name="xaProperties">
+			<props>
+				<prop key="driverClassName">com.mysql.jdbc.Driver</prop>
+				<prop key="url">${jdbc.url1}</prop>
+				<prop key="username">root</prop>
+				<prop key="password">Wt251314.</prop>
+				<prop key="initialSize">10</prop>
+				<prop key="minIdle">2</prop>
+				<prop key="maxActive">30</prop>
+				<prop key="maxWait">60000</prop>
+				<prop key="timeBetweenEvictionRunsMillis">60000</prop>
+				<prop key="minEvictableIdleTimeMillis">300000</prop>
+				<prop key="validationQuery">SELECT 1</prop>
+				<prop key="testWhileIdle">true</prop>
+				<prop key="testOnBorrow">false</prop>
+				<prop key="testOnReturn">false</prop>
+				<prop key="poolPreparedStatements">true</prop>
+				<prop key="maxPoolPreparedStatementPerConnectionSize">20</prop>
+				<prop key="filters">stat</prop>
+			</props>
+		</property>
+	</bean>
+	<!--<bean id="dataSource1" class="com.alibaba.druid.pool.DruidDataSource" >
+		<property name="url" value="${jdbc.url1}" />
+        <property name="username" value="${jdbc.username1}" />
+        <property name="password" value="${jdbc.password1}" />
+        <property name="driverClassName" value="${jdbc.driverClassName}" />  
+	</bean>-->
+	<!-- mybatis的sessionFactory -->
+	<bean id="sessionFactory1" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 加载数据源 -->
+		<property name="dataSource" ref="dataSource1"></property>
+		<!-- 关联映射sql文件 -->
+		<property name="mapperLocations" value="classpath:mapper/*.xml"></property>
+	</bean>
+	<!-- 配置mapper扫描器 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<!-- 扫描包路径，如果需要扫描多个，中间使用半角的逗号隔开 -->
+		<property name="basePackage" value="com.wt.overflow.dao"></property>
+		<property name="SqlSessionFactoryBeanName" value="sessionFactory1"></property>
+	</bean>
+	<!--原生配置事务-->
+	<!--<bean id="txManager1" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource1"/>
+	</bean>-->
+	<!-- 支持注解形式 enable transaction annotation support -->
+	<!--<tx:annotation-driven transaction-manager="txManager1" />-->
+
+	<!--——————————————数据源2————————————————————————————-->
+
+	<bean id="dataSource2" class="com.atomikos.jdbc.AtomikosDataSourceBean" destroy-method="close">
+		<!-- 该数据源唯一的名称，不能重复 -->
+		<property name="uniqueResourceName" value="dataSource2"/>
+		<property name="xaDataSourceClassName" value="com.alibaba.druid.pool.xa.DruidXADataSource" />
+		<property name="borrowConnectionTimeout" value="60" />
+		<property name="minPoolSize" value="5" />
+		<property name="maxPoolSize" value="20" />
+		<property name="maxLifetime" value="0" />
+		<property name="xaProperties">
+			<props>
+				<prop key="driverClassName">com.mysql.jdbc.Driver</prop>
+				<prop key="url">${jdbc.url2}</prop>
+				<prop key="username">root</prop>
+				<prop key="password">Wt251314.</prop>
+				<prop key="initialSize">10</prop>
+				<prop key="minIdle">2</prop>
+				<prop key="maxActive">30</prop>
+				<prop key="maxWait">60000</prop>
+				<prop key="timeBetweenEvictionRunsMillis">60000</prop>
+				<prop key="minEvictableIdleTimeMillis">300000</prop>
+				<prop key="validationQuery">SELECT 1</prop>
+				<prop key="testWhileIdle">true</prop>
+				<prop key="testOnBorrow">false</prop>
+				<prop key="testOnReturn">false</prop>
+				<prop key="poolPreparedStatements">true</prop>
+				<prop key="maxPoolPreparedStatementPerConnectionSize">20</prop>
+				<prop key="filters">stat</prop>
+			</props>
+		</property>
+	</bean>
+	<!--原生数据源配置
+	<bean id="dataSource2" class="com.alibaba.druid.pool.DruidDataSource">
+		<property name="url" value="${jdbc.url2}" />
+		<property name="username" value="${jdbc.username2}" />
+		<property name="password" value="${jdbc.password2}" />
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+	</bean>-->
+	<!-- mybatis的sessionFactory -->
+	<bean id="sessionFactory2" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 加载数据源 -->
+		<property name="dataSource" ref="dataSource2"></property>
+		<!-- 关联映射sql文件 -->
+		<property name="mapperLocations" value="classpath:mapper/*.xml"></property>
+	</bean>
+	<!-- 配置mapper扫描器 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<!-- 扫描包路径，如果需要扫描多个，中间使用半角的逗号隔开 -->
+		<property name="basePackage" value="com.wt.overflow.dao2"></property>
+		<property name="SqlSessionFactoryBeanName" value="sessionFactory2"></property>
+	</bean>
+	<!--原生配置事务-->
+	<!--<bean id="txManager2" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource2"/>
+	</bean>-->
+	<!-- 支持注解形式 enable transaction annotation support -->
+	<!--<tx:annotation-driven transaction-manager="txManager2" />-->
+
+
+
+
+
+
+	<!-- 分布式事务配置
+	https://download.csdn.net/download/m0_37992069/10478270
+	https://www.oschina.net/question/2282265_241355?sort=default
+	https://blog.csdn.net/Little_fxc/article/details/84840169
+	Spring在TransactionDefinition接口中规定了7种类型的事务传播行为，它们规定了事务方法和事务方法发生嵌套调用时事务如何进行传播
+	得每一个方法上定义事务方式，也就是说每个service方法都得打@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+		事务传播行为类型:
+			PROPAGATION_REQUIRED	如果当前没有事务，就新建一个事务，如果已经存在一个事务中，加入到这个事务中。这是最常见的选择。
+			PROPAGATION_SUPPORTS	支持当前事务，如果当前没有事务，就以非事务方式执行。
+			PROPAGATION_MANDATORY	使用当前的事务，如果当前没有事务，就抛出异常。
+			PROPAGATION_REQUIRES_NEW	新建事务，如果当前存在事务，把当前事务挂起。
+			PROPAGATION_NOT_SUPPORTED	以非事务方式执行操作，如果当前存在事务，就把当前事务挂起。
+			PROPAGATION_NEVER	以非事务方式执行，如果当前存在事务，则抛出异常。
+			PROPAGATION_NESTED	如果当前存在事务，则在嵌套事务内执行。如果当前没有事务，则执行与PROPAGATION_REQUIRED类似的操作。
+			配置切面举例：<本例子不做切面配置，将在每一个方法上面配置事务传播方式>
+			//通知
+				<tx:advice id="txAdvice" transaction-manager="jtaTransactionManager">
+					<tx:attributes>
+						//传播行为
+						<tx:method name="save*" propagation="REQUIRED" />
+						<tx:method name="insert*" propagation="REQUIRED" />
+						<tx:method name="add*" propagation="REQUIRED" />
+						<tx:method name="create*" propagation="REQUIRED" />
+						<tx:method name="delete*" propagation="REQUIRED" />
+						<tx:method name="update*" propagation="REQUIRED" />
+						<tx:method name="find*" propagation="SUPPORTS" read-only="true" />
+						<tx:method name="select*" propagation="SUPPORTS" read-only="true" />
+						<tx:method name="get*" propagation="SUPPORTS" read-only="true" />
+					</tx:attributes>
+				</tx:advice>
+				//切面
+				<aop:config>
+					<aop:advisor advice-ref="txAdvice"
+								 pointcut="execution(* com.dmsd.api..*.*(..))" />
+				</aop:config>
+		参考：https://blog.csdn.net/kisscatforever/article/details/79129055
+			  https://blog.csdn.net/nyistzp/article/details/9012275
+	-->
+	<bean id="atomikosTransactionManager" class="com.atomikos.icatch.jta.UserTransactionManager" init-method="init" destroy-method="close">
+		<property name="forceShutdown" value="true"/>
+	</bean>
+	<bean id="atomikosUserTransaction" class="com.atomikos.icatch.jta.UserTransactionImp">
+		<property name="transactionTimeout" value="300"/>
+	</bean>
+	<bean id="transactionManager" class="org.springframework.transaction.jta.JtaTransactionManager">
+		<property name="transactionManager" ref="atomikosTransactionManager"/>
+		<property name="userTransaction" ref="atomikosUserTransaction"/>
+	</bean>
+	<tx:annotation-driven/>
+
+
+
+
+	<!--——————————————统一开启注解配置————————————————————————————-->
+	<bean id="typeHandlers" class="com.wt.overflow.interceptor.WtStringTypeHandler">
+	</bean>
+	<!--日志切面配置-->
+	<aop:aspectj-autoproxy proxy-target-class="true" />
+	<bean id="logAop" class="com.wt.overflow.log.LogAop"></bean>
+	<!--加入高并发的ConcurrentLinkedQueue队列日志bean测试-->
+	<bean id="customOperationLogger" class="com.wt.overflow.service.impl.CustomOperationLogger"></bean>
+</beans>

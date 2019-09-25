@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wt.overflow.dao.AbMapper" >
+  <resultMap id="BaseResultMap" type="com.wt.overflow.bean.Ab" >
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="names" jdbcType="VARCHAR" property="names" />
+    <result column="age" jdbcType="VARCHAR" property="age" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, names, age
+  </sql>
+  <select id="selectAll" resultType="com.wt.overflow.bean.Ab">
+    SELECT <include refid="Base_Column_List" /> FROM Ab
+  </select>
+
+</mapper>

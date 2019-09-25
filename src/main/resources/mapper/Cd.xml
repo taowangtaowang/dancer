@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wt.overflow.dao2.CdMapper" >
+  <resultMap id="BaseResultMap" type="com.wt.overflow.bean.Cd" >
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="names" jdbcType="VARCHAR" property="names" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, names
+  </sql>
+
+  <select id="selectAll" resultType="com.wt.overflow.bean.Cd">
+    SELECT <include refid="Base_Column_List" /> FROM Cd
+  </select>
+
+  <insert id="insert" parameterType="com.wt.overflow.bean.Account" >
+    insert into Cd
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="names != null" >
+        names,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="names != null" >
+        #{names,jdbcType=VARCHAR},
+      </if>
+    </trim>
+
+  </insert>
+
+</mapper>

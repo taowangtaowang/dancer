@@ -6,9 +6,7 @@ import com.rabbitmq.client.ConnectionFactory;
 import com.wt.overflow.rabbitmq.util.ResourceUtil;
 
 /**
- * @Author: qingshan
- * @Date: 2018/9/21 10:52
- * @Description: 咕泡学院，只为更好的你
+ *
  * 消息生产者，用于测试消费者手工应答和重回队列
  */
 public class AckProducer {
@@ -24,7 +22,7 @@ public class AckProducer {
         Channel channel = conn.createChannel();
 
         String msg = "test ack message ";
-        // 声明队列（默认交换机AMQP default，Direct）
+        // 声明队列（默认交换机AMQP default:Direct exchange 直连交换机）
         // String queue, boolean durable, boolean exclusive, boolean autoDelete, Map<String, Object> arguments
         channel.queueDeclare(QUEUE_NAME, false, false, false, null);
 
